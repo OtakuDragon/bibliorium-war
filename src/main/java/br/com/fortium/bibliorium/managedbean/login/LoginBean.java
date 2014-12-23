@@ -50,6 +50,7 @@ public class LoginBean extends AbstractManagedBean{
 		if(mensagem != null){
 			addMessage(FacesMessage.SEVERITY_ERROR, mensagem, null);
 		}
+		getSession().setAttribute(MENSAGEM_ACESSO_NEGADO, null);
 	}
 
 	public String getCpf() {

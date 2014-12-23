@@ -39,9 +39,9 @@ public class SecurityFilter implements Filter {
 			return;
 		}else{
 			
-			if(upperUrl.contains("PAGES/LEITOR") && (tipo == TipoUsuario.PROFESSOR || tipo == TipoUsuario.ALUNO)){
+			if(upperUrl.contains("1/LEITOR") && (tipo == TipoUsuario.PROFESSOR || tipo == TipoUsuario.ALUNO)){
 				doFilter(httpRequest, response, chain);
-			}else if(upperUrl.contains("PAGES/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
+			}else if(upperUrl.contains("1/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
 				doFilter(httpRequest, response, chain);
 			}else{
 				redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não tem permissão para acessar esta funcionalidade.");
