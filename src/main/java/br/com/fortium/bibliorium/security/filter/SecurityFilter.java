@@ -22,23 +22,17 @@ public class SecurityFilter implements Filter {
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		HttpServletRequest httpRequest = (HttpServletRequest)request;
+		HttpServletRequest  httpRequest  = (HttpServletRequest) request;
 		HttpServletResponse httpResponse = (HttpServletResponse)response;
 		
 		String upperUrl = httpRequest.getRequestURL().toString().toUpperCase();
 		
 		TipoUsuario tipo = (TipoUsuario)httpRequest.getSession(true).getAttribute(Usuario.AUTENTICADO);
 		
-		if(!isFolderNamesValid(httpRequest)){
-			redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Nice try... nada de tentar burlar minha segurança.");
-			return;
-		}
-		
 		if(tipo == null){
 			redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não está logado no sistema ou a sua sessão expirou.");
 			return;
 		}else{
-			
 			if(upperUrl.contains("1/LEITOR") && (tipo == TipoUsuario.PROFESSOR || tipo == TipoUsuario.ALUNO)){
 				doFilter(httpRequest, response, chain);
 			}else if(upperUrl.contains("1/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
@@ -53,15 +47,6 @@ public class SecurityFilter implements Filter {
 	@Override
 	public void destroy() {}
 	
-	private boolean isFolderNamesValid(HttpServletRequest request){
-		String requestOriginal = request.getRequestURL().toString().split("://")[1];
-		String folderNames = requestOriginal.substring(requestOriginal.indexOf("/"), requestOriginal.lastIndexOf("/"));
-		
-		String lowerFolderNames = folderNames.toLowerCase();
-		
-		return folderNames.equals(lowerFolderNames);
-	}
-
 	private void redirectToLoginWithError(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String errorMessage) throws IOException{
 		httpRequest.getSession().setAttribute(LoginBean.MENSAGEM_ACESSO_NEGADO, errorMessage);
 		httpResponse.sendRedirect("/bibliorium/login.xhtml");

@@ -7,9 +7,9 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
 
 import br.com.fortium.bibliorium.managedbean.AbstractManagedBean;
-import br.com.fortium.bibliorium.persistence.eao.UsuarioEAO;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
+import br.com.fortium.bibliorium.service.UsuarioService;
 
 @ManagedBean
 @RequestScoped
@@ -21,11 +21,11 @@ public class LoginBean extends AbstractManagedBean{
 	private String senha;
 	
 	@EJB
-	private UsuarioEAO usuarioEAO;
+	private UsuarioService usuarioService;
 	
 	public String efetuarLogin(){
 		
-		TipoUsuario tipo = usuarioEAO.autenticarUsuario(cpf, senha);
+		TipoUsuario tipo = usuarioService.autenticarUsuario(cpf, senha);
 		
 		if(tipo == null){
 			addMessage(FacesMessage.SEVERITY_ERROR, "Usuário/Senha inválidos, Tente Novamente.", null);
