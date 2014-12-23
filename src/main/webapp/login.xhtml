@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"> 
+      
+<f:event listener="#{loginBean.exibirMsgAcessoNegado}" type="preRenderView" />
+<h:head>
+	<title>Bibliorium - Identifique-se</title>
+</h:head> 
+<h:body>
+	<div style="margin:0 auto;" align="center">
+		<p:graphicImage library="img" name="bibliorium_horizontal.svg" width="40%" style="margin-bottom:5%"/>
+
+		<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+	
+		<h:form>
+			<p:outputLabel id="usernameInputLabel" for="usernameInput" value="&nbsp;&nbsp;&nbsp;CPF:"/>
+			<p:inputText id="usernameInput" value="#{loginBean.cpf}" required="true" requiredMessage="O campo CPF é obrigatório" style="margin-top:1%;margin-left:3px"/>
+			<br/>
+			<p:outputLabel id="passwordInputLabel" for="passwordInput" value="Senha:"/>
+			<p:password id="passwordInput" value="#{loginBean.senha}" required="true" requiredMessage="O campo Senha é obrigatório" style="margin-top:1%;margin-left:3px"/>
+			<br/>
+			<div style="padding-left:4%;margin-top:2%">
+				<p:commandButton value="Entrar" action="#{loginBean.efetuarLogin}"/>
+				<p:commandButton type="reset" value="Limpar" /> 
+			</div> 
+		</h:form>
+	</div>
+</h:body> 
+</html>
