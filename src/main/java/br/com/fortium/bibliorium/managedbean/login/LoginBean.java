@@ -32,17 +32,14 @@ public class LoginBean extends AbstractManagedBean{
 			return null;
 		}else{
 			getSession().setAttribute(Usuario.AUTENTICADO, tipo);
-			switch(tipo){
-				case ALUNO:
-				case PROFESSOR:
-					return "LEITOR/index.xhtml";
-				case BIBLIOTECARIO:
-					return "BIBLIOTECARIO/index.xhtml";
-				default:
-					addMessage(FacesMessage.SEVERITY_ERROR, "Tipo de usuário inválido.", null);
-					return null;
-			}
+			return getIndexPageForUserType(tipo);
 		}
+	}
+	
+	public String efetuarLogOff(){
+		getSession().setAttribute(Usuario.AUTENTICADO, null);
+		addMessage(FacesMessage.SEVERITY_INFO, "Tchau, Volte Sempre!", null);
+		return "/pages/login.xhtml";
 	}
 	
 	public void exibirMsgAcessoNegado(ComponentSystemEvent event){
@@ -51,6 +48,24 @@ public class LoginBean extends AbstractManagedBean{
 			addMessage(FacesMessage.SEVERITY_ERROR, mensagem, null);
 		}
 		getSession().setAttribute(MENSAGEM_ACESSO_NEGADO, null);
+	}
+	
+	public String redirectToIndex(){
+		TipoUsuario tipo = (TipoUsuario)getSession().getAttribute(Usuario.AUTENTICADO);
+		return getIndexPageForUserType(tipo);
+	}
+	
+	private String getIndexPageForUserType(TipoUsuario tipo){
+		switch(tipo){
+			case ALUNO:
+			case PROFESSOR:
+				return "LEITOR/index.xhtml";
+			case BIBLIOTECARIO:
+				return "BIBLIOTECARIO/index.xhtml";
+			default:
+				addMessage(FacesMessage.SEVERITY_ERROR, "Tipo de usuário inválido.", null);
+				return null;
+		}
 	}
 
 	public String getCpf() {

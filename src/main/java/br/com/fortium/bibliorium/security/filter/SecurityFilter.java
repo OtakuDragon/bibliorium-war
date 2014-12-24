@@ -39,6 +39,8 @@ public class SecurityFilter implements Filter {
 				chain.doFilter(httpRequest, response);
 			}else if(upperUrl.contains("PAGES/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
 				chain.doFilter(httpRequest, response);
+			}else if(upperUrl.contains("PAGES/ALL") && ((tipo == TipoUsuario.BIBLIOTECARIO) || (tipo == TipoUsuario.ALUNO) || (tipo == TipoUsuario.PROFESSOR))){
+				chain.doFilter(httpRequest, response);
 			}else{
 				redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não tem permissão para acessar esta funcionalidade.");
 				return;
@@ -50,7 +52,11 @@ public class SecurityFilter implements Filter {
 	public void destroy() {}
 	
 	private void redirectToLoginWithError(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String errorMessage) throws IOException{
+		//Define a mensagem de erro de acesso ilegal que aparecerá na tela de login
 		httpRequest.getSession().setAttribute(LoginBean.MENSAGEM_ACESSO_NEGADO, errorMessage);
+		//Desloga o usuario.
+		httpRequest.getSession().setAttribute(Usuario.AUTENTICADO, null);
+		//Redireciona para a pagina de login
 		httpResponse.sendRedirect("/bibliorium/pages/login.xhtml");
 	}
 }

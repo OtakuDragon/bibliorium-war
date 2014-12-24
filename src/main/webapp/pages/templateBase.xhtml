@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Bibliorium - Biblioteca da faculdade fortium</title>
+	<style type="text/css" media="screen">
+	<!--
+		body{padding:0;margin:0;border:0;}
+		#img_topo{width:100%;vertical-align: top}
+		#principal{margin:0 auto;width:60%;height:100vh;}
+		#menuHorizontalContainer{border:1px solid #4C311F;height:5vh;background-color: #FF8F45; border-radius: 3px;background: linear-gradient(to bottom, #FF8F45, #FFB788);}
+		#menuVerticalContainer{border:1px solid #4C311F;height:100vh;width:25%;float:left;}
+		#contentContainer{border:1px solid #4C311F;height:100vh;}
+		
+		.linkHorizontal{
+			color: black;
+			font-weight:700;
+			float:left;
+			margin-left:3%;
+			padding-right:2%;
+			border-right:1px solid black;
+		}
+		
+		.linkHorizontal:link {
+			text-decoration: none;
+		}
+
+		.linkHorizontal:visited {
+			text-decoration: none;
+		}
+
+		.linkHorizontal:hover {
+			text-decoration: underline;
+		}
+
+		.linkHorizontal:active {
+			color: white;
+		}
+	-->
+	</style>
+</h:head>
+<h:body>
+	<div id="principal" align="center">
+		<p:graphicImage id="img_topo" library="img" name="topoPlaceHolder.png"/>
+		<div id="menuHorizontalContainer" style="padding-top:1%;">
+			<h:form>
+				<p:commandLink class="linkHorizontal" action="#{loginBean.redirectToIndex}">Pagina Inicial</p:commandLink>
+				<p:commandLink class="linkHorizontal" action="/pages/ALL/meuPerfil.xhtml">Meu Perfil</p:commandLink>
+				<p:commandLink class="linkHorizontal" style="border-right:0;" action="#{loginBean.efetuarLogOff}">Sair</p:commandLink>
+			</h:form>
+		</div>
+		<div id="menuVerticalContainer">
+			<ui:insert name ="MenuVertical"> Espaço para o Menu vertical </ui:insert>
+		</div>
+		<div id="contentContainer">
+			<ui:insert name ="Conteudo"> Espaço para o conteudo da página </ui:insert>
+		</div>
+	</div>
+</h:body>
+</html>
