@@ -29,14 +29,16 @@ public class SecurityFilter implements Filter {
 		
 		TipoUsuario tipo = (TipoUsuario)httpRequest.getSession(true).getAttribute(Usuario.AUTENTICADO);
 		
-		if(tipo == null){
+		if(!upperUrl.contains("PAGES/LEITOR") && !upperUrl.contains("PAGES/BIBLIOTECARIO")){
+			chain.doFilter(httpRequest, response);
+		}else if(tipo == null){
 			redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não está logado no sistema ou a sua sessão expirou.");
 			return;
 		}else{
-			if(upperUrl.contains("1/LEITOR") && (tipo == TipoUsuario.PROFESSOR || tipo == TipoUsuario.ALUNO)){
-				doFilter(httpRequest, response, chain);
-			}else if(upperUrl.contains("1/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
-				doFilter(httpRequest, response, chain);
+			if(upperUrl.contains("PAGES/LEITOR") && (tipo == TipoUsuario.PROFESSOR || tipo == TipoUsuario.ALUNO)){
+				chain.doFilter(httpRequest, response);
+			}else if(upperUrl.contains("PAGES/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
+				chain.doFilter(httpRequest, response);
 			}else{
 				redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não tem permissão para acessar esta funcionalidade.");
 				return;
@@ -49,6 +51,6 @@ public class SecurityFilter implements Filter {
 	
 	private void redirectToLoginWithError(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String errorMessage) throws IOException{
 		httpRequest.getSession().setAttribute(LoginBean.MENSAGEM_ACESSO_NEGADO, errorMessage);
-		httpResponse.sendRedirect("/bibliorium/login.xhtml");
+		httpResponse.sendRedirect("/bibliorium/pages/login.xhtml");
 	}
 }
