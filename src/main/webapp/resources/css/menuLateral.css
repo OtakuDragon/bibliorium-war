@@ -1,0 +1,59 @@
+@CHARSET "ISO-8859-1";
+body{padding:0;margin:0;border:0;}
+
+#menuContainer{
+	border:5px solid #6A97A6;
+	width:78%;
+	margin-top:15%;
+	background-color: #FF8F45;
+	border-radius: 10px;
+	background: linear-gradient(to bottom, #BAEEFF, #DCEFFF);
+}
+.menuItemIcon{
+	width:100%;
+	float:right;
+}
+#menu_table{
+	padding:8%;
+	margin-left:3%;
+}
+
+.iconTD{
+
+}
+
+
+.textTD{
+	width:83%;
+}
+
+#spacingTD{
+	padding-bottom:4%;
+	border-top:1px solid #628896;
+}
+
+tr{
+	border-bottom:1px solid black;
+}
+
+.menuItemText{
+	color: black;
+	font-size: medium;
+	margin-left:5%;
+}
+
+.menuItemText:link {
+	text-decoration: none;
+}
+
+.menuItemText:visited {
+	text-decoration: none;
+}
+
+.menuItemText:hover {
+	text-decoration: underline;
+}
+
+.menuItemText:active {
+	color: white;
+}

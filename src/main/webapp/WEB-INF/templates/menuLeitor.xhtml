@@ -1,0 +1,32 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui">
+
+		<h:outputStylesheet library="css" name="menuLateral.css" />
+		
+		<div id="menuContainer">
+			<h:form>
+				<table id="menu_table">
+					<tr>
+						<td class="iconTD" >
+							<p:graphicImage class="menuItemIcon" library="img" name="busca_livro.png"/>
+						</td>
+						<td class="textTD">
+							<p:commandLink class="menuItemText">Pesquisar livro</p:commandLink>
+						</td>
+					</tr>
+					<tr><td id="spacingTD" colspan="2"/></tr>
+					<tr>
+						<td class="iconTD">
+							<p:graphicImage class="menuItemIcon" library="img" name="hist.png"/>
+						</td>
+						<td class="textTD">
+							<p:commandLink class="menuItemText">Ver Histórico</p:commandLink>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</div>
+</ui:composition>

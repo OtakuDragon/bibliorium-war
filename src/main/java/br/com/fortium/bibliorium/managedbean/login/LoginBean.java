@@ -59,9 +59,9 @@ public class LoginBean extends AbstractManagedBean{
 		switch(tipo){
 			case ALUNO:
 			case PROFESSOR:
-				return "LEITOR/index.xhtml";
+				return "/pages/LEITOR/index.xhtml";
 			case BIBLIOTECARIO:
-				return "BIBLIOTECARIO/index.xhtml";
+				return "/pages/BIBLIOTECARIO/index.xhtml";
 			default:
 				addMessage(FacesMessage.SEVERITY_ERROR, "Tipo de usuário inválido.", null);
 				return null;
