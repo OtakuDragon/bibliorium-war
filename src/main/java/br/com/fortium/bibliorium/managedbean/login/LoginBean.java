@@ -1,20 +1,22 @@
 package br.com.fortium.bibliorium.managedbean.login;
 
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Named;
 
 import br.com.fortium.bibliorium.managedbean.AbstractManagedBean;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
 import br.com.fortium.bibliorium.service.UsuarioService;
 
-@ManagedBean
+@Named
 @RequestScoped
 public class LoginBean extends AbstractManagedBean{
-	
+
+	private static final long serialVersionUID = -345315455106409853L;
+
 	public static final String MENSAGEM_ACESSO_NEGADO = "MensagemAcessoNegado";
 	
 	private String cpf;
