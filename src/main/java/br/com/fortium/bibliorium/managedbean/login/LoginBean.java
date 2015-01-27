@@ -39,7 +39,7 @@ public class LoginBean extends AbstractManagedBean{
 	}
 	
 	public String efetuarLogOff(){
-		getSession().setAttribute(Usuario.AUTENTICADO, null);
+		getSession().invalidate();
 		addMessage(FacesMessage.SEVERITY_INFO, "Tchau, Volte Sempre!", null);
 		return "/pages/login.xhtml";
 	}
