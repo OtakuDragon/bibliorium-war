@@ -3,8 +3,8 @@ body{padding:0;margin:0;border:0;}
 
 #menuContainer{
 	border:5px solid #6A97A6;
-	width:78%;
-	margin-top:15%;
+	width:70%;
+	margin-top:7%;
 	background-color: #FF8F45;
 	border-radius: 10px;
 	background: linear-gradient(to bottom, #BAEEFF, #DCEFFF);
@@ -38,8 +38,10 @@ tr{
 
 .menuItemText{
 	color: black;
-	font-size: medium;
+	font-size: 14px;
 	margin-left:5%;
+	font-weight:190;
+	font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;
 }
 
 .menuItemText:link {

@@ -8,26 +8,30 @@
 <f:event listener="#{loginBean.exibirMsgAcessoNegado}" type="preRenderView" />
 <h:head>
 	<title>Bibliorium - Identifique-se</title>
+	<h:outputStylesheet library="css" name="login.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico"/>
 </h:head> 
 <h:body>
-	<div style="margin:0 auto;" align="center">
-		<p:graphicImage library="img" name="bibliorium_horizontal.svg" width="40%" style="margin-bottom:5%"/>
+	<div id="principal" align="center">
+		<p:graphicImage library="img" name="bibliorium_horizontal.svg" width="40%" id="logoImg"/>
 
 		<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
 	
-		<h:form>
-			<p:outputLabel id="usernameInputLabel" for="usernameInput" value="&nbsp;&nbsp;&nbsp;CPF:"/>
-			<p:inputText id="usernameInput" value="#{loginBean.cpf}" required="true" requiredMessage="O campo CPF é obrigatório" style="margin-top:1%;margin-left:3px"/>
-			<br/>
-			<p:outputLabel id="passwordInputLabel" for="passwordInput" value="Senha:"/>
-			<p:password id="passwordInput" value="#{loginBean.senha}" required="true" requiredMessage="O campo Senha é obrigatório" style="margin-top:1%;margin-left:3px"/>
-			<br/>
-			<div style="padding-left:4%;margin-top:2%">
-				<p:commandButton value="Entrar" action="#{loginBean.efetuarLogin}"/>
-				<p:commandButton type="reset" value="Limpar" /> 
-			</div> 
-		</h:form>
+		<div id="formDiv">
+			<h:form>
+				<p:outputLabel id="usernameInputLabel" for="usernameInput" value="&nbsp;&nbsp;&nbsp;&nbsp;CPF:"/>
+				<p:inputText id="usernameInput" value="#{loginBean.cpf}" size="20" required="true" requiredMessage="O campo CPF é obrigatório" styleClass="inputField"/>
+				<br/>
+				<p:outputLabel id="passwordInputLabel" for="passwordInput" value="Senha:"/>
+				<p:password id="passwordInput" value="#{loginBean.senha}"  size="20" required="true" requiredMessage="O campo Senha é obrigatório" styleClass="inputField"/>
+				<br/>
+				
+				<div id="buttonsDiv">
+					<p:commandButton value="Entrar" action="#{loginBean.efetuarLogin}" style="margin-right:6%;"/>
+					<p:commandButton type="reset" value="Limpar" /> 
+				</div> 
+			</h:form>
+		</div>
 	</div>
 </h:body> 
 </html>

@@ -1,0 +1,22 @@
+@CHARSET "ISO-8859-1";
+#principal{margin:0 auto;}
+#logoImg{margin-bottom:5%}
+#formDiv{
+	padding:2%;
+	border:5px solid #6A97A6;
+	width:15%;margin-top:2%;
+	background-color: #FF8F45;
+	border-radius: 10px;
+	background: linear-gradient(to bottom, #BAEEFF, #DCEFFF);
+}
+
+.inputField{
+	margin-top:1% !important;
+	margin-left:3px !important;
+	margin-bottom:5% !important;
+}
+
+#buttonsDiv{
+	padding-left:1%;
+	margin-top:6%;
+}

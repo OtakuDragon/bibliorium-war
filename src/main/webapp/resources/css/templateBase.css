@@ -3,7 +3,7 @@ body{padding:0;margin:0;border:0;}
 
 #img_topo{width:100%;height:16%;vertical-align: top}
 
-#principal{margin:0 auto;width:50%;height:100vh;}
+#principal{margin:0 auto;width:60%;height:100vh;}
 
 #menuHorizontalContainer{
 	border:1px solid #4C311F;
@@ -31,8 +31,8 @@ body{padding:0;margin:0;border:0;}
 	text-decoration: none;
 }
 
-.linkHorizontal:visited {
-	text-decoration: none;
+.linkHorizontal:focus{
+	outline:0;
 }
 
 .linkHorizontal:hover {
@@ -42,3 +42,4 @@ body{padding:0;margin:0;border:0;}
 .linkHorizontal:active {
 	color: white;
 }
+
