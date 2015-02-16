@@ -59,3 +59,7 @@ tr{
 .menuItemText:active {
 	color: white;
 }
+
+.menuItemText:focus{
+	outline:0;
+}
