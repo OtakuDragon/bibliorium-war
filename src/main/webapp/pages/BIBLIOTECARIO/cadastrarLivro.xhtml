@@ -1,0 +1,25 @@
+<ui:composition template="/WEB-INF/templates/templateBase.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui">
+				
+	<ui:define name="MenuVertical">
+		<ui:include src ="/WEB-INF/templates/menuBibliotecario.xhtml"/>
+	</ui:define>
+	<ui:define name="Conteudo">
+		<div class="TituloConteudoDiv">
+			<span class="TituloConteudoText">Cadastrar Livro</span>
+		</div>
+		
+		<div class="conteudoFormDiv">
+			<h:form>
+				<h:messages/>
+				<h:outputLabel class="conteudoFormLabel" value="Título: ">
+					<h:inputText class="conteudoFormInText" value="" required="true" requiredMessage="O título do livro é obrigatorio." size="40" style="height:20px;" />
+				</h:outputLabel>
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>
