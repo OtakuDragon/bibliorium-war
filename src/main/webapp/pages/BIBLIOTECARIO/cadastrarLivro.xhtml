@@ -3,7 +3,8 @@
 				xmlns:h="http://java.sun.com/jsf/html"
 				xmlns:f="http://java.sun.com/jsf/core"
 				xmlns:ui="http://java.sun.com/jsf/facelets"
-				xmlns:p="http://primefaces.org/ui">
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
 				
 	<ui:define name="MenuVertical">
 		<ui:include src ="/WEB-INF/templates/menuBibliotecario.xhtml"/>
@@ -13,12 +14,88 @@
 			<span class="TituloConteudoText">Cadastrar Livro</span>
 		</div>
 		
-		<div class="conteudoFormDiv">
+		<div class="conteudoFormDiv" style="margin-right:5%;">
 			<h:form>
-				<h:messages/>
-				<h:outputLabel class="conteudoFormLabel" value="Título: ">
-					<h:inputText class="conteudoFormInText" value="" required="true" requiredMessage="O título do livro é obrigatorio." size="40" style="height:20px;" />
-				</h:outputLabel>
+				<table style="width:70%;">
+					<tr>
+						<td align="right" class="conteudoTdMidSpacing">
+							<h:outputLabel class="conteudoFormLabel" value="Título:">
+								<h:inputText id="titulo" title="Título do livro" class="conteudoFormInText" value="" required="true" requiredMessage="O título do livro é obrigatorio." size="40" style="height:20px;" /><br/>
+								<span class="conteudoValidationMessage"><h:message for="titulo"/></span>
+							</h:outputLabel>
+						</td>
+						<td align="right">
+							<h:outputLabel class="conteudoFormLabel" value="Edição:">
+								<h:inputText id="edicao" title="Edição do livro" class="conteudoFormInText" value="" required="true" requiredMessage="A edição do livro é obrigatoria." size="10" style="height:20px;" />
+								<span class="conteudoValidationMessage"><h:message for="edicao"/></span>
+							</h:outputLabel>
+						</td>
+					</tr>
+					<tr></tr>
+					<tr></tr>
+					<tr>
+						<td align="right" class="conteudoTdMidSpacing">
+							<h:outputLabel class="conteudoFormLabel" value="Editora:">
+								<h:inputText id="editora" title="Editora do livro" class="conteudoFormInText" value="" required="true" requiredMessage="A editora do livro é obrigatoria." size="40" style="height:20px;" />
+								<span class="conteudoValidationMessage"><h:message for="editora"/></span>
+							</h:outputLabel>
+						</td>
+						<td align="right">
+							<h:outputLabel class="conteudoFormLabel" value="Categoria: ">
+ 								<h:selectOneMenu id="categoria" title="Categoria do livro" class="conteudoFormInText" value="" required="true" requiredMessage="A categoria do livro é obrigatoria." style="height:20px;">
+		<!--  						<f:selectItems value=""/> -->
+									<f:selectItem itemLabel="Ciência"/>
+								</h:selectOneMenu>
+								<span class="conteudoValidationMessage"><h:message for="categoria"/></span>
+							</h:outputLabel>
+						</td>
+					</tr>
+					<tr></tr>
+					<tr></tr>
+					<tr>
+						<td align="right" class="conteudoTdMidSpacing">
+							<h:outputLabel class="conteudoFormLabel" value="Autores:">
+								<h:inputText id="autores" title="Autores do livro, separados por ponto-e-virgula" class="conteudoFormInText" value="" required="true" requiredMessage="Pelo menos um autor deve ser definido." size="40" style="height:20px;" />
+							</h:outputLabel>
+							<span class="conteudoValidationMessage"><h:message for="autores"/></span>
+						</td>
+						<td align="right">
+							<h:outputLabel class="conteudoFormLabel" value="Num. Páginas: ">
+								<h:inputText id="paginas" title="Numero de páginas do livro" class="conteudoFormInText" value="" required="true" requiredMessage="O numero de páginas do livro é obrigatório." size="5" style="height:20px;width:55px;" />
+								<span class="conteudoValidationMessage"><h:message for="paginas"/></span>
+							</h:outputLabel>
+						</td>
+					</tr>
+					<tr></tr>
+					<tr></tr>
+					<tr>
+						<td align="right" class="conteudoTdMidSpacing">
+							<h:outputLabel class="conteudoFormLabel" value="ISBN:">
+								<h:inputText id="isbn" title="ISBN do livro" class="conteudoFormInText" value="" required="true" requiredMessage="O ISBN do livro é obrigatorio." size="40" style="height:20px;" />
+								<span class="conteudoValidationMessage"><h:message for="isbn"/></span>
+							</h:outputLabel>
+						</td>
+						<td align="right">
+							<h:outputLabel class="conteudoFormLabel" value="Quantidade: ">
+								<h:inputText id="qtd" h5:type="number" title="Quantidade de livros sendo cadastrada" class="conteudoFormInText" value="" required="true" requiredMessage="A quantidade de livros é obrigatoria." size="2" style="height:20px;width:55px;"/>
+								<span class="conteudoValidationMessage"><h:message for="qtd"/></span>
+							</h:outputLabel>
+						</td>
+					</tr>
+					<tr></tr>
+					<tr></tr>
+					<tr>
+						<td align="right" colspan="2">
+							<h:outputLabel class="conteudoFormLabel" value="Foto(Opcional): ">
+								<p:fileUpload title="Foto da capa do livro, no formato jpg" mode="simple" skinSimple="true" allowTypes="\.(jpe?g)" style="width:60%;height:10%;"/>
+							</h:outputLabel>
+						</td>
+					</tr>
+				</table>
+				<div style="margin-top:3%;">
+					<h:commandButton value="Cadastrar"/>
+					<h:commandButton value="Cancelar" h5:type="reset"/>
+				</div>
 			</h:form>
 		</div>
 	</ui:define>
