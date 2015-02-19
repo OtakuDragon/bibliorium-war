@@ -15,19 +15,14 @@
 	font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;
 }
 
-.conteudoTdMidSpacing{
-	padding-right:1%;
-}
-
 .conteudoValidationMessage{
 	font-size:10px;
 	color: red;
-	float:left;
-	margin-left:26%;
+	float:right;
 }
 
 .conteudoBotaoForm{
-	width:23%;
+	width:17%;
 	font-size:14px;
 	font-family: Franklin Gothic Medium,Franklin Gothic,ITC Franklin Gothic,Arial;
 	background-color:lightblue;

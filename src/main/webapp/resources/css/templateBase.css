@@ -16,7 +16,12 @@ body{padding:0;margin:0;border:0;}
 
 #menuVerticalContainer{border:1px solid #4C311F;height:100vh;width:25%;float:left;}
 
-#contentContainer{border:1px solid #4C311F;height:100vh;}
+#contentContainer{
+	border:1px solid #4C311F;
+	height:100vh;
+	width:74.5%;
+	float:right;
+}
 
 .linkHorizontal{
 	color: black;
