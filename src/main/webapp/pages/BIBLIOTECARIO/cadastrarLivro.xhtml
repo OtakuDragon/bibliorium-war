@@ -14,18 +14,18 @@
 			<span class="TituloConteudoText">Cadastrar Livro</span>
 		</div>
 		
-		<div class="conteudoFormDiv" style="margin-right:5%;">
+		<div class="conteudoFormDiv" style="margin-right:12%;">
 			<h:form>
 				<table style="width:70%;">
 					<tr>
 						<td align="right" class="conteudoTdMidSpacing">
-							<h:outputLabel class="conteudoFormLabel" value="Título:">
+							<h:outputLabel class="conteudoFormLabel" value="Título: ">
 								<h:inputText id="titulo" title="Título do livro" class="conteudoFormInText" value="" required="true" requiredMessage="O título do livro é obrigatorio." size="40" style="height:20px;" /><br/>
 								<span class="conteudoValidationMessage"><h:message for="titulo"/></span>
 							</h:outputLabel>
 						</td>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Edição:">
+							<h:outputLabel class="conteudoFormLabel" value="Edição: ">
 								<h:inputText id="edicao" title="Edição do livro" class="conteudoFormInText" value="" required="true" requiredMessage="A edição do livro é obrigatoria." size="10" style="height:20px;" />
 								<span class="conteudoValidationMessage"><h:message for="edicao"/></span>
 							</h:outputLabel>
@@ -35,7 +35,7 @@
 					<tr></tr>
 					<tr>
 						<td align="right" class="conteudoTdMidSpacing">
-							<h:outputLabel class="conteudoFormLabel" value="Editora:">
+							<h:outputLabel class="conteudoFormLabel" value="Editora: ">
 								<h:inputText id="editora" title="Editora do livro" class="conteudoFormInText" value="" required="true" requiredMessage="A editora do livro é obrigatoria." size="40" style="height:20px;" />
 								<span class="conteudoValidationMessage"><h:message for="editora"/></span>
 							</h:outputLabel>
@@ -54,7 +54,7 @@
 					<tr></tr>
 					<tr>
 						<td align="right" class="conteudoTdMidSpacing">
-							<h:outputLabel class="conteudoFormLabel" value="Autores:">
+							<h:outputLabel class="conteudoFormLabel" value="Autores: ">
 								<h:inputText id="autores" title="Autores do livro, separados por ponto-e-virgula" class="conteudoFormInText" value="" required="true" requiredMessage="Pelo menos um autor deve ser definido." size="40" style="height:20px;" />
 							</h:outputLabel>
 							<span class="conteudoValidationMessage"><h:message for="autores"/></span>
@@ -70,7 +70,7 @@
 					<tr></tr>
 					<tr>
 						<td align="right" class="conteudoTdMidSpacing">
-							<h:outputLabel class="conteudoFormLabel" value="ISBN:">
+							<h:outputLabel class="conteudoFormLabel" value="ISBN: ">
 								<h:inputText id="isbn" title="ISBN do livro" class="conteudoFormInText" value="" required="true" requiredMessage="O ISBN do livro é obrigatorio." size="40" style="height:20px;" />
 								<span class="conteudoValidationMessage"><h:message for="isbn"/></span>
 							</h:outputLabel>
@@ -87,14 +87,14 @@
 					<tr>
 						<td align="right" colspan="2">
 							<h:outputLabel class="conteudoFormLabel" value="Foto(Opcional): ">
-								<p:fileUpload title="Foto da capa do livro, no formato jpg" mode="simple" skinSimple="true" allowTypes="\.(jpe?g)" style="width:60%;height:10%;"/>
+								<p:fileUpload title="Foto da capa do livro, no formato jpg" mode="simple" skinSimple="true" allowTypes="\.(jpe?g)" style="width:60%;"/>
 							</h:outputLabel>
 						</td>
 					</tr>
 				</table>
-				<div style="margin-top:3%;">
-					<h:commandButton value="Cadastrar"/>
-					<h:commandButton value="Cancelar" h5:type="reset"/>
+				<div style="margin-top:3%;margin-left:42%;">
+					<h:commandButton value="Cadastrar" style="margin-right:2%;" class="conteudoBotaoForm"/>
+					<h:commandButton value="Cancelar" h5:type="reset" class="conteudoBotaoForm"/>
 				</div>
 			</h:form>
 		</div>

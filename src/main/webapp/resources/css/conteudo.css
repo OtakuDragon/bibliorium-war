@@ -16,7 +16,7 @@
 }
 
 .conteudoTdMidSpacing{
-	padding-right:4%;
+	padding-right:1%;
 }
 
 .conteudoValidationMessage{
@@ -24,4 +24,13 @@
 	color: red;
 	float:left;
 	margin-left:26%;
+}
+
+.conteudoBotaoForm{
+	width:23%;
+	font-size:14px;
+	font-family: Franklin Gothic Medium,Franklin Gothic,ITC Franklin Gothic,Arial;
+	background-color:lightblue;
+	border:2px solid #6D90A6;
+	border-radius:3px;
 }
