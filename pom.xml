@@ -7,6 +7,15 @@
   <name>bibliorium-war</name>
   <description>Aplicação web do projeto Bibliorium</description>
 
+	<repositories>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<!-- Dependencias internas -->
 		<dependency>

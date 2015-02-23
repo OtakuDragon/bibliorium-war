@@ -19,11 +19,13 @@
 	
 		<div id="formDiv">
 			<h:form>
-				<p:outputLabel id="usernameInputLabel" for="usernameInput" value="&nbsp;&nbsp;&nbsp;&nbsp;CPF:"/>
-				<p:inputText id="usernameInput" value="#{loginBean.cpf}" size="20" required="true" requiredMessage="O campo CPF é obrigatório" styleClass="inputField"/>
+				<p:outputLabel id="usernameInputLabel" value="CPF">
+					<p:inputText id="usernameInput" value="#{loginBean.cpf}" required="true" requiredMessage="O campo CPF é obrigatório" styleClass="inputField"/>
+				</p:outputLabel>
 				<br/>
-				<p:outputLabel id="passwordInputLabel" for="passwordInput" value="Senha:"/>
-				<p:password id="passwordInput" value="#{loginBean.senha}"  size="20" required="true" requiredMessage="O campo Senha é obrigatório" styleClass="inputField"/>
+				<p:outputLabel id="passwordInputLabel" value="Senha">
+					<p:password id="passwordInput" value="#{loginBean.senha}" required="true" requiredMessage="O campo Senha é obrigatório" styleClass="inputField"/>
+				</p:outputLabel>
 				<br/>
 				
 				<div id="buttonsDiv">
