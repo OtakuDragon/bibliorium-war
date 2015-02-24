@@ -43,8 +43,7 @@
 						<td align="right">
 							<h:outputLabel class="conteudoFormLabel" value="Categoria: ">
  								<h:selectOneMenu id="categoria" title="Categoria do livro" class="conteudoFormInText" value="" required="true" requiredMessage="A categoria do livro é obrigatoria." style="height:20px;">
-		<!--  						<f:selectItems value=""/> -->
-									<f:selectItem itemLabel="Ciência"/>
+		 						<f:selectItems value="#{cadastrarLivroMB.opcoesCategorias}"/>
 								</h:selectOneMenu><br/>
 								<span class="conteudoValidationMessage"><h:message for="categoria"/></span>
 							</h:outputLabel>

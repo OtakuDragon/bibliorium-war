@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"> 
       
-<f:event listener="#{loginBean.exibirMsgAcessoNegado}" type="preRenderView" />
+<f:event listener="#{loginMB.exibirMsgAcessoNegado}" type="preRenderView" />
 <h:head>
 	<title>Bibliorium - Identifique-se</title>
 	<h:outputStylesheet library="css" name="login.css" />
@@ -20,16 +20,16 @@
 		<div id="formDiv">
 			<h:form>
 				<p:outputLabel id="usernameInputLabel" value="CPF">
-					<p:inputText id="usernameInput" value="#{loginBean.cpf}" required="true" requiredMessage="O campo CPF é obrigatório" styleClass="inputField"/>
+					<p:inputText id="usernameInput" value="#{loginMB.cpf}" required="true" requiredMessage="O campo CPF é obrigatório" styleClass="inputField"/>
 				</p:outputLabel>
 				<br/>
 				<p:outputLabel id="passwordInputLabel" value="Senha">
-					<p:password id="passwordInput" value="#{loginBean.senha}" required="true" requiredMessage="O campo Senha é obrigatório" styleClass="inputField"/>
+					<p:password id="passwordInput" value="#{loginMB.senha}" required="true" requiredMessage="O campo Senha é obrigatório" styleClass="inputField"/>
 				</p:outputLabel>
 				<br/>
 				
 				<div id="buttonsDiv">
-					<p:commandButton value="Entrar" action="#{loginBean.efetuarLogin}" style="margin-right:6%;"/>
+					<p:commandButton value="Entrar" action="#{loginMB.efetuarLogin}" style="margin-right:6%;"/>
 					<p:commandButton type="reset" value="Limpar" /> 
 				</div> 
 			</h:form>

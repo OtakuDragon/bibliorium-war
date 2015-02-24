@@ -11,7 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import br.com.fortium.bibliorium.managedbean.login.LoginBean;
+import br.com.fortium.bibliorium.managedbean.LoginMB;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
 
@@ -53,7 +53,7 @@ public class SecurityFilter implements Filter {
 	
 	private void redirectToLoginWithError(HttpServletRequest httpRequest, HttpServletResponse httpResponse, String errorMessage) throws IOException{
 		//Define a mensagem de erro de acesso ilegal que aparecerá na tela de login
-		httpRequest.getSession().setAttribute(LoginBean.MENSAGEM_ACESSO_NEGADO, errorMessage);
+		httpRequest.getSession().setAttribute(LoginMB.MENSAGEM_ACESSO_NEGADO, errorMessage);
 		//Desloga o usuario.
 		httpRequest.getSession().setAttribute(Usuario.AUTENTICADO, null);
 		//Redireciona para a pagina de login
