@@ -1,6 +1,5 @@
 package br.com.fortium.bibliorium.managedbean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +9,7 @@ import javax.inject.Named;
 
 import org.primefaces.model.UploadedFile;
 
+import br.com.fortium.bibliorium.enumeration.DialogType;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.service.CategoriaService;
 
@@ -28,7 +28,7 @@ public class CadastrarLivroMB extends AbstractManagedBean {
 	private String isbn;
 	private String edicao;
 	private String categoria;
-	private List<String> opcoesCategorias;
+	private List<Categoria> categorias;
 	private Integer numPaginas;
 	private Integer quantidade;
 	private UploadedFile foto;
@@ -39,13 +39,12 @@ public class CadastrarLivroMB extends AbstractManagedBean {
 	}
 	
 	private void initCategorias(){
-		List<Categoria> categorias =  categoriaService.buscarCategorias();
-		
-		opcoesCategorias = new ArrayList<String>();
-		
-		for (Categoria categoria : categorias) {
-			opcoesCategorias.add(categoria.getNome());
-		}
+		categorias =  categoriaService.buscarCategorias();
+	}
+	
+	public void cadastrarLivro(){
+		//TODO Cadastrar Livro
+		getDialogUtil().showDialog(DialogType.SUCCESS);
 	}
 	
 	public String getTitulo() {
@@ -84,12 +83,6 @@ public class CadastrarLivroMB extends AbstractManagedBean {
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
 	}
-	public List<String> getOpcoesCategorias() {
-		return opcoesCategorias;
-	}
-	public void setOpcoesCategorias(List<String> opcoesCategorias) {
-		this.opcoesCategorias = opcoesCategorias;
-	}
 	public Integer getNumPaginas() {
 		return numPaginas;
 	}
@@ -107,5 +100,13 @@ public class CadastrarLivroMB extends AbstractManagedBean {
 	}
 	public void setFoto(UploadedFile foto) {
 		this.foto = foto;
+	}
+
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
 	}
 }

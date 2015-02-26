@@ -76,7 +76,7 @@
 							<h:outputLabel class="conteudoFormLabel" value="Categoria: ">
  								<h:selectOneMenu id="categoria" title="Categoria do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.quantidade}" required="true" requiredMessage="A categoria do livro é obrigatoria." style="height:20px;">
 		 							<f:selectItem itemLabel="Selecione uma categoria.." itemValue="" />
-		 							<f:selectItems value="#{cadastrarLivroMB.opcoesCategorias}"/>
+		 							<f:selectItems var="opcao" itemLabel="#{opcao.nome}" itemValue="#{opcao.idCategoria}" value="#{cadastrarLivroMB.categorias}"/>
 								</h:selectOneMenu><br/>
 								<span class="conteudoValidationMessage"><h:message for="categoria"/></span>
 							</h:outputLabel>
@@ -94,7 +94,7 @@
 					</tr>
 				</table>
 				<div style="margin-top:3%;">
-					<h:commandButton value="Cadastrar" style="margin-right:2%;" class="conteudoBotaoForm"/>
+					<h:commandButton value="Cadastrar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="conteudoBotaoForm"/>
 					<h:commandButton value="Cancelar" h5:type="reset" class="conteudoBotaoForm"/>
 				</div>
 			</h:form>

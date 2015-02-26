@@ -1,0 +1,40 @@
+/*Dialog*/
+.ui-dialog-title{
+	font-size: 14px !important;
+	color:white !important;
+}
+
+.ui-dialog .ui-dialog-titlebar{
+	padding:0 !important;
+	padding-left:2% !important;
+	padding-bottom:1% !important;
+	position:relative;
+	border:0px;
+	background-color: #176FBD !important;
+	background:none;
+}
+
+.ui-widget-overlay{
+	background:none !important;
+	background-color:black !important;
+}
+
+.ui-dialog-content{
+	background-color:#F7F7F7 !important;
+}
+
+.dialogIcon{
+	float:left;
+	width:11%;
+}
+
+.dialogButton{
+	float:right;
+}
+
+#dialogMessage{
+	margin-left:11%;
+	padding-right:11%;
+	padding-top:2%;
+	font-size:19px;
+}

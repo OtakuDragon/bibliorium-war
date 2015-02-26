@@ -23,8 +23,8 @@
 
 .conteudoBotaoForm{
 	width:17%;
-	font-size:14px;
-	font-family: Franklin Gothic Medium,Franklin Gothic,ITC Franklin Gothic,Arial;
+	font-size:14px !important;
+	font-family: Franklin Gothic Medium,Franklin Gothic,ITC Franklin Gothic,Arial !important;
 	background-color:lightblue;
 	border:2px solid #6D90A6;
 	border-radius:3px;
