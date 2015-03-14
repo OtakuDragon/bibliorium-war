@@ -13,21 +13,68 @@
 		<div class="TituloConteudoDiv">
 			<span class="TituloConteudoText">Cadastrar Livro</span>
 		</div>
-		
 		<div class="conteudoFormDiv">
 			<h:form enctype="multipart/form-data">
-				<table>
+			<div class="formConteudoRow" align="center">
+			<div class="formConteudoElement-left">
+				<h:outputLabel styleClass="conteudoFormLabel" value="Título: " title="Título do livro">
+					<h:inputText id="titulo2"
+								 styleClass="conteudoFormInText-big"
+								 value="#{cadastrarLivroMB.titulo}"
+								 required="true"
+								 requiredMessage="O título do livro é obrigatorio."
+								 validatorMessage="O título do livro deve ter no minimo 5 letras e não pode começar com número."
+								 maxlength="255" >
+						<f:validateRegex pattern="(^\D{1}[\w|\s]{4,255})" />
+					</h:inputText><br/>
+					<span class="conteudoValidationMessage">
+						<h:message for="titulo2"/>
+					</span>
+				</h:outputLabel>
+			</div>
+			<div class="formConteudoElement-left">
+				<h:outputLabel styleClass="conteudoFormLabel" value="Edição: " title="Edição do livro">
+					<h:inputText id="edicao2"
+								 styleClass="conteudoFormInText-medium"
+								 value="#{cadastrarLivroMB.edicao}"
+								 required="true"
+								 requiredMessage="A edição do livro é obrigatoria."
+								 maxlength="10" /><br/>
+					<span class="conteudoValidationMessage">
+						<h:message for="edicao2"/>
+					</span>
+				</h:outputLabel>
+			</div>
+		</div>
+				<table style="width:100%;padding:5%;">
 					<tr>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Título: ">
-								<h:inputText id="titulo" title="Título do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.titulo}" required="true" requiredMessage="O título do livro é obrigatorio." size="40" style="height:20px;" /><br/>
-								<span class="conteudoValidationMessage"><h:message for="titulo"/></span>
+							<h:outputLabel styleClass="conteudoFormLabel" value="Título: " title="Título do livro">
+								<h:inputText id="titulo"
+											 styleClass="conteudoFormInText-big"
+											 value="#{cadastrarLivroMB.titulo}"
+											 required="true"
+											 requiredMessage="O título do livro é obrigatorio."
+											 validatorMessage="O título do livro deve ter no minimo 5 letras e não pode começar com número."
+											 maxlength="255" >
+									<f:validateRegex pattern="(^\D{1}[\w|\s]{4,255})" />
+								</h:inputText><br/>
+								<span class="conteudoValidationMessage">
+									<h:message for="titulo"/>
+								</span>
 							</h:outputLabel>
 						</td>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Edição: ">
-								<h:inputText id="edicao" title="Edição do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.edicao}" required="true" requiredMessage="A edição do livro é obrigatoria." size="10" style="height:20px;" /><br/>
-								<span class="conteudoValidationMessage"><h:message for="edicao"/></span>
+							<h:outputLabel styleClass="conteudoFormLabel" value="Edição: " title="Edição do livro">
+								<h:inputText id="edicao"
+											 styleClass="conteudoFormInText-medium"
+											 value="#{cadastrarLivroMB.edicao}"
+											 required="true"
+											 requiredMessage="A edição do livro é obrigatoria."
+											 maxlength="10" /><br/>
+								<span class="conteudoValidationMessage">
+									<h:message for="edicao"/>
+								</span>
 							</h:outputLabel>
 						</td>
 					</tr>
@@ -35,15 +82,34 @@
 					<tr></tr>
 					<tr>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Editora: ">
-								<h:inputText id="editora" title="Editora do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.editora}" required="true" requiredMessage="A editora do livro é obrigatoria." size="40" style="height:20px;" /><br/>
-								<span class="conteudoValidationMessage"><h:message for="editora"/></span>
+							<h:outputLabel styleClass="conteudoFormLabel" value="Editora: " title="Editora do livro">
+								<h:inputText id="editora"
+											 styleClass="conteudoFormInText-big"
+											 value="#{cadastrarLivroMB.editora}" required="true"
+											 requiredMessage="A editora do livro é obrigatoria."
+											 validatorMessage="A editora do livro deve ter no minimo 5 letras e não pode começar com número."
+											 maxlength="255">
+									<f:validateRegex pattern="(^\D{1}[\w|\s]{4,255})" />
+								</h:inputText><br/>
+								<span class="conteudoValidationMessage">
+									<h:message for="editora"/>
+								</span>
 							</h:outputLabel>
 						</td>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Num. Páginas: ">
-								<h:inputText id="paginas" title="Numero de páginas do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.numPaginas}" required="true" requiredMessage="O numero de páginas do livro é obrigatório." size="5" style="height:20px;width:55px;" /><br/>
-								<span class="conteudoValidationMessage"><h:message for="paginas"/></span>
+							<h:outputLabel styleClass="conteudoFormLabel" value="Num. Páginas: " title="Numero de páginas do livro">
+								<h:inputText id="paginas"
+											 styleClass="conteudoFormInText-small"
+											 value="#{cadastrarLivroMB.numPaginas}"
+											 required="true"
+											 requiredMessage="O numero de páginas do livro é obrigatório."
+											 validatorMessage="O número de paginas do livro deve ser um número maior do que 0, limitado a 5 digitos."
+											 maxlength="5" >
+									<f:validateRegex pattern="[1-99999]" />
+								</h:inputText><br/>
+								<span class="conteudoValidationMessage">
+									<h:message for="paginas"/>
+								</span>
 							</h:outputLabel>
 						</td>
 					</tr>
@@ -51,15 +117,36 @@
 					<tr></tr>
 					<tr>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Autores: ">
-								<h:inputText id="autores" title="Autores do livro, separados por ponto-e-virgula" class="conteudoFormInText" value="#{cadastrarLivroMB.autores}" required="true" requiredMessage="Pelo menos um autor deve ser definido." size="40" style="height:20px;" /><br/>
+							<h:outputLabel styleClass="conteudoFormLabel" value="Autores: " title="Nome dos Autores do livro, separados por virgula">
+								<h:inputText id="autores"
+											 styleClass="conteudoFormInText-big"
+											 value="#{cadastrarLivroMB.autores}"
+											 required="true"
+											 requiredMessage="Pelo menos um autor deve ser definido."
+											 validatorMessage="O(s) nome(s) do(s) autor(res) deve ter no minimo 5 letras e não pode começar com número."
+											 maxlength="255" >
+									<f:validateRegex pattern="(^\D{1}[\w|\s]{4,255})" />
+								</h:inputText><br/>
 							</h:outputLabel>
-							<span class="conteudoValidationMessage"><h:message for="autores"/></span>
+							<span class="conteudoValidationMessage">
+								<h:message for="autores"/>
+							</span>
 						</td>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Quantidade: ">
-								<h:inputText id="qtd" h5:type="number" title="Quantidade de livros sendo cadastrada" class="conteudoFormInText" value="#{cadastrarLivroMB.quantidade}" required="true" requiredMessage="A quantidade de livros é obrigatoria." size="2" style="height:20px;width:55px;"/><br/>
-								<span class="conteudoValidationMessage"><h:message for="qtd"/></span>
+							<h:outputLabel styleClass="conteudoFormLabel" value="Quantidade: " title="Quantidade de livros sendo cadastrada">
+								<h:inputText id="qtd"
+											 h5:type="number"
+											 styleClass="conteudoFormInText-small"
+											 value="#{cadastrarLivroMB.quantidade}"
+											 required="true"
+											 requiredMessage="A quantidade de livros é obrigatoria."
+											 validatorMessage="A quantidade de livros deve ser um número maior do que 0, limitado a 3 digitos."
+											 maxlength="2" >
+									<f:validateRegex pattern="[1-999]" />
+								</h:inputText><br/>
+								<span class="conteudoValidationMessage">
+									<h:message for="qtd"/>
+								</span>
 							</h:outputLabel>
 						</td>
 					</tr>
@@ -67,15 +154,31 @@
 					<tr></tr>
 					<tr>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="ISBN: ">
-								<h:inputText id="isbn" title="ISBN do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.isbn}" required="true" requiredMessage="O ISBN do livro é obrigatorio." size="40" style="height:20px;" /><br/>
-								<span class="conteudoValidationMessage"><h:message for="isbn"/></span>
+							<h:outputLabel styleClass="conteudoFormLabel" value="ISBN: ">
+								<h:inputText id="isbn"
+											 title="ISBN do livro"
+											 styleClass="conteudoFormInText-big"
+											 value="#{cadastrarLivroMB.isbn}"
+											 required="true"
+											 requiredMessage="O ISBN do livro é obrigatorio."
+											 validatorMessage="O código ISBN deve ser um número de 10 ou 13 Digítos"
+											 maxlength="13">
+									<f:validateRegex pattern="(\d{10}|\d{13})"></f:validateRegex>
+								</h:inputText><br/>
+								<span class="conteudoValidationMessage">
+									<h:message for="isbn"/>
+								</span>
 							</h:outputLabel>
 						</td>
 						<td align="right">
-							<h:outputLabel class="conteudoFormLabel" value="Categoria: ">
- 								<h:selectOneMenu id="categoria" title="Categoria do livro" class="conteudoFormInText" value="#{cadastrarLivroMB.quantidade}" required="true" requiredMessage="A categoria do livro é obrigatoria." style="height:20px;">
-		 							<f:selectItem itemLabel="Selecione uma categoria.." itemValue="" />
+							<h:outputLabel styleClass="conteudoFormLabel" value="Categoria: ">
+ 								<h:selectOneMenu id="categoria"
+ 												 styleClass="conteudoFormSelectOneMenu"
+ 												 title="Categoria do livro"
+ 												 value="#{cadastrarLivroMB.quantidade}"
+ 												 required="true" 
+ 												 requiredMessage="A categoria do livro é obrigatoria." >
+		 							<f:selectItem itemLabel="Selecione.." itemValue="#{null}" />
 		 							<f:selectItems var="opcao" itemLabel="#{opcao.nome}" itemValue="#{opcao.idCategoria}" value="#{cadastrarLivroMB.categorias}"/>
 								</h:selectOneMenu><br/>
 								<span class="conteudoValidationMessage"><h:message for="categoria"/></span>
