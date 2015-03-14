@@ -68,4 +68,5 @@ local.properties
 .cproject
  
 # PDT-specific
-.buildpath
+.buildpath/.tern-project
+/.tern-project

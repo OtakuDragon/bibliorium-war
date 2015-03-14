@@ -13,13 +13,26 @@
 	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico"/>
 </h:head>
 <h:body>
+	<h:outputStylesheet library="css" name="dialog.css" />
+	<h:form>
+		<p:dialog id="returnDialog" modal="true" draggable="false" resizable="false" closable="false" widgetVar="dialog" header="#{sessionScope.dialogHeader}" width="40%" >
+			<div>
+				<h:graphicImage class="dialogIcon" library="img" name="#{sessionScope.dialogIcon.concat('.png')}" />
+				<div id="dialogMessage" align="center">
+					<h:outputText value="#{sessionScope.dialogMesssage}" />
+				</div>
+				<br/>
+				<h:commandButton class="conteudoBotaoForm dialogButton" value="OK" onclick="PF('dialog').hide()" />
+			</div>
+		</p:dialog>
+	</h:form>
 	<div id="principal" align="center">
 		<p:graphicImage id="img_topo" library="img" name="topo.jpg"/>
 		<div id="menuHorizontalContainer" style="padding-top:1%;">
 			<h:form>
-				<p:commandLink class="linkHorizontal" action="#{loginBean.redirectToIndex}">Pagina Inicial</p:commandLink>
+				<p:commandLink class="linkHorizontal" action="#{loginMB.redirectToIndex}">Pagina Inicial</p:commandLink>
 				<p:commandLink class="linkHorizontal" action="/pages/ALL/meuPerfil.xhtml">Meu Perfil</p:commandLink>
-				<p:commandLink class="linkHorizontal" style="border-right:0;" action="#{loginBean.efetuarLogOff}">Sair</p:commandLink>
+				<p:commandLink class="linkHorizontal" style="border-right:0;" action="#{loginMB.efetuarLogOff}">Sair</p:commandLink>
 			</h:form>
 		</div>
 		<div id="menuVerticalContainer">
