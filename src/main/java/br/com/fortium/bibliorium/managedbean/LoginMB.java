@@ -12,7 +12,7 @@ import br.com.fortium.bibliorium.service.UsuarioService;
 
 @Named
 @RequestScoped
-public class LoginMB extends AbstractManagedBean{
+public class LoginMB extends AbstractManagedBean<LoginMB>{
 
 	private static final long serialVersionUID = -345315455106409853L;
 

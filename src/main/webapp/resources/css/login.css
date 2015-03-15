@@ -8,6 +8,7 @@
 	background-color: #FF8F45;
 	border-radius: 10px;
 	background: linear-gradient(to bottom, #BAEEFF, #DCEFFF);
+	max-width:230px;
 }
 
 .inputField{

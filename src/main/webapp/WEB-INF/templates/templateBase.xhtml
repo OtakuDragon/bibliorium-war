@@ -10,19 +10,19 @@
 	<h:outputStylesheet library="css" name="templateBase.css" />
 	<h:outputStylesheet library="css" name="menuLateral.css" />
 	<h:outputStylesheet library="css" name="conteudo.css" />
+	<h:outputStylesheet library="css" name="dialog.css" />
 	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico"/>
 </h:head>
 <h:body>
-	<h:outputStylesheet library="css" name="dialog.css" />
 	<h:form>
 		<p:dialog id="returnDialog" modal="true" draggable="false" resizable="false" closable="false" widgetVar="dialog" header="#{sessionScope.dialogHeader}" width="40%" >
-			<div>
+			<div style="padding:1%;">
 				<h:graphicImage class="dialogIcon" library="img" name="#{sessionScope.dialogIcon.concat('.png')}" />
 				<div id="dialogMessage" align="center">
 					<h:outputText value="#{sessionScope.dialogMesssage}" />
 				</div>
 				<br/>
-				<h:commandButton class="conteudoBotaoForm dialogButton" value="OK" onclick="PF('dialog').hide()" />
+				<h:commandButton class="botao dialogButton" value="OK" onclick="PF('dialog').hide()" />
 			</div>
 		</p:dialog>
 	</h:form>

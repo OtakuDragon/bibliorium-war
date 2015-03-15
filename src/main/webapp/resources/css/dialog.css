@@ -25,11 +25,12 @@
 
 .dialogIcon{
 	float:left;
-	width:11%;
+	width:10%;
 }
 
 .dialogButton{
 	float:right;
+	margin-top:1%;
 }
 
 #dialogMessage{

@@ -11,90 +11,52 @@ import org.primefaces.model.UploadedFile;
 
 import br.com.fortium.bibliorium.enumeration.DialogType;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
+import br.com.fortium.bibliorium.persistence.entity.Livro;
 import br.com.fortium.bibliorium.service.CategoriaService;
+import br.com.fortium.bibliorium.validation.CadastroLivroValidator;
+import br.com.fortium.bibliorium.validation.exception.ValidationException;
 
 @Named
 @RequestScoped
-public class CadastrarLivroMB extends AbstractManagedBean {
-	
+public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
+
 	private static final long serialVersionUID = 9169829006153798046L;
 
 	@EJB
 	private CategoriaService categoriaService; 
 	
-	private String titulo;
-	private String editora;
-	private String autores;
-	private String isbn;
-	private String edicao;
-	private String categoria;
-	private List<Categoria> categorias;
-	private Integer numPaginas;
-	private Integer quantidade;
+	private Livro livro;
+	private String quantidade;
 	private UploadedFile foto;
+	
+	private List<Categoria> categorias;
+	
+	public CadastrarLivroMB() {
+		super(CadastrarLivroMB.class, new CadastroLivroValidator());
+	}
 	
 	@PostConstruct
 	public void init(){
 		initCategorias();
+		setLivro(new Livro());
 	}
 	
 	private void initCategorias(){
 		categorias =  categoriaService.buscarCategorias();
+		categorias.add(new Categoria(0, "a"));
 	}
 	
 	public void cadastrarLivro(){
-		//TODO Cadastrar Livro
-		getDialogUtil().showDialog(DialogType.SUCCESS);
+		try{
+			validate();
+			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
+		}catch(ValidationException e){
+			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
+			getLogger().error(e);
+		}
+		
 	}
-	
-	public String getTitulo() {
-		return titulo;
-	}
-	public void setTitulo(String titulo) {
-		this.titulo = titulo;
-	}
-	public String getEditora() {
-		return editora;
-	}
-	public void setEditora(String editora) {
-		this.editora = editora;
-	}
-	public String getAutores() {
-		return autores;
-	}
-	public void setAutores(String autores) {
-		this.autores = autores;
-	}
-	public String getIsbn() {
-		return isbn;
-	}
-	public void setIsbn(String isbn) {
-		this.isbn = isbn;
-	}
-	public String getEdicao() {
-		return edicao;
-	}
-	public void setEdicao(String edicao) {
-		this.edicao = edicao;
-	}
-	public String getCategoria() {
-		return categoria;
-	}
-	public void setCategoria(String categoria) {
-		this.categoria = categoria;
-	}
-	public Integer getNumPaginas() {
-		return numPaginas;
-	}
-	public void setNumPaginas(Integer numPaginas) {
-		this.numPaginas = numPaginas;
-	}
-	public Integer getQuantidade() {
-		return quantidade;
-	}
-	public void setQuantidade(Integer quantidade) {
-		this.quantidade = quantidade;
-	}
+
 	public UploadedFile getFoto() {
 		return foto;
 	}
@@ -108,5 +70,21 @@ public class CadastrarLivroMB extends AbstractManagedBean {
 
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
+	}
+
+	public String getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(String quantidade) {
+		this.quantidade = quantidade;
+	}
+
+	public Livro getLivro() {
+		return livro;
+	}
+
+	public void setLivro(Livro livro) {
+		this.livro = livro;
 	}
 }
