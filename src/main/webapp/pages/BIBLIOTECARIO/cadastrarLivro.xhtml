@@ -20,7 +20,7 @@
 					<h:outputLabel styleClass="label width-20" value="Título: " title="Título do livro" for="titulo"/>
 					<h:inputText id="titulo"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.livro.titulo}"
+								 value="#{cadastrarLivroMB.dataFormatter.titulo}"
 								 required="true"
 								 requiredMessage="O título do livro é obrigatorio."
 								 validatorMessage="Titulo inválido (Min. 5 Letras)."
@@ -35,7 +35,7 @@
 					<h:outputLabel styleClass="label width-62" value="Edição: " title="Edição do livro" for="edicao"/>
 					<h:inputText id="edicao"
 								 styleClass="input-text width-35"
-								 value="#{cadastrarLivroMB.livro.edicao}"
+								 value="#{cadastrarLivroMB.dataFormatter.edicao}"
 								 required="true"
 								 requiredMessage="A edição do livro é obrigatoria."
 								 maxlength="10" />
@@ -49,7 +49,7 @@
 					<h:outputLabel styleClass="label width-20" value="Editora: " title="Editora do livro" for="editora" />
 					<h:inputText id="editora"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.livro.editora}" required="true"
+								 value="#{cadastrarLivroMB.dataFormatter.editora}" required="true"
 								 requiredMessage="A editora do livro é obrigatoria."
 								 validatorMessage="Editora Inválida (Min. 3 Letras)."
 								 maxlength="255">
@@ -63,7 +63,7 @@
 					<h:outputLabel styleClass="label width-77" value="Num. Páginas: " title="Numero de páginas do livro" for="paginas"/>
 					<h:inputText id="paginas"
 								 styleClass="input-text width-20"
-								 value="#{cadastrarLivroMB.livro.numPaginas}"
+								 value="#{cadastrarLivroMB.dataFormatter.numPaginas}"
 								 required="true"
 								 requiredMessage="O numero de páginas do livro é obrigatório."
 								 validatorMessage="Número de páginas inválido, deve ser positivo."
@@ -80,7 +80,7 @@
 					<h:outputLabel styleClass="label width-20" value="Autores: " title="Nome dos Autores do livro, separados por virgula" for="autores"/>
 					<h:inputText id="autores"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.livro.autores}"
+								 value="#{cadastrarLivroMB.dataFormatter.autores}"
 								 required="true"
 								 requiredMessage="Pelo menos um autor deve ser definido."
 								 validatorMessage="Autores inválidos (Min. 3 Letras)."
@@ -96,7 +96,7 @@
 						<h:inputText id="qtd"
 									 h5:type="number"
 									 styleClass="input-text width-20"
-									 value="#{cadastrarLivroMB.quantidade}"
+									 value="#{cadastrarLivroMB.dataFormatter.quantidade}"
 									 required="true"
 									 requiredMessage="A quantidade de livros é obrigatoria."
 									 validatorMessage="Quantidade inválida, deve ser positiva."
@@ -114,7 +114,7 @@
 					<h:inputText id="isbn"
 								 title="ISBN do livro"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.livro.isbn}"
+								 value="#{cadastrarLivroMB.dataFormatter.isbn}"
 								 required="true"
 								 requiredMessage="O ISBN do livro é obrigatorio."
 								 validatorMessage="O código ISBN deve ser um número de 10 ou 13 Digítos"
@@ -130,7 +130,7 @@
 					<h:selectOneMenu id="categoria"
 									 styleClass="select"
 									 title="Categoria do livro"
-									 value="#{cadastrarLivroMB.livro.categoria.idCategoria}"
+									 value="#{cadastrarLivroMB.dataFormatter.categoria}"
 									 required="true" 
 									 requiredMessage="A categoria do livro é obrigatoria." >
 						<f:selectItem itemLabel="Selecione.." itemValue="#{null}" />
@@ -147,7 +147,7 @@
 								  title="Foto da capa do livro, no formato jpg"
 								  mode="simple" 
 								  skinSimple="true" 
-								  value="#{cadastrarLivroMB.foto}" 
+								  value="#{cadastrarLivroMB.dataFormatter.foto}" 
 								  allowTypes="\.jp(g|eg)" 
 								  sizeLimit="1048576" 
 								  styleClass="width-40 spacing-top-2" 

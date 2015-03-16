@@ -1,5 +1,6 @@
 package br.com.fortium.bibliorium.managedbean;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,10 +10,12 @@ import javax.inject.Named;
 
 import org.primefaces.model.UploadedFile;
 
+import br.com.fortium.bibliorium.data.formatter.view.CadastrarLivroDataFormatter;
 import br.com.fortium.bibliorium.enumeration.DialogType;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
-import br.com.fortium.bibliorium.persistence.entity.Livro;
+import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.service.CategoriaService;
+import br.com.fortium.bibliorium.service.CopiaService;
 import br.com.fortium.bibliorium.validation.CadastroLivroValidator;
 import br.com.fortium.bibliorium.validation.exception.ValidationException;
 
@@ -24,10 +27,10 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 
 	@EJB
 	private CategoriaService categoriaService; 
+	@EJB
+	private CopiaService copiaService; 
 	
-	private Livro livro;
-	private String quantidade;
-	private UploadedFile foto;
+	private CadastrarLivroDataFormatter dataFormatter;
 	
 	private List<Categoria> categorias;
 	
@@ -38,32 +41,35 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 	@PostConstruct
 	public void init(){
 		initCategorias();
-		setLivro(new Livro());
+		dataFormatter = new CadastrarLivroDataFormatter(categoriaService);
 	}
 	
 	private void initCategorias(){
 		categorias =  categoriaService.buscarCategorias();
-		categorias.add(new Categoria(0, "a"));
 	}
 	
-	public void cadastrarLivro(){
+	public void cadastrarLivro() throws Exception{
 		try{
 			validate();
+			List<Copia> copias = dataFormatter.getFormattedData();
+			saveFoto(dataFormatter.getFoto());
+			copiaService.cadastrarCopias(copias);
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
-		}catch(ValidationException e){
+		}catch(ValidationException | IOException e){
 			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
 			getLogger().error(e);
 		}
 		
 	}
 
-	public UploadedFile getFoto() {
-		return foto;
+	private void saveFoto(UploadedFile foto) throws Exception{
+		String fileName = foto.getFileName();
+		if(!fileName.isEmpty()){
+			//Definir um folder padrão
+			foto.write("D:\\Users\\Otaku_Dragon\\Desktop\\Bibliorium\\a.png");
+		}
 	}
-	public void setFoto(UploadedFile foto) {
-		this.foto = foto;
-	}
-
+	
 	public List<Categoria> getCategorias() {
 		return categorias;
 	}
@@ -72,19 +78,12 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 		this.categorias = categorias;
 	}
 
-	public String getQuantidade() {
-		return quantidade;
+	public CadastrarLivroDataFormatter getDataFormatter() {
+		return dataFormatter;
 	}
 
-	public void setQuantidade(String quantidade) {
-		this.quantidade = quantidade;
+	public void setDataFormatter(CadastrarLivroDataFormatter dataFormatter) {
+		this.dataFormatter = dataFormatter;
 	}
 
-	public Livro getLivro() {
-		return livro;
-	}
-
-	public void setLivro(Livro livro) {
-		this.livro = livro;
-	}
 }

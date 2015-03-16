@@ -1,23 +1,23 @@
 package br.com.fortium.bibliorium.validation;
 
+import br.com.fortium.bibliorium.data.formatter.view.CadastrarLivroDataFormatter;
 import br.com.fortium.bibliorium.managedbean.CadastrarLivroMB;
-import br.com.fortium.bibliorium.persistence.entity.Livro;
 import br.com.fortium.bibliorium.validation.exception.ValidationException;
 
 public class CadastroLivroValidator extends Validator<CadastrarLivroMB> {
 
 	@Override
 	public void validate(CadastrarLivroMB instance) throws ValidationException {
-		Livro livro = instance.getLivro();
+		CadastrarLivroDataFormatter formatter = instance.getDataFormatter();
 		
-		validateRequiredValues(livro.getTitulo(), livro.getEditora(), livro.getAutores(), livro.getAutores(), livro.getEdicao());
-		validateRequiredNumbers(livro.getIsbn(), livro.getNumPaginas(), instance.getQuantidade());
+		validateRequiredValues(formatter.getTitulo(), formatter.getEditora(), formatter.getAutores(), formatter.getAutores(), formatter.getEdicao());
+		validateRequiredNumbers(formatter.getIsbn(), formatter.getNumPaginas(), formatter.getQuantidade());
 		
-		if(livro.getCategoria().getIdCategoria() == null){
+		if(formatter.getCategoria() == null){
 			throw new ValidationException("Categoria não foi definida");
 		}
 		
-		if(!(livro.getIsbn().length() == 10 || livro.getIsbn().length() == 13)){
+		if(!(formatter.getIsbn().length() == 10 || formatter.getIsbn().length() == 13)){
 			throw new ValidationException("ISPB Inválido");
 		}
 	
