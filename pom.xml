@@ -1,8 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>br.com.otakudragon</groupId>
   <artifactId>bibliorium-war</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>bibliorium-war</name>
   <description>Aplicação web do projeto Bibliorium</description>
@@ -16,12 +14,18 @@
 		</repository>
 	</repositories>
 	
+	<parent>
+		<groupId>br.com.otakudragon</groupId>
+		<artifactId>bibliorium-bom</artifactId>
+		<version>1.0.0-ALPHA</version>
+	</parent>
+	
 	<dependencies>
 		<!-- Dependencias internas -->
 		<dependency>
 			<groupId>br.com.otakudragon</groupId>
 			<artifactId>bibliorium-ejb</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-ALPHA</version>
 		</dependency>
 		<!-- Primefaces -->
 		<dependency>  

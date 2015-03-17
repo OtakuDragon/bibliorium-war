@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 
+import br.com.fortium.bibliorium.service.Service;
 import br.com.fortium.bibliorium.util.DialogUtil;
+import br.com.fortium.bibliorium.util.ServiceableUtility;
 import br.com.fortium.bibliorium.validation.Validator;
 import br.com.fortium.bibliorium.validation.exception.ValidationException;
 
@@ -48,6 +50,15 @@ public abstract class AbstractManagedBean<T> implements Serializable {
 	@SuppressWarnings("unchecked")
 	protected void validate() throws ValidationException{
 		validator.validate((T)this);
+	}
+	
+	@SuppressWarnings("unchecked")
+	protected <D extends Service> void setValidationService(D service){
+		if(validator instanceof ServiceableUtility){
+			ServiceableUtility<D> servUtil = null;
+			servUtil = (ServiceableUtility<D>) validator;
+			servUtil.setService(service);
+		}
 	}
 
 }

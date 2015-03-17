@@ -4,18 +4,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.primefaces.model.UploadedFile;
-
-import br.com.fortium.bibliorium.constantes.LivroConsts;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.persistence.entity.Livro;
 import br.com.fortium.bibliorium.persistence.enumeration.EstadoCopia;
 import br.com.fortium.bibliorium.service.CategoriaService;
+import br.com.fortium.bibliorium.util.AbstractServiceableUtility;
 
-public class CadastrarLivroDataFormatter implements ViewDataFormatter<List<Copia>> {
-
-	private CategoriaService categoriaService; 
+public class CadastrarLivroDataFormatter extends AbstractServiceableUtility<CategoriaService> implements ViewDataFormatter<List<Copia>>{
 	
 	private List<Copia> data;
 	
@@ -28,18 +24,16 @@ public class CadastrarLivroDataFormatter implements ViewDataFormatter<List<Copia
 	private String quantidade;
 	private String isbn;
 	private String categoria;
-	private UploadedFile foto;
 
-	public CadastrarLivroDataFormatter(CategoriaService categoriaService) {
+	public CadastrarLivroDataFormatter() {
 		livro = new Livro();
-		this.categoriaService = categoriaService;
 	}
 	
 	@Override
 	public List<Copia> getFormattedData() {
 		data = new ArrayList<Copia>();
 		
-		Categoria catObj = categoriaService.buscar(categoria);
+		Categoria catObj = getService().buscar(categoria);
 		
 		livro.setCategoria(catObj);
 		livro.setTitulo(titulo);
@@ -49,21 +43,12 @@ public class CadastrarLivroDataFormatter implements ViewDataFormatter<List<Copia
 		livro.setNumPaginas(Integer.parseInt(numPaginas));
 		livro.setAutores(autores);
 		livro.setIsbn(isbn);
-		livro.setNomeFoto(getNomeFoto());
 		
 		for (int i = 0; i < Integer.parseInt(quantidade); i++) {
 			data.add(new Copia(livro, EstadoCopia.DISPONIVEL));
 		}
 		
 		return data;
-	}
-	
-	public String getNomeFoto() {
-		if(foto == null){
-			return LivroConsts.DEFAULT_PICTURE_NAME;
-		}else{
-			return foto.getFileName();
-		}
 	}
 
 	public Livro getLivro() {
@@ -136,13 +121,5 @@ public class CadastrarLivroDataFormatter implements ViewDataFormatter<List<Copia
 
 	public void setCategoria(String categoria) {
 		this.categoria = categoria;
-	}
-
-	public UploadedFile getFoto() {
-		return foto;
-	}
-
-	public void setFoto(UploadedFile foto) {
-		this.foto = foto;
 	}
 }

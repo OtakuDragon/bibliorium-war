@@ -20,13 +20,10 @@ public abstract class Validator<T> {
 	}
 	
 	protected void validateRequiredNumbers(String... values) throws ValidationException{
-		try{
-			validateRequiredValues(values);
-			for (String value : values) {
-				Float.parseFloat(value);
+		for (String value : values) {
+			if(!StringUtils.isNumeric(value)){
+				throw new ValidationException(REQUIRED_NUMBER_MESSAGE);
 			}
-		}catch(ValidationException | NumberFormatException nfe){
-			throw new ValidationException(REQUIRED_NUMBER_MESSAGE);
 		}
 	}
 }

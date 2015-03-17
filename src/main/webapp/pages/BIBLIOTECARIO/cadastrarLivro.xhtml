@@ -142,22 +142,6 @@
 				</div>
 			</div>
 			<div class="row" align="center">
-					<h:outputLabel class="label" value="Foto(Opcional): " for="foto"/>
-					<p:fileUpload id="foto"
-								  title="Foto da capa do livro, no formato jpg"
-								  mode="simple" 
-								  skinSimple="true" 
-								  value="#{cadastrarLivroMB.dataFormatter.foto}" 
-								  allowTypes="\.jp(g|eg)" 
-								  sizeLimit="1048576" 
-								  styleClass="width-40 spacing-top-2" 
-								  invalidFileMessage="Apenas imagens no formato jpeg(jpg) são aceitas" 
-								  invalidSizeMessage="Tamanho inválido, a imagem deve ter no máximo 1mb de tamanho, tente redimensiona-la"/><br/>
-					<span class="validation-message">
-						<h:message for="foto"/>
-					</span>
-			</div>
-			<div class="row" align="center">
 				<div style="margin-top:3%;">
 						<h:commandButton value="Cadastrar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao"/>
 						<h:commandButton value="Cancelar" h5:type="reset" class="botao"/>
