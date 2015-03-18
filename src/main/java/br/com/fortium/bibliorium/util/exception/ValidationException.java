@@ -1,4 +1,4 @@
-package br.com.fortium.bibliorium.validation.exception;
+package br.com.fortium.bibliorium.util.exception;
 
 public class ValidationException extends Exception {
 

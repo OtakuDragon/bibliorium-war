@@ -13,11 +13,13 @@ import br.com.fortium.bibliorium.metadata.Serviceable;
 import br.com.fortium.bibliorium.metadata.Validator;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
+import br.com.fortium.bibliorium.print.PrintableBuilder;
 import br.com.fortium.bibliorium.service.CategoriaService;
 import br.com.fortium.bibliorium.service.CopiaService;
 import br.com.fortium.bibliorium.service.LivroService;
+import br.com.fortium.bibliorium.util.exception.PrintableException;
+import br.com.fortium.bibliorium.util.exception.ValidationException;
 import br.com.fortium.bibliorium.validation.CadastroLivroValidator;
-import br.com.fortium.bibliorium.validation.exception.ValidationException;
 
 @Named
 @RequestScoped
@@ -53,17 +55,17 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 		categorias =  categoriaService.buscarCategorias();
 	}
 	
-	public void cadastrarLivro() throws Exception{
+	public void cadastrarLivro(){
 		try{
 			validator.validate(this);
 			List<Copia> copias = dataFormatter.getFormattedData();
 			copiaService.cadastrarCopias(copias);
+			print(PrintableBuilder.buildEtiquetas(copias));
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
-		}catch(ValidationException e){
+		}catch(ValidationException | PrintableException e){
 			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
 			getLogger().error(e);
 		}
-		
 	}
 	
 	public List<Categoria> getCategorias() {

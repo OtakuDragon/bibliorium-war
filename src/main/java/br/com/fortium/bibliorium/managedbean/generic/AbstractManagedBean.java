@@ -11,8 +11,11 @@ import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
 
+import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.util.DialogUtil;
+import br.com.fortium.bibliorium.util.OutputPrintableUtil;
 import br.com.fortium.bibliorium.util.ServiceableContainer;
+import br.com.fortium.bibliorium.util.exception.PrintableException;
 import br.com.fortium.bibliorium.util.exception.ServiceableException;
 import br.com.fortium.bibliorium.validation.Validator;
 
@@ -23,13 +26,15 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	private DialogUtil dialogUtil;
 	private Logger logger;
 	private Class<T> managedBeanClass;
+	private OutputPrintableUtil printUtil;
 	
 	AbstractManagedBean() {}
 	
 	public AbstractManagedBean(Class<T> managedBeanClass){
-		dialogUtil = new DialogUtil();
+		this.dialogUtil = new DialogUtil();
+		this.printUtil  = new OutputPrintableUtil();
 		this.managedBeanClass = managedBeanClass;
-		logger = Logger.getLogger(managedBeanClass);
+		this.logger = Logger.getLogger(managedBeanClass);
 	}
 	
 	@PostConstruct
@@ -55,6 +60,10 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	
 	protected Logger getLogger(){
 		return logger;
+	}
+	
+	protected void print(Printable... printables) throws PrintableException{
+		printUtil.output(printables);
 	}
 	
 	@SuppressWarnings("unchecked")

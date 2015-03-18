@@ -8,7 +8,7 @@ import br.com.fortium.bibliorium.service.LivroService;
 import br.com.fortium.bibliorium.service.Service;
 import br.com.fortium.bibliorium.util.ServiceableUtility;
 import br.com.fortium.bibliorium.util.ServiceableUtilityAdapter;
-import br.com.fortium.bibliorium.validation.exception.ValidationException;
+import br.com.fortium.bibliorium.util.exception.ValidationException;
 
 public class CadastroLivroValidator extends Validator<CadastrarLivroMB> implements ServiceableUtility{
 
@@ -48,7 +48,5 @@ public class CadastroLivroValidator extends Validator<CadastrarLivroMB> implemen
 	public <D extends Service> D getService(Class<D> serviceClass) {
 		return serviceUtilAdapter.getService(serviceClass);
 	}
-
-	
 
 }

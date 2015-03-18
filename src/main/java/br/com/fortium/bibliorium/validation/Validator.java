@@ -2,7 +2,7 @@ package br.com.fortium.bibliorium.validation;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.com.fortium.bibliorium.validation.exception.ValidationException;
+import br.com.fortium.bibliorium.util.exception.ValidationException;
 
 public abstract class Validator<T> {
 	
