@@ -1,20 +1,32 @@
 package br.com.fortium.bibliorium.util;
 
-import br.com.fortium.bibliorium.service.Service;
-import br.com.fortium.bibliorium.util.exception.NullServiceException;
+import java.util.Map;
 
-public abstract class AbstractServiceableUtility<T extends Service> implements ServiceableUtility<T> {
+import br.com.fortium.bibliorium.service.Service;
+import br.com.fortium.bibliorium.util.exception.ServiceableException;
+
+public abstract class AbstractServiceableUtility implements ServiceableUtility {
 	
-	private T service;
+	private Map<Class<? extends Service>, Service> services;
 	
-	public void setService(T service){
-		this.service = service;
+	@Override
+	public void setServices(Map<Class<? extends Service>, Service> services){
+		this.services = services;
 	}
 	
-	public T getService() throws NullServiceException {
-		if(service == null){
-			throw new NullServiceException();
+	@Override
+	@SuppressWarnings("unchecked")
+	public <D extends Service> D getService(Class<D> serviceClass) throws ServiceableException {
+		if(services == null){
+			throw new ServiceableException("Serviços não setados, a classe que conter membros anotados deve extender de ServiceableContainer");
 		}
-		return service;
+		
+		Service service = services.get(serviceClass);
+		
+		if(service == null){
+			throw new ServiceableException("Serviço não disponivel para este serviceable, este tipo foi declarado na anotação?");
+		}
+		
+		return (D) services.get(serviceClass);
 	}
 }

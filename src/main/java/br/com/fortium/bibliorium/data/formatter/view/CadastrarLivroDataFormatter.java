@@ -11,7 +11,7 @@ import br.com.fortium.bibliorium.persistence.enumeration.EstadoCopia;
 import br.com.fortium.bibliorium.service.CategoriaService;
 import br.com.fortium.bibliorium.util.AbstractServiceableUtility;
 
-public class CadastrarLivroDataFormatter extends AbstractServiceableUtility<CategoriaService> implements ViewDataFormatter<List<Copia>>{
+public class CadastrarLivroDataFormatter extends AbstractServiceableUtility implements ViewDataFormatter<List<Copia>>{
 	
 	private List<Copia> data;
 	
@@ -33,7 +33,7 @@ public class CadastrarLivroDataFormatter extends AbstractServiceableUtility<Cate
 	public List<Copia> getFormattedData() {
 		data = new ArrayList<Copia>();
 		
-		Categoria catObj = getService().buscar(categoria);
+		Categoria catObj = getService(CategoriaService.class).buscar(categoria);
 		
 		livro.setCategoria(catObj);
 		livro.setTitulo(titulo);

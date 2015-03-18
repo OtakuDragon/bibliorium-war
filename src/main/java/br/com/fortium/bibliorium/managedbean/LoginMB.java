@@ -6,6 +6,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
+import br.com.fortium.bibliorium.managedbean.generic.AbstractManagedBean;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
 import br.com.fortium.bibliorium.service.UsuarioService;
@@ -23,6 +24,15 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	
 	@EJB
 	private UsuarioService usuarioService;
+	
+	public LoginMB() {
+		super(LoginMB.class);
+	}
+	
+	@Override
+	protected void init() {
+		// Nenhuma inicialização necessaria
+	}
 	
 	public String efetuarLogin(){
 		
@@ -84,4 +94,5 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
+
 }

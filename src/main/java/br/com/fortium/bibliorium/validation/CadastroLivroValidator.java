@@ -1,19 +1,21 @@
 package br.com.fortium.bibliorium.validation;
 
+import java.util.Map;
+
 import br.com.fortium.bibliorium.data.formatter.view.CadastrarLivroDataFormatter;
 import br.com.fortium.bibliorium.managedbean.CadastrarLivroMB;
 import br.com.fortium.bibliorium.service.LivroService;
+import br.com.fortium.bibliorium.service.Service;
 import br.com.fortium.bibliorium.util.ServiceableUtility;
 import br.com.fortium.bibliorium.util.ServiceableUtilityAdapter;
-import br.com.fortium.bibliorium.util.exception.NullServiceException;
 import br.com.fortium.bibliorium.validation.exception.ValidationException;
 
-public class CadastroLivroValidator extends Validator<CadastrarLivroMB> implements ServiceableUtility<LivroService>{
+public class CadastroLivroValidator extends Validator<CadastrarLivroMB> implements ServiceableUtility{
 
-	private ServiceableUtilityAdapter<LivroService> serviceUtilAdapter; 
+	private ServiceableUtilityAdapter serviceUtilAdapter; 
 	
 	public CadastroLivroValidator() {
-		serviceUtilAdapter = new ServiceableUtilityAdapter<LivroService>();
+		serviceUtilAdapter = new ServiceableUtilityAdapter();
 	}
 	
 	@Override
@@ -31,21 +33,22 @@ public class CadastroLivroValidator extends Validator<CadastrarLivroMB> implemen
 			throw new ValidationException("ISBN Inválido");
 		}
 		
-		if(getService().isIsbnCadastrado(formatter.getIsbn())){
+		if(getService(LivroService.class).isIsbnCadastrado(formatter.getIsbn())){
 			throw new ValidationException("ISBN já cadastrado");
 		}
 	
 	}
 
 	@Override
-	public void setService(LivroService service) {
-		serviceUtilAdapter.setService(service);
+	public void setServices(Map<Class<? extends Service>, Service> services) {
+		serviceUtilAdapter.setServices(services);
 	}
 
 	@Override
-	public LivroService getService() throws NullServiceException {
-		return serviceUtilAdapter.getService();
+	public <D extends Service> D getService(Class<D> serviceClass) {
+		return serviceUtilAdapter.getService(serviceClass);
 	}
+
 	
 
 }

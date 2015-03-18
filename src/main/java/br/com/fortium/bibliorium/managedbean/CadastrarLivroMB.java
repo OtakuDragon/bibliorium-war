@@ -2,13 +2,15 @@ package br.com.fortium.bibliorium.managedbean;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import br.com.fortium.bibliorium.data.formatter.view.CadastrarLivroDataFormatter;
 import br.com.fortium.bibliorium.enumeration.DialogType;
+import br.com.fortium.bibliorium.managedbean.generic.AbstractManagedBean;
+import br.com.fortium.bibliorium.metadata.Serviceable;
+import br.com.fortium.bibliorium.metadata.Validator;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.service.CategoriaService;
@@ -30,20 +32,21 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 	@EJB
 	private LivroService livroService;
 	
+	@Serviceable(CategoriaService.class)
 	private CadastrarLivroDataFormatter dataFormatter;
+	
+	@Validator
+	@Serviceable(LivroService.class)
+	private CadastroLivroValidator validator;
 	
 	private List<Categoria> categorias;
 	
 	public CadastrarLivroMB() {
-		super(CadastrarLivroMB.class, new CadastroLivroValidator());
+		super(CadastrarLivroMB.class);
 	}
 	
-	@PostConstruct
 	public void init(){
 		initCategorias();
-		dataFormatter = new CadastrarLivroDataFormatter();
-		dataFormatter.setService(categoriaService);
-		setValidationService(livroService);
 	}
 	
 	private void initCategorias(){
@@ -52,7 +55,7 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 	
 	public void cadastrarLivro() throws Exception{
 		try{
-			validate();
+			validator.validate(this);
 			List<Copia> copias = dataFormatter.getFormattedData();
 			copiaService.cadastrarCopias(copias);
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
