@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
 
 import br.com.fortium.bibliorium.print.Printable;
+import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.util.DialogUtil;
 import br.com.fortium.bibliorium.util.OutputPrintableUtil;
 import br.com.fortium.bibliorium.util.ServiceableContainer;
@@ -63,9 +64,18 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 		return logger;
 	}
 	
-	protected void print(String printableName,Printable... printables) throws PrintableException{
-		printUtil.download(getResponse(), printableName, printables);
-		getFacesContext().responseComplete();
+	protected void setPrintable(PrintableDataHolder printableDataHolder){
+		getSession().setAttribute(Printable.DATA_HOLDER_KEY, printableDataHolder);
+	}
+	
+	protected void print() throws PrintableException{
+		Object dhObj = getSession().getAttribute(Printable.DATA_HOLDER_KEY);
+		
+		if(dhObj != null){
+			PrintableDataHolder printableDataHolder = (PrintableDataHolder) dhObj;
+			printUtil.download(getResponse(), printableDataHolder.getPrintableName(), printableDataHolder.getPrintables());
+			getFacesContext().responseComplete();
+		}
 	}
 	
 	protected FacesContext getFacesContext(){

@@ -14,11 +14,12 @@ import br.com.fortium.bibliorium.metadata.Validator;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.print.EtiquetaPrintable;
+import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.print.PrintableBuilder;
+import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.service.CategoriaService;
 import br.com.fortium.bibliorium.service.CopiaService;
 import br.com.fortium.bibliorium.service.LivroService;
-import br.com.fortium.bibliorium.util.exception.PrintableException;
 import br.com.fortium.bibliorium.util.exception.ValidationException;
 import br.com.fortium.bibliorium.validation.CadastroLivroValidator;
 
@@ -62,8 +63,8 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 			List<Copia> copias = dataFormatter.getFormattedData();
 			copiaService.cadastrarCopias(copias);
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
-			print(EtiquetaPrintable.NAME, PrintableBuilder.buildEtiquetas(copias));
-		}catch(ValidationException | PrintableException e){
+			handlePrint(copias);
+		}catch(ValidationException e){
 			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
 			getLogger().error(e);
 		}
@@ -83,6 +84,14 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 
 	public void setDataFormatter(CadastrarLivroDataFormatter dataFormatter) {
 		this.dataFormatter = dataFormatter;
+		
+	}
+	
+	private void handlePrint(List<Copia> copias){
+		Printable[] etiquetas = PrintableBuilder.buildEtiquetas(copias);
+		PrintableDataHolder dataHolder = new PrintableDataHolder(EtiquetaPrintable.NAME, etiquetas);
+		
+		setPrintable(dataHolder);
 	}
 
 }

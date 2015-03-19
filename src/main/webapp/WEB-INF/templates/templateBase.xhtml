@@ -22,7 +22,7 @@
 					<h:outputText value="#{sessionScope.dialogMesssage}" />
 				</div>
 				<br/>
-				<h:commandButton class="botao dialogButton" value="OK" onclick="PF('dialog').hide()" />
+				<h:commandButton class="botao dialogButton" value="OK" onclick="PF('dialog').hide()" action="#{printDialogMB.print}"/>
 			</div>
 		</p:dialog>
 	</h:form>

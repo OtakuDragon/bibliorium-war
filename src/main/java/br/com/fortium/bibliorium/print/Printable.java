@@ -8,6 +8,7 @@ public interface Printable {
 	String SEPARATOR      = "_";
 	String DIVISION       = "--------------------------------------------------------";
 	String LINE_BREAK     = "\n";
+	String DATA_HOLDER_KEY = "printableDataHolder";
 	
 	Map<String,String> getPrintableInfo();
 }
