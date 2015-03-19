@@ -6,9 +6,8 @@ public interface Printable {
 	String FILE_EXTENSION = ".txt";
 	String RELATION       = "=";
 	String SEPARATOR      = "_";
+	String DIVISION       = "--------------------------------------------------------";
 	String LINE_BREAK     = "\n";
-	String OUTPUT_FOLDER  = "C:\\bibliorium\\output\\";
 	
 	Map<String,String> getPrintableInfo();
-	String getName();
 }

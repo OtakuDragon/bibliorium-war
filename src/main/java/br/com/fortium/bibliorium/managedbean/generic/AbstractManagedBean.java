@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.jboss.logging.Logger;
@@ -47,11 +48,11 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	protected abstract void init();
 	
 	protected HttpSession getSession(){
-		return (HttpSession)FacesContext.getCurrentInstance().getExternalContext().getSession(true);
+		return (HttpSession)getFacesContext().getExternalContext().getSession(true);
 	}
 	
 	protected void addMessage(Severity severity, String message, String detail){
-		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, message, detail));
+		getFacesContext().addMessage(null, new FacesMessage(severity, message, detail));
 	}
 
 	protected DialogUtil getDialogUtil() {
@@ -62,8 +63,17 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 		return logger;
 	}
 	
-	protected void print(Printable... printables) throws PrintableException{
-		printUtil.output(printables);
+	protected void print(String printableName,Printable... printables) throws PrintableException{
+		printUtil.download(getResponse(), printableName, printables);
+		getFacesContext().responseComplete();
+	}
+	
+	protected FacesContext getFacesContext(){
+		return FacesContext.getCurrentInstance();
+	}
+	
+	protected HttpServletResponse getResponse(){
+		return (HttpServletResponse) getFacesContext().getExternalContext().getResponse();
 	}
 	
 	@SuppressWarnings("unchecked")

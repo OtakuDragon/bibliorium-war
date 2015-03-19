@@ -18,7 +18,7 @@ public class PrintableBuilder {
 			
 			printable.setTitulo  (livro.getTitulo());
 			printable.setIsbn    (livro.getIsbn());
-			printable.setCodLivro(livro.toString());
+			printable.setCodLivro(livro.getId().toString());
 			printable.setCodCopia(copia.getId().toString());
 			
 			retorno.add(printable);

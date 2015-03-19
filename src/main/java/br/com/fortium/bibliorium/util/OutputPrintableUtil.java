@@ -1,57 +1,57 @@
 package br.com.fortium.bibliorium.util;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Date;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.util.exception.PrintableException;
 
 public class OutputPrintableUtil {
 
-	public void output(Printable... printables) throws PrintableException{
-		String outputDirectory = Printable.OUTPUT_FOLDER;
-		File printableFile = null;
-		String fileContent = null;
-		Integer counter = 1;
+	public void download(HttpServletResponse response, String printableName, Printable... printables) throws PrintableException{
+		StringBuilder fileContent = new StringBuilder();;
+		String printableFileName = formatPrintableFileName(printableName);
 		for (Printable printable : printables) {
-			String printableFileName = formatPrintableFileName(outputDirectory, printable, counter++);
-			printableFile = new File(printableFileName);
-			fileContent = generateFileContent(printable.getPrintableInfo());
-			writeToFile(printableFile, fileContent);
+			fileContent.append(generateFileContent(printable.getPrintableInfo()));
+			fileContent.append(Printable.DIVISION);
+			fileContent.append(Printable.LINE_BREAK);
 		}
+		downloadAsText(printableFileName, fileContent.toString(), response);
 	}
 	
-	private String formatPrintableFileName(String outputDirectory, Printable printable, Integer counter){
+	private String formatPrintableFileName(String printableName){
 		StringBuilder retorno = new StringBuilder();
 		
-		retorno.append(outputDirectory);
-		retorno.append(printable.getName());
-		retorno.append(Printable.SEPARATOR);
-		retorno.append(counter);
+		retorno.append(printableName);
 		retorno.append(Printable.SEPARATOR);
 		retorno.append(DataUtil.getDataS(new Date(), "dd_MM_yyyy_HH-mm-ss"));
-		retorno.append(Printable.SEPARATOR);
 		retorno.append(Printable.FILE_EXTENSION);
 		
 		return retorno.toString();
 	}
 	
-	private void writeToFile(File printableFile, String fileContent) throws PrintableException{
-		FileOutputStream fos = null;
+	private void downloadAsText(String printableFileName, String fileContent, HttpServletResponse response) throws PrintableException{
+		response.reset();
+		response.setHeader("Content-Type", "text/plain");
+		 response.setHeader("Content-Disposition", "attachment;filename="+printableFileName);
+		 ByteArrayInputStream bis = new ByteArrayInputStream(fileContent.getBytes());
 		try{
-			fos = new FileOutputStream(printableFile);
-			fos.write(fileContent.getBytes());
-		}catch(IOException e){
-			throw new PrintableException("Falha ao escrever arquivos.", e);
-		}finally{
-			try {
-				fos.close();
-			} catch (IOException e) {
-				throw new PrintableException("Falha ao escrever arquivos.", e);
+			OutputStream responseOutputStream = response.getOutputStream();
+			
+			byte[] bytesBuffer = new byte[256];
+			int bytesRead;
+			while ((bytesRead = bis.read(bytesBuffer)) > 0) {
+				responseOutputStream.write(bytesBuffer, 0, bytesRead);
 			}
+	
+			responseOutputStream.flush();
+		}catch(IOException e){
+			throw new PrintableException("Falha processar download.", e);
 		}
 	}
 	

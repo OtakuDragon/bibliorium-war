@@ -6,6 +6,7 @@ import java.util.Map;
 public class EtiquetaPrintable implements Printable {
 
 	private Map<String,String> printableInfo;
+	public static String NAME = "ETIQUETA_LIVRO";
 	
 	public EtiquetaPrintable() {
 		printableInfo = new LinkedHashMap<String,String>();
@@ -14,11 +15,6 @@ public class EtiquetaPrintable implements Printable {
 	@Override
 	public Map<String, String> getPrintableInfo() {
 		return printableInfo;
-	}
-
-	@Override
-	public String getName() {
-		return "ETIQUETA_LIVRO";
 	}
 
 	public void setTitulo(String titulo) {

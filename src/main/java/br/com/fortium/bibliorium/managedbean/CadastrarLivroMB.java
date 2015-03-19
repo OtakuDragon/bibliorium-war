@@ -13,6 +13,7 @@ import br.com.fortium.bibliorium.metadata.Serviceable;
 import br.com.fortium.bibliorium.metadata.Validator;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
+import br.com.fortium.bibliorium.print.EtiquetaPrintable;
 import br.com.fortium.bibliorium.print.PrintableBuilder;
 import br.com.fortium.bibliorium.service.CategoriaService;
 import br.com.fortium.bibliorium.service.CopiaService;
@@ -60,8 +61,8 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 			validator.validate(this);
 			List<Copia> copias = dataFormatter.getFormattedData();
 			copiaService.cadastrarCopias(copias);
-			print(PrintableBuilder.buildEtiquetas(copias));
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
+			print(EtiquetaPrintable.NAME, PrintableBuilder.buildEtiquetas(copias));
 		}catch(ValidationException | PrintableException e){
 			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
 			getLogger().error(e);
