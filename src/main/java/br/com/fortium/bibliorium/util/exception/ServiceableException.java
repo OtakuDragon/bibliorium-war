@@ -7,4 +7,8 @@ public class ServiceableException extends RuntimeException {
 	public ServiceableException(String message) {
 		super(message);
 	}
+	
+	public ServiceableException(String message, Throwable throwable) {
+		super(message, throwable);
+	}
 }

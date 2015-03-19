@@ -9,6 +9,7 @@ public interface Printable {
 	String DIVISION       = "--------------------------------------------------------";
 	String LINE_BREAK     = "\n";
 	String DATA_HOLDER_KEY = "printableDataHolder";
+	String PRINTED_FLAG_KEY = "printedFlag";
 	
 	Map<String,String> getPrintableInfo();
 }

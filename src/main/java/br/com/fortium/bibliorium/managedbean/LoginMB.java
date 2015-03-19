@@ -18,9 +18,12 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	private static final long serialVersionUID = -345315455106409853L;
 
 	public static final String MENSAGEM_ACESSO_NEGADO = "MensagemAcessoNegado";
+	public static final String HOME_PAGE_KEY = "homePage";
 	
 	private String cpf;
 	private String senha;
+	
+	private String contextPath;
 	
 	@EJB
 	private UsuarioService usuarioService;
@@ -42,31 +45,32 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 			addMessage(FacesMessage.SEVERITY_ERROR, "Usuário/Senha inválidos, Tente Novamente.", null);
 			return null;
 		}else{
-			getSession().setAttribute(Usuario.AUTENTICADO, tipo);
-			return getIndexPageForUserType(tipo);
+			String homePage = getHomePage(tipo);
+			saveHomePage(homePage);
+			setSessionAttribute(Usuario.AUTENTICADO, tipo);
+			return homePage;
 		}
 	}
 	
 	public String efetuarLogOff(){
-		getSession().invalidate();
+		invalidateSession();
 		addMessage(FacesMessage.SEVERITY_INFO, "Tchau, Volte Sempre!", null);
 		return "/pages/login.xhtml";
 	}
 	
 	public void exibirMsgAcessoNegado(ComponentSystemEvent event){
-		String mensagem = (String)getSession().getAttribute(MENSAGEM_ACESSO_NEGADO);
+		String mensagem = (String) extractSessionAttribute(MENSAGEM_ACESSO_NEGADO);
 		if(mensagem != null){
 			addMessage(FacesMessage.SEVERITY_ERROR, mensagem, null);
 		}
-		getSession().setAttribute(MENSAGEM_ACESSO_NEGADO, null);
 	}
 	
 	public String redirectToIndex(){
-		TipoUsuario tipo = (TipoUsuario)getSession().getAttribute(Usuario.AUTENTICADO);
-		return getIndexPageForUserType(tipo);
+		TipoUsuario tipo = (TipoUsuario)getSessionAttribute(Usuario.AUTENTICADO);
+		return getHomePage(tipo);
 	}
 	
-	private String getIndexPageForUserType(TipoUsuario tipo){
+	private String getHomePage(TipoUsuario tipo){
 		switch(tipo){
 			case ALUNO:
 			case PROFESSOR:
@@ -77,6 +81,10 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 				addMessage(FacesMessage.SEVERITY_ERROR, "Tipo de usuário inválido.", null);
 				return null;
 		}
+	}
+	
+	private void saveHomePage(String homePage){
+		setSessionAttribute(HOME_PAGE_KEY, homePage);
 	}
 
 	public String getCpf() {
@@ -93,6 +101,14 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+
+	public String getContextPath() {
+		return contextPath;
+	}
+
+	public void setContextPath(String contextPath) {
+		this.contextPath = contextPath;
 	}
 
 }

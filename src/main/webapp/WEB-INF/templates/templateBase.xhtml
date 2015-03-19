@@ -22,7 +22,8 @@
 					<h:outputText value="#{sessionScope.dialogMesssage}" />
 				</div>
 				<br/>
-				<h:commandButton class="botao dialogButton" value="OK" onclick="PF('dialog').hide()" action="#{printDialogMB.print}"/>
+				<h:commandButton class="botao dialogButton" value="Fechar" onclick="PF('dialog').hide()" action="#{dialogDownloadMB.refresh}"  />
+				<h:commandButton class="botao dialogButton" value="Imprimir" action="#{dialogDownloadMB.print}" rendered="#{not empty sessionScope.get('printableDataHolder')}" style="margin-right:1%;"/>
 			</div>
 		</p:dialog>
 	</h:form>

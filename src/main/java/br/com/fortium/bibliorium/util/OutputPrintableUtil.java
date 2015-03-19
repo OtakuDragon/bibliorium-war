@@ -14,7 +14,7 @@ import br.com.fortium.bibliorium.util.exception.PrintableException;
 public class OutputPrintableUtil {
 
 	public void download(HttpServletResponse response, String printableName, Printable... printables) throws PrintableException{
-		StringBuilder fileContent = new StringBuilder();;
+		StringBuilder fileContent = new StringBuilder();
 		String printableFileName = formatPrintableFileName(printableName);
 		for (Printable printable : printables) {
 			fileContent.append(generateFileContent(printable.getPrintableInfo()));
