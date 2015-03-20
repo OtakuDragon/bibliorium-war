@@ -47,6 +47,7 @@ public class DialogDownloadMB extends AbstractManagedBean<DialogDownloadMB> {
 	}
 	
 	public void refresh() {
+		extractSessionAttribute(Printable.DATA_HOLDER_KEY);
 		if(isPrinted()){
 			refresh();
 		}
