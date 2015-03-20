@@ -4,7 +4,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
 import br.com.fortium.bibliorium.enumeration.DialogType;
-import br.com.fortium.bibliorium.managedbean.generic.AbstractManagedBean;
 import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.util.OutputPrintableUtil;
@@ -17,14 +16,10 @@ public class DialogDownloadMB extends AbstractManagedBean<DialogDownloadMB> {
 	private static final long serialVersionUID = 712333695975406665L;
 	
 	private OutputPrintableUtil printUtil;
-	
-	public DialogDownloadMB() {
-		super(DialogDownloadMB.class);
-	}
 
 	@Override
 	protected void init() {
-		this.printUtil  = new OutputPrintableUtil();
+		this.printUtil = new OutputPrintableUtil();
 	}
 
 	public void print() {

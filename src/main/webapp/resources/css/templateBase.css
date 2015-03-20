@@ -15,13 +15,12 @@ body{padding:0;margin:0;border:0;}
 	max-height:40px
 }
 
-#menuVerticalContainer{border:1px solid #4C311F;height:100vh;width:25%;float:left;}
+#menuVerticalContainer{border-right:1px solid #6A97A6;height:100vh;width:22%;float:left;}
 
 #contentContainer{
-	border:1px solid #4C311F;
 	height:100vh;
-	width:74.5%;
-	float:right;
+	width:77.5%;
+	float:left;
 }
 
 .linkHorizontal{

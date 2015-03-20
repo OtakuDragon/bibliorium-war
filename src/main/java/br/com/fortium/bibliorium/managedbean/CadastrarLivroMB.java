@@ -4,13 +4,14 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
+
+import org.apache.commons.lang3.StringUtils;
 
 import br.com.fortium.bibliorium.data.formatter.view.CadastrarLivroDataFormatter;
 import br.com.fortium.bibliorium.enumeration.DialogType;
-import br.com.fortium.bibliorium.managedbean.generic.AbstractManagedBean;
 import br.com.fortium.bibliorium.metadata.Serviceable;
-import br.com.fortium.bibliorium.metadata.Validator;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.print.EtiquetaPrintable;
@@ -20,8 +21,6 @@ import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.service.CategoriaService;
 import br.com.fortium.bibliorium.service.CopiaService;
 import br.com.fortium.bibliorium.service.LivroService;
-import br.com.fortium.bibliorium.util.exception.ValidationException;
-import br.com.fortium.bibliorium.validation.CadastroLivroValidator;
 
 @Named
 @RequestScoped
@@ -39,15 +38,7 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 	@Serviceable(CategoriaService.class)
 	private CadastrarLivroDataFormatter dataFormatter;
 	
-	@Validator
-	@Serviceable(LivroService.class)
-	private CadastroLivroValidator validator;
-	
 	private List<Categoria> categorias;
-	
-	public CadastrarLivroMB() {
-		super(CadastrarLivroMB.class);
-	}
 	
 	public void init(){
 		initCategorias();
@@ -58,15 +49,17 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 	}
 	
 	public void cadastrarLivro(){
-		try{
-			validator.validate(this);
-			List<Copia> copias = dataFormatter.getFormattedData();
-			copiaService.cadastrarCopias(copias);
-			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
-			handlePrint(copias);
-		}catch(ValidationException e){
-			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
-			getLogger().error(e);
+		List<Copia> copias = dataFormatter.getFormattedData();
+		copiaService.cadastrarCopias(copias);
+		getDialogUtil().showDialog(DialogType.SUCCESS, "Livro cadastrado com sucesso");
+		handlePrint(copias);
+	}
+	
+	public void isIsbnCadastrado(ValueChangeEvent event){
+		String isbn = (String)event.getNewValue();
+
+		if(StringUtils.isNumeric(isbn) && livroService.isIsbnCadastrado(isbn)){
+			addValidationMessage(event.getComponent().getClientId(), "ISBN já cadastrado.");
 		}
 	}
 	
@@ -90,7 +83,6 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 	private void handlePrint(List<Copia> copias){
 		Printable[] etiquetas = PrintableBuilder.buildEtiquetas(copias);
 		PrintableDataHolder dataHolder = new PrintableDataHolder(EtiquetaPrintable.NAME, etiquetas);
-		
 		setPrintable(dataHolder);
 	}
 

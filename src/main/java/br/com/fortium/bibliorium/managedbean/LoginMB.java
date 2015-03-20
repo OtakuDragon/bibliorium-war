@@ -6,7 +6,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 
-import br.com.fortium.bibliorium.managedbean.generic.AbstractManagedBean;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
 import br.com.fortium.bibliorium.service.UsuarioService;
@@ -27,10 +26,6 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	
 	@EJB
 	private UsuarioService usuarioService;
-	
-	public LoginMB() {
-		super(LoginMB.class);
-	}
 	
 	@Override
 	protected void init() {
@@ -74,9 +69,9 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 		switch(tipo){
 			case ALUNO:
 			case PROFESSOR:
-				return "/pages/LEITOR/index.xhtml";
+				return "/pages/LEITOR/index.xhtml?faces-redirect=true";
 			case BIBLIOTECARIO:
-				return "/pages/BIBLIOTECARIO/index.xhtml";
+				return "/pages/BIBLIOTECARIO/index.xhtml?faces-redirect=true";
 			default:
 				addMessage(FacesMessage.SEVERITY_ERROR, "Tipo de usuário inválido.", null);
 				return null;

@@ -22,13 +22,15 @@
 								 styleClass="input-text width-77"
 								 value="#{cadastrarLivroMB.dataFormatter.titulo}"
 								 required="true"
-								 requiredMessage="O título do livro é obrigatorio."
+								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Titulo inválido (Min. 5 Caracteres)."
-								 maxlength="255" >
+								 maxlength="255"
+								 tabindex="1" >
 						<f:validateRegex pattern="^\w{3}.{2,250}" />
+						<p:ajax event="blur" update="tituloMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
-						<h:message for="titulo"/>
+						<h:message id="tituloMessage" for="titulo"/>
 					</span>
 				</div>
 				<div class="element">
@@ -37,12 +39,14 @@
 								 styleClass="input-text width-35"
 								 value="#{cadastrarLivroMB.dataFormatter.edicao}"
 								 required="true"
-								 requiredMessage="A edição do livro é obrigatoria."
-								 maxlength="10">
+								 requiredMessage="Campo obrigatório."
+								 maxlength="10"
+								 tabindex="5">
 						<f:validateRegex pattern="^\w{1}.{0,9}" />
+						<p:ajax event="blur" update="edicaoMessage"/>
 					</h:inputText>
 					<span class="validation-message">
-						<h:message for="edicao"/>
+						<h:message id="edicaoMessage" for="edicao"/>
 					</span>
 				</div>
 			</div>
@@ -52,13 +56,15 @@
 					<h:inputText id="editora"
 								 styleClass="input-text width-77"
 								 value="#{cadastrarLivroMB.dataFormatter.editora}" required="true"
-								 requiredMessage="A editora do livro é obrigatoria."
+								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Editora Inválida (Min. 3 Caracteres)."
-								 maxlength="255">
+								 maxlength="255"
+								 tabindex="2">
 						<f:validateRegex pattern="^\w{3}.{0,252}" />
+						<p:ajax event="blur" update="editoraMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
-						<h:message for="editora"/>
+						<h:message id="editoraMessage" for="editora"/>
 					</span>
 				</div>
 				<div class="element">
@@ -67,13 +73,15 @@
 								 styleClass="input-text width-20"
 								 value="#{cadastrarLivroMB.dataFormatter.numPaginas}"
 								 required="true"
-								 requiredMessage="O numero de páginas do livro é obrigatório."
+								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Número de páginas inválido."
-								 maxlength="5" >
-						<f:validateRegex pattern="^\d{1,5}" />
+								 maxlength="5" 
+								 tabindex="6">
+						<f:validateRegex pattern="^[0-9]\d{0,4}" />
+						<p:ajax event="blur" update="numPgMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
-						<h:message for="paginas"/>
+						<h:message id="numPgMessage" for="paginas"/>
 					</span>
 				</div>
 			</div>
@@ -84,13 +92,15 @@
 								 styleClass="input-text width-77"
 								 value="#{cadastrarLivroMB.dataFormatter.autores}"
 								 required="true"
-								 requiredMessage="Pelo menos um autor deve ser definido."
+								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Autores inválidos (Min. 3 Letras)."
-								 maxlength="255" >
+								 maxlength="255"
+								 tabindex="3">
 						<f:validateRegex pattern="^\w{3}.{0,252}" />
+						<p:ajax event="blur" update="autoresMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
-						<h:message for="autores"/>
+						<h:message id="autoresMessage" for="autores"/>
 					</span>
 				</div>
 				<div class="element">
@@ -100,13 +110,15 @@
 									 styleClass="input-text width-20"
 									 value="#{cadastrarLivroMB.dataFormatter.quantidade}"
 									 required="true"
-									 requiredMessage="A quantidade de livros é obrigatoria."
+									 requiredMessage="Campo obrigatório."
 									 validatorMessage="Quantidade inválida, deve ser positiva."
-									 maxlength="2" >
+									 maxlength="2"
+									 tabindex="7">
 							<f:validateRegex pattern="^[1-9]\d{0,3}" />
+							<p:ajax event="blur" update="qtdMessage"/>
 						</h:inputText><br/>
 						<span class="validation-message">
-							<h:message for="qtd"/>
+							<h:message id="qtdMessage" for="qtd"/>
 						</span>
 				</div>
 			</div>
@@ -118,13 +130,16 @@
 								 styleClass="input-text width-77"
 								 value="#{cadastrarLivroMB.dataFormatter.isbn}"
 								 required="true"
-								 requiredMessage="O ISBN do livro é obrigatorio."
+								 requiredMessage="Campo obrigatório."
 								 validatorMessage="O código ISBN deve ser um número de 10 ou 13 Digítos"
-								 maxlength="13">
+								 maxlength="13"
+								 valueChangeListener="#{cadastrarLivroMB.isIsbnCadastrado}"
+								 tabindex="4">
 						<f:validateRegex pattern="(\d{10}|\d{13})"/>
+						<p:ajax event="blur" update="isbnMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
-						<h:message for="isbn"/>
+						<h:message id="isbnMessage" for="isbn"/>
 					</span>
 				</div>
 				<div class="element">
@@ -134,19 +149,21 @@
 									 title="Categoria do livro"
 									 value="#{cadastrarLivroMB.dataFormatter.categoria}"
 									 required="true" 
-									 requiredMessage="A categoria do livro é obrigatoria." >
+									 requiredMessage="Campo obrigatório." 
+									 tabindex="9">
 						<f:selectItem itemLabel="Selecione.." itemValue="#{null}" />
 						<f:selectItems var="opcao" itemLabel="#{opcao.nome}" itemValue="#{opcao.idCategoria}" value="#{cadastrarLivroMB.categorias}"/>
+						<p:ajax event="blur" update="categoriaMessage"/>
 					</h:selectOneMenu><br/>
 					<span class="validation-message">
-						<h:message for="categoria"/>
+						<h:message id="categoriaMessage" for="categoria"/>
 					</span>
 				</div>
 			</div>
 			<div class="row" align="center">
 				<div style="margin-top:3%;">
-						<h:commandButton value="Cadastrar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao"/>
-						<h:commandButton value="Cancelar" h5:type="reset" class="botao"/>
+						<h:commandButton value="Cadastrar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao" tabindex="10"/>
+						<h:commandButton value="Cancelar" h5:type="reset" class="botao" tabindex="11"/>
 				</div>
 			</div>
 		</div>

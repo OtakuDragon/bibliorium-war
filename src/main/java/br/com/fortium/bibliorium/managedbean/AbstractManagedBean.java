@@ -1,8 +1,6 @@
-package br.com.fortium.bibliorium.managedbean.generic;
+package br.com.fortium.bibliorium.managedbean;
 
 import java.io.Serializable;
-import java.lang.annotation.Annotation;
-import java.lang.reflect.Field;
 import java.util.Formatter;
 
 import javax.annotation.PostConstruct;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
 import org.primefaces.context.RequestContext;
 
-import br.com.fortium.bibliorium.managedbean.LoginMB;
 import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.util.DialogUtil;
@@ -29,20 +26,15 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	
 	private DialogUtil dialogUtil;
 	private Logger logger;
-	private Class<T> managedBeanClass;
 	
-	AbstractManagedBean() {}
-	
-	public AbstractManagedBean(Class<T> managedBeanClass){
+	public AbstractManagedBean(){
 		this.dialogUtil = new DialogUtil();
-		this.managedBeanClass = managedBeanClass;
-		this.logger = Logger.getLogger(managedBeanClass);
+		this.logger = Logger.getLogger(getMBInstance().getClass());
 	}
 	
 	@PostConstruct
 	private void abstractInit() throws ServiceableException{
 		try{
-			setValidator();
 			setServiceables(getMBInstance());
 		}catch(ReflectiveOperationException e){
 			throw new ServiceableException("Erro na injeção de utilities no managed bean", e);
@@ -52,10 +44,6 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	
 	protected abstract void init();
 	
-	protected void addMessage(Severity severity, String message, String detail){
-		getFacesContext().addMessage(null, new FacesMessage(severity, message, detail));
-	}
-
 	protected DialogUtil getDialogUtil() {
 		return dialogUtil;
 	}
@@ -66,6 +54,11 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	
 	protected void setPrintable(PrintableDataHolder printableDataHolder){
 		getSession().setAttribute(Printable.DATA_HOLDER_KEY, printableDataHolder);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private T getMBInstance(){
+		return (T) this;
 	}
 	
 	/*
@@ -84,6 +77,24 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	
 	protected HttpServletRequest getRequest(){
 		return (HttpServletRequest) getFacesContext().getExternalContext().getRequest();
+	}
+	
+	/*
+	=============================
+	    Message management
+	=============================
+	*/
+	
+	protected void addMessage(Severity severity, String message, String detail){
+		addMessage(null, severity, message, detail);
+	}
+	
+	protected void addValidationMessage(String clientId, String message){
+		addMessage(clientId, FacesMessage.SEVERITY_ERROR, message, null);
+	}
+	
+	protected void addMessage(String clientId, Severity severity, String message, String detail){
+		getFacesContext().addMessage(clientId, new FacesMessage(severity, message, detail));
 	}
 	
 	/*
@@ -141,37 +152,4 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 		return retorno;
 	}
 	
-	/*
-	=============================
-	*/
-	
-	@SuppressWarnings("unchecked")
-	private T getMBInstance(){
-		return (T) this;
-	}
-	
-	private void setValidator() throws ReflectiveOperationException{
-		for (Field field : managedBeanClass.getDeclaredFields()) {
-			field.setAccessible(Boolean.TRUE);
-			
-			Class<?> validationInterface                     = br.com.fortium.bibliorium.validation.Validator.class;
-			Class<? extends Annotation> validationAnnotation = br.com.fortium.bibliorium.metadata.Validator.class;
-			
-			if(field.isAnnotationPresent(validationAnnotation)){
-					if(validationInterface.isAssignableFrom(field.getType())){
-					try{
-						if(field.get(getMBInstance()) == null){
-							field.set(getMBInstance(), field.getType().newInstance());
-						}else{
-							throw new ReflectiveOperationException("Mais do que um @Validator identificado no managed bean");
-						}
-					}catch(InstantiationException e){
-						throw new ReflectiveOperationException("O atributo "+ field.getName()+" Anotado com @Validator não possui um construtor sem parametros e isto é obrigatorio");
-					}
-				}else{
-					throw new ReflectiveOperationException("O atributo "+ field.getName()+" Anotado com @Validator não implementa a interface Validator");
-				}
-			}
-		}
-	}
 }
