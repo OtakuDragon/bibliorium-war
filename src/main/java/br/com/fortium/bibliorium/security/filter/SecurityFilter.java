@@ -29,7 +29,7 @@ public class SecurityFilter implements Filter {
 		
 		TipoUsuario tipo = (TipoUsuario)httpRequest.getSession(true).getAttribute(Usuario.AUTENTICADO);
 		
-		if(!upperUrl.contains("PAGES/LEITOR") && !upperUrl.contains("PAGES/BIBLIOTECARIO")){
+		if(!upperUrl.contains("PAGES/LEITOR") && !upperUrl.contains("PAGES/BIBLIOTECARIO") && !upperUrl.contains("PAGES/ALL")){
 			chain.doFilter(httpRequest, response);
 		}else if(tipo == null){
 			redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não está logado no sistema ou a sua sessão expirou.");

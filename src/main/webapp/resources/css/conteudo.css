@@ -1,5 +1,9 @@
 @CHARSET "ISO-8859-1";
 
+.small-prime, .small-prime .ui-widget, .small-prime .ui-widget .ui-helper-reset, .small-prime .ui-widget .ui-widget {
+	font-size: 90% !important;
+}
+
 .titulo-conteudo-div{
 	margin-top:2%;
 	margin-bottom:5%;
@@ -90,5 +94,13 @@
 	width:67%;
 	height:25px;
 	float:right;
+}
+
+.auto-complete{
+	float:left;
+}
+
+.auto-complete input{
+	width:195%;
 }
 

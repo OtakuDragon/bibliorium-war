@@ -3,7 +3,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<title>Bibliorium - Biblioteca da faculdade fortium</title>
@@ -37,7 +38,16 @@
 			</h:form>
 		</div>
 		<div id="menuVerticalContainer">
-			<ui:insert name ="MenuVertical"> Espaço para o Menu vertical </ui:insert>
+			<ui:insert name ="MenuVertical">
+				<c:choose>
+					<c:when test="#{loginMB.menuFlag}">
+						<ui:include src ="/WEB-INF/templates/menuBibliotecario.xhtml"/>
+					</c:when>
+					<c:otherwise>
+						<ui:include src ="/WEB-INF/templates/menuLeitor.xhtml"/>
+					</c:otherwise>
+				</c:choose>
+			</ui:insert>
 		</div>
 		<div id="contentContainer">
 			<ui:insert name ="Conteudo"> Espaço para o conteudo da página </ui:insert>

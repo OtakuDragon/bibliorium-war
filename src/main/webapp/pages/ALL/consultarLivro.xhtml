@@ -1,0 +1,39 @@
+<ui:composition template="/WEB-INF/templates/templateBase.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="Conteudo">
+		<div class="titulo-conteudo-div">
+			<span class="titulo-conteudo-text">Consultar Livro</span>
+		</div>
+		<h:form id="cadastrarLivroForm" styleClass="form-conteudo" enctype="multipart/form-data">
+		<div class="form-conteudo wrapper">
+			<div class="row">
+				<div class="element">
+					<h:outputLabel styleClass="label" value="Título do livro: " title="Título do livro" for="titulo" style="float:left;padding-right:1%;"/>
+					<p:autoComplete styleClass="auto-complete small-prime"></p:autoComplete><br/>
+				</div>
+				<div class="element">
+					<h:outputLabel styleClass="label" value="Categoria: " title="Categoria" for="titulo" style="margin-left:38%;padding-right:1%;"/>
+					<h:selectOneMenu style="width:38%;" styleClass="select">
+						<f:selectItem itemLabel="Todas"/>
+					</h:selectOneMenu>
+				</div>
+			</div>
+			<div class="row">
+
+			</div>
+			<div class="row" align="center">
+				<div style="margin-top:3%;">
+						<h:commandButton value="Cadastrar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao" tabindex="10"/>
+						<h:commandButton value="Cancelar" h5:type="reset" class="botao" tabindex="11"/>
+				</div>
+			</div>
+		</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

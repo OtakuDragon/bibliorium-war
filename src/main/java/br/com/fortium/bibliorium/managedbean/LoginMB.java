@@ -65,6 +65,11 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 		return getHomePage(tipo);
 	}
 	
+	public boolean getMenuFlag(){
+		TipoUsuario tipo = (TipoUsuario)getSessionAttribute(Usuario.AUTENTICADO);
+		return tipo == TipoUsuario.BIBLIOTECARIO;
+	}
+	
 	private String getHomePage(TipoUsuario tipo){
 		switch(tipo){
 			case ALUNO:
