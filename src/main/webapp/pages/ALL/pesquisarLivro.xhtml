@@ -1,0 +1,164 @@
+<ui:composition template="/WEB-INF/templates/templateBase.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="Conteudo">
+		<h:outputScript library="js" name="pesquisaAvancada.js" target="body" />
+		<div class="titulo-conteudo-div">
+			<span class="titulo-conteudo-text">Pesquisar Livro</span>
+		</div>
+		<h:form id="pesquisarLivroForm" styleClass="form-conteudo" enctype="multipart/form-data">
+			<div class="form-conteudo wrapper">
+				<div class="row" style="height:36px !important;">
+					<div class="element">
+						<h:outputLabel styleClass="label" value="Título do livro: " title="Título do livro" for="autocomplete" style="float:left;padding-right:1%;"/>
+						<p:autoComplete id="autocomplete" styleClass="auto-complete reset-theme small-prime"></p:autoComplete><br/>
+					</div>
+					<div class="element">
+						<h:outputLabel styleClass="label" value="Categoria: " title="Categoria" for="categoria" style="margin-left:38%;padding-right:1%;"/>
+						<h:selectOneMenu id="categoria" style="width:38%;" styleClass="select">
+							<f:selectItem itemLabel="Todas"/>
+						</h:selectOneMenu>
+					</div>
+				</div>
+				<div class="row" style="height:30px !important;">
+					<div class="element"/>
+					<div class="element" style="float:right;">
+						<p:commandLink styleClass="small-prime avancadoLink" style="float:right;text-decoration:none;">Pesquisa Avançada...</p:commandLink>
+					</div>
+				</div>
+				<div class="row avancado">
+					<div class="element">
+						<h:outputLabel styleClass="label width-20" value="Autores: " title="Autores do livro" for="autores"/>
+						<h:inputText id="autores"
+									 styleClass="input-text width-77"
+									 value="#{cadastrarLivroMB.dataFormatter.titulo}"
+									 maxlength="255"
+									 tabindex="1" />
+					</div>
+					<div class="element">
+						<h:outputLabel styleClass="label width-20" value="ISBN: " title="ISBN do livro" for="isbn"/>
+						<h:inputText id="isbn"
+									 styleClass="input-text width-77"
+									 value="#{cadastrarLivroMB.dataFormatter.edicao}"
+									 tabindex="5" />
+					</div>
+				</div>
+				<div class="row avancado">
+					<div class="element">
+						<h:outputLabel styleClass="label width-20" value="Editora: " title="Editora do livro" for="editora"/>
+						<h:inputText id="editora"
+									 styleClass="input-text width-77"
+									 value="#{cadastrarLivroMB.dataFormatter.titulo}"
+									 maxlength="255"
+									 tabindex="1" />
+					</div>
+					<div class="element">
+						<h:outputLabel styleClass="label width-20" value="Edição: " title="Edição do livro" for="edicao"/>
+						<h:inputText id="edicao"
+									 styleClass="input-text width-77"
+									 value="#{cadastrarLivroMB.dataFormatter.edicao}"
+									 tabindex="5" />
+					</div>
+				</div>
+				<div class="row" align="center">
+					<div>
+						<h:commandButton value="Pesquisar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao" tabindex="10"/>
+						<h:commandButton value="Limpar" h5:type="reset" class="botao" tabindex="11"/>
+					</div>
+				</div>
+				<div class="row" align="center">
+					<p:dataTable styleClass="small-prime"
+								 value="#{pesquisarLivroMB.livros}"
+								 var="livro"
+								 scrollable="true"
+								 scrollHeight="300"
+								 emptyMessage="Nenhum livro encontrado."
+								 lazy="true">
+						<p:column style="width: 10%;">
+							<f:facet name="header">
+								Título
+							</f:facet>
+							<div>
+								<h:outputText value="#{livro.titulo}" />
+							</div>
+						</p:column>
+						<p:column style="width: 12%;">
+							<f:facet name="header">
+								Autores
+							</f:facet>
+							<div>
+								<h:outputText value="#{livro.autores}" />
+							</div>
+						</p:column>
+						<p:column style="width: 5%;">
+							<f:facet name="header">
+								Copias
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{livro.copiasDisponiveis.size()}" />/<h:outputText value="#{livro.copias.size()}" />
+							</div>
+						</p:column>
+						<p:column style="width: 7%;">
+							<div>
+								<p:commandButton value="Detalhar" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;" update=":pesquisarLivroForm:idDetalheDialog">
+									<f:setPropertyActionListener target="#{pesquisarLivroMB.livroDetalhe}" value="#{livro}" />
+								</p:commandButton>
+							</div>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			<p:dialog id="idDetalheDialog" modal="true" widgetVar="detalheDialog" resizable="false" header="Detalhe Livro" draggable="false" width="60%">
+				<div class="row">
+					<div class="element detalhe-dialog-left-element">
+						<h:outputLabel styleClass="label" value="Titulo:" style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.titulo}" styleClass="detalhe-dialog-text"/>
+					</div>
+					<div class="element detalhe-dialog-right-element">
+						<h:outputLabel styleClass="label" value="Edição: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.edicao}" styleClass="detalhe-dialog-text"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="element detalhe-dialog-left-element">
+						<h:outputLabel styleClass="label" value="Editora: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.editora}" styleClass="detalhe-dialog-text"/>
+					</div>
+					<div class="element detalhe-dialog-right-element">
+						<h:outputLabel styleClass="label" value="Num. Páginas: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.numPaginas}" styleClass="detalhe-dialog-text"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="element detalhe-dialog-left-element">
+						<h:outputLabel styleClass="label" value="Autores: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.autores}" styleClass="detalhe-dialog-text"/>
+					</div>
+					<div class="element detalhe-dialog-right-element">
+						<h:outputLabel styleClass="label" value="Quantidade Disponível: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.copiasDisponiveis.size()}" styleClass="detalhe-dialog-text"/>
+					</div>
+				</div>
+				<div class="row">
+					<div class="element detalhe-dialog-left-element">
+						<h:outputLabel styleClass="label" value="ISBN: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.isbn}" styleClass="detalhe-dialog-text"/>
+					</div>
+					<div class="element detalhe-dialog-right-element">
+						<h:outputLabel styleClass="label" value="Categoria: " style="float:left"/>
+						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.categoria.nome}" styleClass="detalhe-dialog-text"/>
+					</div>
+				</div>
+				<div class="row" style="margin-top:2%;">
+						<p:commandButton value="Reservar" style="font-size:80% !important;float:right" />
+						<p:commandButton value="Editar"   style="font-size:80% !important;float:right"/>
+				</div>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>
