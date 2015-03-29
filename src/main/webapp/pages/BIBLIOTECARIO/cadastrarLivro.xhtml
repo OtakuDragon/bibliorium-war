@@ -128,11 +128,9 @@
 								 value="#{cadastrarLivroMB.dataFormatter.isbn}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
-								 validatorMessage="O código ISBN deve ser um número de 10 ou 13 Digítos"
 								 maxlength="13"
-								 valueChangeListener="#{cadastrarLivroMB.isIsbnCadastrado}"
-								 tabindex="4">
-						<f:validateRegex pattern="(\d{10}|\d{13})"/>
+								 tabindex="4"
+								 validator="#{cadastrarLivroMB.validarIsbn}">
 						<p:ajax event="blur" update="isbnMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">

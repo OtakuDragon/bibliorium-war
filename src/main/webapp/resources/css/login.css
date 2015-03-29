@@ -22,3 +22,7 @@
 	padding-left:1%;
 	margin-top:6%;
 }
+
+.ui-widget {
+	font-size:16px !important;
+}

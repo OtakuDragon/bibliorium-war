@@ -37,11 +37,11 @@ tr{
 }
 
 .menuItemText{
-	color: black;
-	font-size: 13px;
-	margin-left:5%;
-	font-weight:190;
-	font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;
+	color: black !important;
+	font-size: 13px !important;
+	margin-left:5% !important;
+	font-weight:190 !important;
+	font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif !important;
 }
 
 .menuItemText:link {

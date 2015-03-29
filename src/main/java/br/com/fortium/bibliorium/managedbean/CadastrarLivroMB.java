@@ -4,7 +4,10 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.event.ValueChangeEvent;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
@@ -55,11 +58,21 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 		handlePrint(copias);
 	}
 	
-	public void isIsbnCadastrado(ValueChangeEvent event){
-		String isbn = (String)event.getNewValue();
+	private void handlePrint(List<Copia> copias){
+		Printable[] etiquetas = PrintableBuilder.buildEtiquetas(copias);
+		PrintableDataHolder dataHolder = new PrintableDataHolder(EtiquetaPrintable.NAME, etiquetas);
+		setPrintable(dataHolder);
+	}
 
+	public void validarIsbn(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+		String isbn = (String)value;
+
+		if(!(isbn.length() == 10 || isbn.length() == 13)){
+			throw new ValidatorException(new FacesMessage("O código ISBN deve ser um número de 10 ou 13 Digítos"));
+		}
+		
 		if(StringUtils.isNumeric(isbn) && livroService.isIsbnCadastrado(isbn)){
-			addValidationMessage(event.getComponent().getClientId(), "ISBN já cadastrado.");
+			throw new ValidatorException(new FacesMessage("ISBN já cadastrado"));
 		}
 	}
 	
@@ -77,13 +90,6 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 
 	public void setDataFormatter(CadastrarLivroDataFormatter dataFormatter) {
 		this.dataFormatter = dataFormatter;
-		
-	}
-	
-	private void handlePrint(List<Copia> copias){
-		Printable[] etiquetas = PrintableBuilder.buildEtiquetas(copias);
-		PrintableDataHolder dataHolder = new PrintableDataHolder(EtiquetaPrintable.NAME, etiquetas);
-		setPrintable(dataHolder);
 	}
 
 }

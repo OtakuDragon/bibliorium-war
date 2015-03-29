@@ -103,9 +103,9 @@
 								<h:outputText value="#{livro.copiasDisponiveis.size()}" />/<h:outputText value="#{livro.copias.size()}" />
 							</div>
 						</p:column>
-						<p:column style="width: 7%;">
+						<p:column style="width: 7%;padding-left:1% !important;">
 							<div>
-								<p:commandButton value="Detalhar" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;" update=":pesquisarLivroForm:idDetalheDialog">
+								<p:commandButton value="Detalhar" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;max-width:77px !important;" update=":pesquisarLivroForm:idDetalheDialog">
 									<f:setPropertyActionListener target="#{pesquisarLivroMB.livroDetalhe}" value="#{livro}" />
 								</p:commandButton>
 							</div>
@@ -113,7 +113,7 @@
 					</p:dataTable>
 				</div>
 			</div>
-			<p:dialog id="idDetalheDialog" modal="true" widgetVar="detalheDialog" resizable="false" header="Detalhe Livro" draggable="false" width="60%">
+			<p:dialog id="idDetalheDialog" modal="true" styleClass="detalhe-dialog" widgetVar="detalheDialog" resizable="false" header="Detalhe Livro" draggable="false" width="60%" style="max-width:770px">
 				<div class="row">
 					<div class="element detalhe-dialog-left-element">
 						<h:outputLabel styleClass="label" value="Titulo:" style="float:left"/>
@@ -155,7 +155,7 @@
 					</div>
 				</div>
 				<div class="row" style="margin-top:2%;">
-						<p:commandButton value="Reservar" style="font-size:80% !important;float:right" />
+						<p:commandButton value="Reservar" style="font-size:80% !important;float:right;" />
 						<p:commandButton value="Editar"   style="font-size:80% !important;float:right"/>
 				</div>
 			</p:dialog>
