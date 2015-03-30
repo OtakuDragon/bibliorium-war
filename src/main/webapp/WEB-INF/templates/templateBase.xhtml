@@ -40,7 +40,7 @@
 		<div id="menuVerticalContainer">
 			<ui:insert name ="MenuVertical">
 				<c:choose>
-					<c:when test="#{loginMB.menuFlag}">
+					<c:when test="#{loginMB.bibliotecario}">
 						<ui:include src ="/WEB-INF/templates/menuBibliotecario.xhtml"/>
 					</c:when>
 					<c:otherwise>

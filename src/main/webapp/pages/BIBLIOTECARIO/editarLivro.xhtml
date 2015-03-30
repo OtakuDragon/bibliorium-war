@@ -8,7 +8,7 @@
 
 	<ui:define name="Conteudo">
 		<div class="titulo-conteudo-div">
-			<span class="titulo-conteudo-text">Cadastrar Livro</span>
+			<span class="titulo-conteudo-text">Editar Livro</span>
 		</div>
 		<h:form id="cadastrarLivroForm" styleClass="form-conteudo" enctype="multipart/form-data">
 		<div class="form-conteudo wrapper">
@@ -17,7 +17,7 @@
 					<h:outputLabel styleClass="label width-20" value="Título: " title="Título do livro" for="titulo"/>
 					<h:inputText id="titulo"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.dataFormatter.titulo}"
+								 value="#{editarLivroMB.livro.titulo}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Titulo inválido (Min. 5 Caracteres)."
@@ -34,7 +34,7 @@
 					<h:outputLabel styleClass="label width-62" value="Edição: " title="Edição do livro" for="edicao" validatorMessage="Edição inválida (Min. 1 Caractere)."/>
 					<h:inputText id="edicao"
 								 styleClass="input-text width-35"
-								 value="#{cadastrarLivroMB.dataFormatter.edicao}"
+								 value="#{editarLivroMB.livro.edicao}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 maxlength="10"
@@ -52,7 +52,7 @@
 					<h:outputLabel styleClass="label width-20" value="Editora: " title="Editora do livro" for="editora" />
 					<h:inputText id="editora"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.dataFormatter.editora}" required="true"
+								 value="#{editarLivroMB.livro.editora}" required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Editora Inválida (Min. 3 Caracteres)."
 								 maxlength="255"
@@ -68,13 +68,13 @@
 					<h:outputLabel styleClass="label width-77" value="Num. Páginas: " title="Numero de páginas do livro" for="paginas"/>
 					<h:inputText id="paginas"
 								 styleClass="input-text width-20"
-								 value="#{cadastrarLivroMB.dataFormatter.numPaginas}"
+								 value="#{editarLivroMB.livro.numPaginas}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Número de páginas inválido."
 								 maxlength="5" 
 								 tabindex="6">
-						<f:validateRegex pattern="^[0-9]\d{0,4}" />
+						<f:validateLongRange minimum="1"/>
 						<p:ajax event="blur" update="numPgMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
@@ -87,7 +87,7 @@
 					<h:outputLabel styleClass="label width-20" value="Autores: " title="Nome dos Autores do livro, separados por virgula" for="autores"/>
 					<h:inputText id="autores"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.dataFormatter.autores}"
+								 value="#{editarLivroMB.livro.autores}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Autores inválidos (Min. 3 Letras)."
@@ -105,12 +105,13 @@
 						<h:inputText id="qtd"
 									 h5:type="number"
 									 styleClass="input-text width-20"
-									 value="#{cadastrarLivroMB.dataFormatter.quantidade}"
+									 value="#{editarLivroMB.livro.copias.size()}"
 									 required="true"
 									 requiredMessage="Campo obrigatório."
 									 validatorMessage="Quantidade inválida, deve ser positiva."
 									 maxlength="2"
-									 tabindex="7">
+									 tabindex="7"
+									 disabled="true">
 							<f:validateRegex pattern="^[1-9]\d{0,3}" />
 							<p:ajax event="blur" update="qtdMessage"/>
 						</h:inputText><br/>
@@ -125,12 +126,13 @@
 					<h:inputText id="isbn"
 								 title="ISBN do livro"
 								 styleClass="input-text width-77"
-								 value="#{cadastrarLivroMB.dataFormatter.isbn}"
+								 value="#{editarLivroMB.livro.isbn}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 maxlength="13"
 								 tabindex="4"
-								 validator="#{cadastrarLivroMB.validarIsbn}">
+								 validator="#{cadastrarLivroMB.validarIsbn}"
+								 disabled="true">
 						<p:ajax event="blur" update="isbnMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
@@ -142,12 +144,11 @@
 					<h:selectOneMenu id="categoria"
 									 styleClass="select"
 									 title="Categoria do livro"
-									 value="#{cadastrarLivroMB.dataFormatter.categoria}"
+									 value="#{editarLivroMB.livro.categoria.id}"
 									 required="true" 
 									 requiredMessage="Campo obrigatório." 
 									 tabindex="9">
-						<f:selectItem itemLabel="Selecione.." itemValue="#{null}" />
-						<f:selectItems var="opcao" itemLabel="#{opcao.nome}" itemValue="#{opcao.id}" value="#{cadastrarLivroMB.categorias}"/>
+						<f:selectItems var="opcao" itemLabel="#{opcao.nome}" itemValue="#{opcao.id}" value="#{editarLivroMB.categorias}"/>
 						<p:ajax event="blur" update="categoriaMessage"/>
 					</h:selectOneMenu><br/>
 					<span class="validation-message">
@@ -157,8 +158,9 @@
 			</div>
 			<div class="row" align="center">
 				<div style="margin-top:3%;">
-						<p:commandButton value="Cadastrar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Cancelar" h5:type="reset" class="botao" tabindex="11" ajax="false"/>
+						<h:commandButton value="Salvar" action="#{editarLivroMB.salvar}" style="margin-right:2%;" class="botao" tabindex="10"/>
+						<h:commandButton value="Excluir" action="#{editarLivroMB.excluir}" style="margin-right:2%;" class="botao" tabindex="10"/>
+						<h:commandButton value="Cancelar" action="/pages/ALL/pesquisarLivro" class="botao" tabindex="11"/>
 				</div>
 			</div>
 		</div>

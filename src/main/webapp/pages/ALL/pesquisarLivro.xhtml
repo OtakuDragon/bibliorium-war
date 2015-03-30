@@ -4,7 +4,8 @@
 				xmlns:f="http://java.sun.com/jsf/core"
 				xmlns:ui="http://java.sun.com/jsf/facelets"
 				xmlns:p="http://primefaces.org/ui"
-				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+				xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 	<ui:define name="Conteudo">
 		<h:outputScript library="js" name="pesquisaAvancada.js" target="body" />
@@ -15,13 +16,14 @@
 			<div class="form-conteudo wrapper">
 				<div class="row" style="height:36px !important;">
 					<div class="element">
-						<h:outputLabel styleClass="label" value="Título do livro: " title="Título do livro" for="autocomplete" style="float:left;padding-right:1%;"/>
-						<p:autoComplete id="autocomplete" styleClass="auto-complete reset-theme small-prime"></p:autoComplete><br/>
+						<h:outputLabel styleClass="label" value="Título: " title="Título do livro" for="titulo" style="float:left;padding-right:1%;"/>
+						<h:inputText id="titulo" styleClass="input-text autocomplete" value="#{pesquisarLivroMB.filtro.titulo}" style="width:84%;" /><br/>
 					</div>
 					<div class="element">
 						<h:outputLabel styleClass="label" value="Categoria: " title="Categoria" for="categoria" style="margin-left:38%;padding-right:1%;"/>
-						<h:selectOneMenu id="categoria" style="width:38%;" styleClass="select">
-							<f:selectItem itemLabel="Todas"/>
+						<h:selectOneMenu id="categoria" value="#{pesquisarLivroMB.filtro.categoria.id}" style="width:38%;" styleClass="select">
+							<f:selectItem itemLabel="Todas" value="#{null}"/>
+							<f:selectItems var="categoria" itemLabel="#{categoria.nome}" itemValue="#{categoria.id}" value="#{pesquisarLivroMB.categorias}"/>
 						</h:selectOneMenu>
 					</div>
 				</div>
@@ -36,7 +38,7 @@
 						<h:outputLabel styleClass="label width-20" value="Autores: " title="Autores do livro" for="autores"/>
 						<h:inputText id="autores"
 									 styleClass="input-text width-77"
-									 value="#{cadastrarLivroMB.dataFormatter.titulo}"
+									 value="#{pesquisarLivroMB.filtro.autores}"
 									 maxlength="255"
 									 tabindex="1" />
 					</div>
@@ -44,7 +46,7 @@
 						<h:outputLabel styleClass="label width-20" value="ISBN: " title="ISBN do livro" for="isbn"/>
 						<h:inputText id="isbn"
 									 styleClass="input-text width-77"
-									 value="#{cadastrarLivroMB.dataFormatter.edicao}"
+									 value="#{pesquisarLivroMB.filtro.isbn}"
 									 tabindex="5" />
 					</div>
 				</div>
@@ -53,7 +55,7 @@
 						<h:outputLabel styleClass="label width-20" value="Editora: " title="Editora do livro" for="editora"/>
 						<h:inputText id="editora"
 									 styleClass="input-text width-77"
-									 value="#{cadastrarLivroMB.dataFormatter.titulo}"
+									 value="#{pesquisarLivroMB.filtro.editora}"
 									 maxlength="255"
 									 tabindex="1" />
 					</div>
@@ -61,18 +63,20 @@
 						<h:outputLabel styleClass="label width-20" value="Edição: " title="Edição do livro" for="edicao"/>
 						<h:inputText id="edicao"
 									 styleClass="input-text width-77"
-									 value="#{cadastrarLivroMB.dataFormatter.edicao}"
+									 value="#{pesquisarLivroMB.filtro.edicao}"
 									 tabindex="5" />
 					</div>
 				</div>
 				<div class="row" align="center">
 					<div>
-						<h:commandButton value="Pesquisar" action="#{cadastrarLivroMB.cadastrarLivro}" style="margin-right:2%;" class="botao" tabindex="10"/>
-						<h:commandButton value="Limpar" h5:type="reset" class="botao" tabindex="11"/>
+						<p:commandButton value="Pesquisar" action="#{pesquisarLivroMB.pesquisar}" style="margin-right:2%;" class="botao small-prime" tabindex="10" update="tabelaLivros"/>
+						<p:commandButton value="Limpar" h5:type="reset" class="botao small-prime" tabindex="11" ajax="false"/>
 					</div>
 				</div>
 				<div class="row" align="center">
-					<p:dataTable styleClass="small-prime"
+					<p:dataTable 
+								 id="tabelaLivros"
+								 styleClass="small-prime"
 								 value="#{pesquisarLivroMB.livros}"
 								 var="livro"
 								 scrollable="true"
@@ -105,8 +109,9 @@
 						</p:column>
 						<p:column style="width: 7%;padding-left:1% !important;">
 							<div>
-								<p:commandButton value="Detalhar" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;max-width:77px !important;" update=":pesquisarLivroForm:idDetalheDialog">
+								<p:commandButton value="Detalhar" class="botao small-prime" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;width:100%;max-width:77px !important;" update=":pesquisarLivroForm:idDetalheDialog">
 									<f:setPropertyActionListener target="#{pesquisarLivroMB.livroDetalhe}" value="#{livro}" />
+									<f:setPropertyActionListener target="#{sessionScope['livroEdit']}" value="#{livro}"/>
 								</p:commandButton>
 							</div>
 						</p:column>
@@ -155,8 +160,14 @@
 					</div>
 				</div>
 				<div class="row" style="margin-top:2%;">
-						<p:commandButton value="Reservar" style="font-size:80% !important;float:right;" />
-						<p:commandButton value="Editar"   style="font-size:80% !important;float:right"/>
+					<c:choose>
+						<c:when test="#{loginMB.bibliotecario}">
+							<p:commandButton value="Editar" action="/pages/BIBLIOTECARIO/editarLivro"   style="font-size:80% !important;float:right;"/>
+						</c:when>
+						<c:otherwise>
+							<p:commandButton value="Reservar" style="font-size:80% !important;float:right;" />
+						</c:otherwise>
+					</c:choose>
 				</div>
 			</p:dialog>
 		</h:form>

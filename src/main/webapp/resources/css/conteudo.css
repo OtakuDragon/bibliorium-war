@@ -86,11 +86,20 @@
 
 .botao{
 	width:17%;
-	font-size:14px !important;
+	font-size:13px !important;
 	font-family: Franklin Gothic Medium,Franklin Gothic,ITC Franklin Gothic,Arial !important;
 	background-color:lightblue;
-	border:2px solid #6D90A6;
+	border:1px solid #6D90A6;
 	border-radius:3px;
+	font-weight: normal !important;
+}
+
+.botao span{
+	padding:0 !important;
+}
+
+.botao :HOVER {
+	background-color:#B6D6FF;
 }
 
 .form-conteudo .input-text{
