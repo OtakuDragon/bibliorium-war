@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.jboss.logging.Logger;
 import org.primefaces.context.RequestContext;
 
+import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.util.DialogUtil;
@@ -150,6 +151,10 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 		Object retorno = getSessionAttribute(attributeName);
 		getSession().removeAttribute(attributeName);
 		return retorno;
+	}
+	
+	protected Usuario getUsuarioAutenticado(){
+		return (Usuario)getSessionAttribute(Usuario.AUTENTICADO);
 	}
 	
 }

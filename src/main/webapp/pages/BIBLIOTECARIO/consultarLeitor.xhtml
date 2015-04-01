@@ -33,9 +33,13 @@
 				<c:choose>
 					<c:when test="#{not empty consultarLeitorMB.leitor}">
 						<div class="row">
-							<div class="element" style="width:100%;" align="center">
-								<h:outputLabel styleClass="label" value="Nome: " title="Nome completo" for="nome" style="width:12%;"/>
+							<div class="element" align="center">
+								<h:outputLabel styleClass="label" value="Nome: " title="Nome completo" for="nome"/>
 								<h:outputText id="nome" styleClass="text" value="#{consultarLeitorMB.leitor.nome}" />
+							</div>
+							<div class="element" align="center">
+								<h:outputLabel styleClass="label" value="Estado: " title="Estado" for="estado"/>
+								<h:outputText id="estado" styleClass="text" value="#{consultarLeitorMB.leitor.estado}" />
 							</div>
 						</div>
 						<div class="row">
@@ -77,10 +81,11 @@
 			<h:panelGroup rendered="#{not empty consultarLeitorMB.leitor}">
 				<div class="row" align="center">
 					<div style="margin-top:3%;">
-						<p:commandButton value="Alterar" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Bloquear" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Resetar Senha" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Cancelar" h5:type="reset" class="botao" tabindex="11" ajax="false"/>
+						<p:commandButton value="Histórico" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Alterar" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Bloquear/Ativar" action="#{consultarLeitorMB.toggleAcesso}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Resetar Senha" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Cancelar" class="botao" tabindex="11" action="#{consultarLeitorMB.reset}" update="@form" />
 					</div>
 				</div>
 			</h:panelGroup>

@@ -34,15 +34,15 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	
 	public String efetuarLogin(){
 		
-		TipoUsuario tipo = usuarioService.autenticarUsuario(cpf, senha);
+		Usuario usuario = usuarioService.autenticarUsuario(cpf, senha);
 		
-		if(tipo == null){
+		if(usuario == null){
 			addMessage(FacesMessage.SEVERITY_ERROR, "Usuário/Senha inválidos, Tente Novamente.", null);
 			return null;
 		}else{
-			String homePage = getHomePage(tipo);
+			String homePage = getHomePage(usuario.getTipo());
 			saveHomePage(homePage);
-			setSessionAttribute(Usuario.AUTENTICADO, tipo);
+			setSessionAttribute(Usuario.AUTENTICADO, usuario);
 			return homePage;
 		}
 	}
@@ -61,13 +61,12 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	}
 	
 	public String redirectToIndex(){
-		TipoUsuario tipo = (TipoUsuario)getSessionAttribute(Usuario.AUTENTICADO);
+		TipoUsuario tipo = getUsuarioAutenticado().getTipo();
 		return getHomePage(tipo);
 	}
 	
 	public boolean isBibliotecario(){
-		TipoUsuario tipo = (TipoUsuario)getSessionAttribute(Usuario.AUTENTICADO);
-		return tipo == TipoUsuario.BIBLIOTECARIO;
+		return getUsuarioAutenticado().getTipo() == TipoUsuario.BIBLIOTECARIO;
 	}
 	
 	private String getHomePage(TipoUsuario tipo){

@@ -27,7 +27,13 @@ public class SecurityFilter implements Filter {
 		
 		String upperUrl = httpRequest.getRequestURL().toString().toUpperCase();
 		
-		TipoUsuario tipo = (TipoUsuario)httpRequest.getSession(true).getAttribute(Usuario.AUTENTICADO);
+		Usuario usuario = (Usuario)httpRequest.getSession(true).getAttribute(Usuario.AUTENTICADO);
+		
+		TipoUsuario tipo = null;
+		
+		if(usuario != null){
+			tipo = usuario.getTipo();
+		}
 		
 		if(!upperUrl.contains("PAGES/LEITOR") && !upperUrl.contains("PAGES/BIBLIOTECARIO") && !upperUrl.contains("PAGES/ALL")){
 			chain.doFilter(httpRequest, response);

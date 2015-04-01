@@ -1,15 +1,17 @@
 package br.com.fortium.bibliorium.managedbean;
 
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
-import javax.inject.Named;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
 
 import br.com.fortium.bibliorium.enumeration.DialogType;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
+import br.com.fortium.bibliorium.persistence.enumeration.EstadoUsuario;
+import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
 import br.com.fortium.bibliorium.service.UsuarioService;
 
-@Named
-@RequestScoped
+@ManagedBean
+@ViewScoped
 public class ConsultarLeitorMB extends AbstractManagedBean<ConsultarLeitorMB> {
 
 	private static final long serialVersionUID = 8656997963954115958L;
@@ -31,6 +33,40 @@ public class ConsultarLeitorMB extends AbstractManagedBean<ConsultarLeitorMB> {
 		}else{
 			leitor = usuarioService.buscar(cpf);
 		}
+	}
+	
+	public void reset(){
+		cpf = "";
+		leitor = null;
+	}
+	
+	public void toggleAcesso(){
+		if((leitor.getTipo() == TipoUsuario.BIBLIOTECARIO) && !getUsuarioAutenticado().equals(leitor)){
+			getDialogUtil().showDialog(DialogType.SUCCESS, "Não é possivel modificar o acesso de outros bibliotecarios.");
+		}
+		
+		EstadoUsuario estado = leitor.getEstado();
+		
+		switch(estado){
+			case ATIVO:
+				leitor.setEstado(EstadoUsuario.INATIVO);
+				usuarioService.update(leitor);
+				getDialogUtil().showDialog(DialogType.SUCCESS, "Usuário bloqueado com sucesso.");
+				break;
+			case INATIVO:
+				leitor.setEstado(EstadoUsuario.ATIVO);
+				usuarioService.update(leitor);
+				getDialogUtil().showDialog(DialogType.SUCCESS, "Usuário desbloqueado com sucesso.");
+				break;
+			case INADIMPLENTE:
+				getDialogUtil().showDialog(DialogType.WARNING, "O Usuário está inadimplente.");
+		}
+	}
+	
+	public void resetarSenha(){
+		leitor.setSenha(leitor.getCpf());
+		usuarioService.update(leitor);
+		getDialogUtil().showDialog(DialogType.SUCCESS, "Senha resetada com sucesso.");
 	}
 
 	public Usuario getLeitor() {
