@@ -121,48 +121,48 @@
 			<p:dialog id="idDetalheDialog" modal="true" styleClass="detalhe-dialog" widgetVar="detalheDialog" resizable="false" header="Detalhe Livro" draggable="false" width="60%" style="max-width:770px">
 				<div class="row">
 					<div class="element detalhe-dialog-left-element">
-						<h:outputLabel styleClass="label" value="Titulo:" style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Titulo:"/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.titulo}" styleClass="detalhe-dialog-text"/>
 					</div>
 					<div class="element detalhe-dialog-right-element">
-						<h:outputLabel styleClass="label" value="Edição: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Edição: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.edicao}" styleClass="detalhe-dialog-text"/>
 					</div>
 				</div>
 				<div class="row">
 					<div class="element detalhe-dialog-left-element">
-						<h:outputLabel styleClass="label" value="Editora: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Editora: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.editora}" styleClass="detalhe-dialog-text"/>
 					</div>
 					<div class="element detalhe-dialog-right-element">
-						<h:outputLabel styleClass="label" value="Num. Páginas: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Num. Páginas: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.numPaginas}" styleClass="detalhe-dialog-text"/>
 					</div>
 				</div>
 				<div class="row">
 					<div class="element detalhe-dialog-left-element">
-						<h:outputLabel styleClass="label" value="Autores: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Autores: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.autores}" styleClass="detalhe-dialog-text"/>
 					</div>
 					<div class="element detalhe-dialog-right-element">
-						<h:outputLabel styleClass="label" value="Quantidade Disponível: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Quantidade Disponível: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.copiasDisponiveis.size()}" styleClass="detalhe-dialog-text"/>
 					</div>
 				</div>
 				<div class="row">
 					<div class="element detalhe-dialog-left-element">
-						<h:outputLabel styleClass="label" value="ISBN: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="ISBN: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.isbn}" styleClass="detalhe-dialog-text"/>
 					</div>
 					<div class="element detalhe-dialog-right-element">
-						<h:outputLabel styleClass="label" value="Categoria: " style="float:left"/>
+						<h:outputLabel styleClass="label align-left" value="Categoria: "/>
 						<h:outputText value="#{pesquisarLivroMB.livroDetalhe.categoria.nome}" styleClass="detalhe-dialog-text"/>
 					</div>
 				</div>
 				<div class="row" style="margin-top:2%;">
 					<c:choose>
 						<c:when test="#{loginMB.bibliotecario}">
-							<p:commandButton value="Editar" action="/pages/BIBLIOTECARIO/editarLivro"   style="font-size:80% !important;float:right;"/>
+							<p:commandButton value="Editar" action="/pages/BIBLIOTECARIO/editarLivro" style="font-size:80% !important;float:right;"/>
 						</c:when>
 						<c:otherwise>
 							<p:commandButton value="Reservar" style="font-size:80% !important;float:right;" />

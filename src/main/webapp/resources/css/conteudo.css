@@ -23,14 +23,6 @@
 	font-stretch: expanded;
 }
 
-.form-conteudo{
-	
-}
-
-.form-conteudo .wrapper{
-	
-}
-
 .form-conteudo .row{
 	width:95%;
 	height:46px;
@@ -84,6 +76,10 @@
 
 .spacing-top-2{
 	margin-top:2%;
+}
+
+.align-left{
+	float:left !important;
 }
 
 .botao{
@@ -142,3 +138,42 @@
 	height:35px !important;
 }
 
+.leitura{
+	width:85%;
+	border:1px solid #6A97A6;
+	border-radius:5px;
+}
+
+.leitura .header{
+	width:100%;
+	height:20px;
+	background-color:#C6DEFF;
+	border-radius:5px 5px 0px 0px;
+	margin-bottom:1%;
+}
+
+.leitura .title{
+	color:#6A97A6;
+	font-weight:bold;
+	float:left;
+	padding-left:1%;
+	width:15% !important;
+}
+
+.leitura .label{
+	width:25%;
+	float:left;
+	margin-right:1%;
+}
+
+.leitura .text{
+	font-family: Optima, Segoe, 'Segoe UI', Candara, Calibri, Arial, sans-serif;
+	display: inline-block;
+	text-align: right;
+	font-size:14px;
+	float:left;
+}
+
+.leitura .row{
+	height:33px;
+}
