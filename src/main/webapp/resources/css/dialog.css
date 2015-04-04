@@ -1,13 +1,13 @@
 /*Dialog*/
 .ui-dialog-title{
 	font-size: 14px !important;
-	color:white !important;
+	color:white;
 }
 
 .ui-dialog .ui-dialog-titlebar{
 	padding:0 !important;
 	padding-left:2% !important;
-	padding-bottom:1% !important;
+	padding-bottom:0.5% !important;
 	position:relative;
 	border:0px;
 	background-color: #176FBD !important;

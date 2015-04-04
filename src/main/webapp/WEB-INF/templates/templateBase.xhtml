@@ -15,7 +15,7 @@
 	<link rel="shortcut icon" type="image/x-icon" href="#{request.contextPath}/resources/img/favicon.ico"/>
 </h:head>
 <h:body>
-	<h:form>
+	<h:form id="returnDialogForm">
 		<p:dialog id="returnDialog" modal="true" draggable="false" resizable="false" closable="false" widgetVar="dialog" header="#{sessionScope.dialogHeader}" width="40%" >
 			<div style="padding:1%;">
 				<h:graphicImage class="dialogIcon" library="img" name="#{sessionScope.dialogIcon.concat('.png')}" />

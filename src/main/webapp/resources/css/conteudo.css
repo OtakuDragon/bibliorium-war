@@ -119,25 +119,6 @@
 	width:179%;
 }
 
-.detalhe-dialog-text{
-	float:left;
-	margin-left:3px;
-	margin-top:4px;
-}
-
-.detalhe-dialog-right-element{
-	float:right !important;
-	width:40% !important;
-}
-
-.detalhe-dialog-left-element{
-	width:60% !important;
-}
-
-.detalhe-dialog .row{
-	height:35px !important;
-}
-
 .leitura{
 	width:85%;
 	border:1px solid #6A97A6;
@@ -176,4 +157,21 @@
 
 .leitura .row{
 	height:33px;
+}
+
+.dialog .label{
+	width:45%;
+	margin-right:2%;
+}
+
+.dialog .left-side{
+	width:23% !important;
+}
+
+.dialog .label, .dialog .text{
+	font-size: 16px !important;
+}
+
+.historico .left-side{
+	width:26% !important;
 }

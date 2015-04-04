@@ -25,11 +25,9 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 
 	private static final long serialVersionUID = 5525739374811866856L;
 	
-	private DialogUtil dialogUtil;
 	private Logger logger;
 	
 	public AbstractManagedBean(){
-		this.dialogUtil = new DialogUtil();
 		this.logger = Logger.getLogger(getMBInstance().getClass());
 	}
 	
@@ -46,7 +44,7 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 	protected abstract void init();
 	
 	protected DialogUtil getDialogUtil() {
-		return dialogUtil;
+		return DialogUtil.getInstance();
 	}
 	
 	protected Logger getLogger(){

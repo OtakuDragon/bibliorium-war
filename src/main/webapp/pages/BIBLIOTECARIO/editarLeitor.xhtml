@@ -1,0 +1,131 @@
+<ui:composition template="/WEB-INF/templates/templateBase.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="Conteudo">
+		<div class="titulo-conteudo-div">
+			<span class="titulo-conteudo-text">Editar Leitor</span>
+		</div>
+		<h:form id="cadastrarLeitorForm" styleClass="form-conteudo">
+		<div class="form-conteudo wrapper">
+			<div class="row">
+				<div class="element" style="width:100%;" align="center">
+					<h:outputLabel styleClass="label" value="Nome: " title="Nome completo" for="nome" style="width:4%;"/>
+					<h:inputText id="nome"
+								 style="width:89%;"
+								 styleClass="input-text width-77"
+								 value="#{editarLeitorMB.leitor.nome}"
+								 required="true"
+								 requiredMessage="Campo obrigatório."
+								 validatorMessage="Nome inválido (Min. 5 Caracteres)."
+								 maxlength="255"
+								 tabindex="1" >
+						<f:validateRegex pattern="^\w{3}.{2,250}" />
+						<p:ajax event="blur" update="nomeMessage"/>
+					</h:inputText><br/>
+					<span class="validation-message">
+						<h:message id="nomeMessage" for="nome"/>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="element">
+					<h:outputLabel styleClass="label width-20" value="RG: " title="Registro geral" for="rg" />
+					<h:inputText id="rg"
+								 styleClass="input-text width-77"
+								 value="#{editarLeitorMB.leitor.rg}" required="true"
+								 requiredMessage="Campo obrigatório."
+								 validatorMessage="RG Inválido (Min. 6 Números)."
+								 maxlength="10"
+								 tabindex="2">
+						<f:validateRegex pattern="^\d{6,}" />
+						<p:ajax event="blur" update="rgMessage"/>
+					</h:inputText><br/>
+					<span class="validation-message">
+						<h:message id="rgMessage" for="rg"/>
+					</span>
+				</div>
+				<div class="element">
+					<h:outputLabel styleClass="label width-20" value="CPF: " title="Cadastro de pessoa fisíca" for="cpf" />
+					<h:inputText id="cpf"
+								 styleClass="input-text width-77"
+								 value="#{editarLeitorMB.leitor.cpf}"
+								 disabled="true"
+								 tabindex="2">
+					</h:inputText><br/>
+				</div>
+			</div>
+			<div class="row">
+				<div class="element">
+					<h:outputLabel styleClass="label width-20" value="Matrícula: " title="Matrícula (Campo opcional)" for="matricula"/>
+					<h:inputText id="matricula"
+								 styleClass="input-text width-77"
+								 value="#{editarLeitorMB.leitor.matricula}"
+								 validatorMessage="Matrícula inválida (Min. 3 Números)."
+								 converterMessage="A matrícula deve ser um número"
+								 maxlength="20"
+								 tabindex="3">
+						<f:validateRegex pattern="^\d{0}|^\d{3,}" />
+						<p:ajax event="blur" update="matriculaMessage"/>
+					</h:inputText><br/>
+					<span class="validation-message">
+						<h:message id="matriculaMessage" for="matricula"/>
+					</span>
+				</div>
+				<div class="element">
+					<h:outputLabel styleClass="label width-20" value="Email: " title="Email válido" for="email"/>
+					<h:inputText id="email"
+								 styleClass="input-text width-77"
+								 value="#{editarLeitorMB.leitor.email}"
+								 required="true"
+								 maxlength="255"
+								 disabled="true"
+								 tabindex="3">
+					</h:inputText>
+				</div>
+			</div>
+			<div class="row">
+				<div class="element">
+					<h:outputLabel styleClass="label width-20" value="Telefone: " for="telefone"/>
+					<h:inputText id="telefone"
+								 title="Telefone"
+								 styleClass="input-text width-77"
+								 value="#{editarLeitorMB.leitor.telefone}"
+								 required="true"
+								 requiredMessage="Campo obrigatório."
+								 validatorMessage="Telefone inválido."
+								 maxlength="13"
+								 tabindex="4">
+						<f:validateRegex pattern="^\d{8}" />
+						<p:ajax event="blur" update="telefoneMessage"/>
+					</h:inputText><br/>
+					<span class="validation-message">
+						<h:message id="telefoneMessage" for="telefone"/>
+					</span>
+				</div>
+				<div class="element">
+					<h:outputLabel styleClass="label width-30" value="Tipo: " for="tipo" />
+					<h:selectOneMenu id="tipo"
+									 styleClass="select"
+									 title="Tipo de usuário"
+									 value="#{editarLeitorMB.leitor.tipo}"
+									 disabled="true"
+									 tabindex="9">
+						<f:selectItem itemLabel="#{editarLeitorMB.leitor.tipo}"/>
+					</h:selectOneMenu>
+				</div>
+			</div>
+			<div class="row" align="center">
+				<div style="margin-top:3%;">
+						<p:commandButton value="Salvar" action="#{editarLeitorMB.editar}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Cancelar" action="/pages/BIBLIOTECARIO/editarLeitor" class="botao" tabindex="11" ajax="false"/>
+				</div>
+			</div>
+		</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

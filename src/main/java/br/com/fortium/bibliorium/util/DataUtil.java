@@ -2,6 +2,7 @@ package br.com.fortium.bibliorium.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.jboss.logging.Logger;
@@ -28,5 +29,13 @@ public class DataUtil {
 		}
 		
 		return null;
+	}
+	
+	public static Calendar getCalendar(Date date){
+		Calendar calendar = Calendar.getInstance();
+		if(date != null){
+			calendar.setTime(date);
+		}
+		return calendar;
 	}
 }

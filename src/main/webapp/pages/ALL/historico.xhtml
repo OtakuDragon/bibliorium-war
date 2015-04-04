@@ -1,0 +1,145 @@
+<ui:composition template="/WEB-INF/templates/templateBase.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+				xmlns:c="http://java.sun.com/jsp/jstl/core">
+	<ui:define name="Conteudo">
+		<h:outputScript library="js" name="pesquisaAvancada.js" target="body" />
+		<div class="titulo-conteudo-div">
+			<span class="titulo-conteudo-text">Histórico</span>
+		</div>
+		<h:form id="pesquisarLivroForm" styleClass="form-conteudo">
+			<div class="form-conteudo wrapper">
+				<div class="leitura" style="margin-bottom:5%;">
+					<div class="header">
+						<span class="title label" style="width:8% !important">Leitor</span>
+					</div>
+					<div class="row" style="height:36px !important;">
+						<div class="element">
+							<h:outputLabel styleClass="label" value="Nome: " style="float:left;padding-right:1%;width:15% !important"/>
+							<h:outputText id="leitor" styleClass="text" value="#{historicoMB.leitor.nome}" style="width:83%;text-align:left;" /><br/>
+						</div>
+						<div class="element">
+							<h:outputLabel styleClass="label" value="Periodo: " style="margin-left:34%;padding-right:1%;"/>
+							<h:selectOneMenu id="categoriaPesquisa" value="#{historicoMB.opcaoPeriodo}" style="width:38%;height:22px !important" styleClass="select">
+								<f:selectItem itemLabel="Todos" value="#{null}"/>
+								<f:selectItems value="#{historicoMB.periodos}"/>
+								<f:ajax event="change" listener="#{historicoMB.filtrar}" render="tabelaLivros"/>
+							</h:selectOneMenu>
+						</div>
+					</div>
+				</div>
+
+				<div class="row" align="center">
+					<p:dataTable id="tabelaLivros"
+								 styleClass="small-prime"
+								 value="#{historicoMB.emprestimos}"
+								 var="emprestimo"
+								 scrollable="true"
+								 scrollHeight="300"
+								 emptyMessage="Nenhum empréstimo encontrado."
+								 lazy="true">
+						<p:column style="width: 9%;">
+							<f:facet name="header">
+								Livro
+							</f:facet>
+							<div>
+								<h:outputText value="#{emprestimo.copia.livro.titulo}" />
+							</div>
+						</p:column>
+						<p:column style="width: 7%;">
+							<f:facet name="header">
+								Dt Ini.
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{emprestimo.dataEmprestimo}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column style="width: 7%;">
+							<f:facet name="header">
+								Dt. Fim.
+							</f:facet>
+							<div align="center">
+								<h:outputText value="Em aberto" rendered="#{empty emprestimo.dataFechamento}" />
+								<h:outputText value="#{emprestimo.dataFechamento}" rendered="#{not empty emprestimo.dataFechamento}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</div>
+						</p:column>
+						<p:column style="width: 9%;">
+							<f:facet name="header">
+								Tipo
+							</f:facet>
+							<div align="center">
+								<h:outputText value="#{emprestimo.tipo}" />
+							</div>
+						</p:column>
+						<p:column style="width: 7%;padding-left:1% !important;">
+							<div>
+								<p:commandButton value="Detalhar" class="botao small-prime" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;width:100%;max-width:77px !important;" update=":pesquisarLivroForm:idDetalheDialog">
+									<f:setPropertyActionListener target="#{historicoMB.emprestimoDetalhe}" value="#{emprestimo}" />
+								</p:commandButton>
+							</div>
+						</p:column>
+					</p:dataTable>
+				</div>
+			</div>
+			<p:dialog id="idDetalheDialog" styleClass="dialog leitura historico"  modal="true" widgetVar="detalheDialog" header="Detalhe Empréstimo" resizable="false" draggable="false" width="30%" style="max-width:770px">
+					<div class="row">
+						<div class="element" align="center">
+							<h:outputLabel styleClass="label left-side" value="Titulo: "/>
+							<h:outputText id="titulo" styleClass="text" value="#{historicoMB.emprestimoDetalhe.copia.livro.titulo}" />
+						</div>
+						<div class="element" align="center">
+							<h:outputLabel styleClass="label" value="Livro: "/>
+							<h:outputText id="codLivro" styleClass="text" value="#{historicoMB.emprestimoDetalhe.copia.livro.id}" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="element" align="center">
+							<h:outputLabel styleClass="label left-side" value="Cópia: "/>
+							<h:outputText id="codCopia" styleClass="text" value="#{historicoMB.emprestimoDetalhe.copia.id}" />
+						</div>
+						<div class="element">
+							<h:outputLabel styleClass="label" value="Tipo: "/>
+							<h:outputText id="tipo" styleClass="text" value="#{historicoMB.emprestimoDetalhe.tipo}" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="element">
+							<h:outputLabel styleClass="label left-side" value="Dt Início: "/>
+							<h:outputText id="dtInicio" styleClass="text" value="#{historicoMB.emprestimoDetalhe.dataEmprestimo}">
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</div>
+						<div class="element">
+							<h:outputLabel styleClass="label" value="Dt. Prev: "/>
+							<h:outputText id="dtPrevista" styleClass="text" value="#{historicoMB.emprestimoDetalhe.dataDevolucao}" >
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</div>
+					</div>
+					<div class="row">
+						<div class="element">
+							<h:outputLabel styleClass="label left-side" value="Dt. Fim: "/>
+								<h:outputText value="Em aberto" styleClass="text" rendered="#{empty historicoMB.emprestimoDetalhe.dataFechamento}"/>
+								<h:outputText value="#{historicoMB.emprestimoDetalhe.dataFechamento}" styleClass="text" rendered="#{not empty historicoMB.emprestimoDetalhe.dataFechamento}" >
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+						</div>
+						<div class="element">
+							<h:outputLabel styleClass="label" value="Multa: "/>
+							<h:outputText id="isbn" styleClass="text " value="#{historicoMB.emprestimoDetalhe.valorMulta}" >
+								<f:convertNumber currencyCode="BRL" type="currency" />
+							</h:outputText>
+						</div>
+					</div>
+			</p:dialog>
+		</h:form>
+	</ui:define>
+</ui:composition>

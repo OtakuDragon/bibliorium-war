@@ -81,10 +81,14 @@
 			<h:panelGroup rendered="#{not empty consultarLeitorMB.leitor}">
 				<div class="row" align="center">
 					<div style="margin-top:3%;">
-						<p:commandButton value="Histórico" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Alterar" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Histórico" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false">
+							<f:setPropertyActionListener value="#{consultarLeitorMB.leitor}" target="#{sessionScope['leitor']}" />
+						</p:commandButton>
+						<p:commandButton value="Alterar" action="/pages/BIBLIOTECARIO/editarLeitor" style="margin-right:1%;" class="botao" tabindex="10" ajax="false">
+							<f:setPropertyActionListener value="#{consultarLeitorMB.leitor}" target="#{sessionScope['leitor']}" />
+						</p:commandButton>
 						<p:commandButton value="Bloquear/Ativar" action="#{consultarLeitorMB.toggleAcesso}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Resetar Senha" action="#{cadastrarLeitorMB.cadastrar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Resetar Senha" action="#{consultarLeitorMB.resetarSenha}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
 						<p:commandButton value="Cancelar" class="botao" tabindex="11" action="#{consultarLeitorMB.reset}" update="@form" />
 					</div>
 				</div>

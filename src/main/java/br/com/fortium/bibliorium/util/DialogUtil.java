@@ -18,7 +18,17 @@ public class DialogUtil {
 	
 	private HttpSession session;
 	
-	public DialogUtil(){
+	private static DialogUtil instance;
+	
+	public static DialogUtil getInstance(){
+		if(instance == null){
+			instance = new DialogUtil();
+		}
+		
+		return instance;
+	}
+	
+	private DialogUtil(){
 		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
 		session.setAttribute(DIALOG_HEADER,   DEFAULT_HEADER);
 		session.setAttribute(DIALOG_ICON,     WARNING_ICON);
