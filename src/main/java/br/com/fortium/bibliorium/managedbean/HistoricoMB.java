@@ -33,7 +33,7 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 	private Emprestimo emprestimoDetalhe;
 	private List<Emprestimo> emprestimos;
 	
-	private SimpleDateFormat formatter;
+	private final SimpleDateFormat formatter = new SimpleDateFormat("MM/yyyy");
 	
 	@EJB
 	private EmprestimoService emprestimoService;
@@ -43,13 +43,11 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		leitor      = (Usuario) extractSessionAttribute("leitor");
 		periodos    = calcularPeriodos(leitor);
 		emprestimos = emprestimoService.buscar(leitor, null);
-		formatter   = new SimpleDateFormat("MM/yyyy");
 	}
 
 	public void filtrar(AjaxBehaviorEvent e){
 		UIInput component = (UIInput)e.getComponent();
-		String value = (String)component.getValue();
-		
+		String value      = (String)component.getValue();
 		Date data = periodosDate.get(value);
 		
 		emprestimos = emprestimoService.buscar(leitor, data);
