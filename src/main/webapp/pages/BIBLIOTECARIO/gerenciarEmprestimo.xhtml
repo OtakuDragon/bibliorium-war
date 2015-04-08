@@ -11,86 +11,183 @@
 		<div class="titulo-conteudo-div">
 			<span class="titulo-conteudo-text">Gerenciar Empréstimo</span>
 		</div>
-		<h:form id="consultarLeitorForm" styleClass="form-conteudo" enctype="multipart/form-data">
-		<div class="form-conteudo wrapper">
-			<div class="row">
-				<div class="element" style="width:100%;" align="center">
-					<h:outputLabel styleClass="label align-left" value="Cod. Cópia: " for="buscaCopia" style="width:13%;margin-right:1%;"/>
-					<h:inputText id="buscaCopia"
-								 style="width:65%;"
-								 styleClass="input-text width-77 align-left"
-								 value="#{gerenciarEmprestimoMB.codCopia}"
-								 required="true"
-								 tabindex="1" />
-					<p:commandButton class="botao" value="Buscar" action="#{gerenciarEmprestimoMB.buscarCopia}" update="@form" />
-				</div>
+		<h:form id="consultarLeitorForm" styleClass="form-conteudo">
+			<div class="form-conteudo wrapper">
+				<h:panelGroup rendered="#{empty gerenciarEmprestimoMB.copia}">
+					<!-- Busca Cópia -->
+					<div class="leitura" style="margin-bottom:2%;">
+							<div class="header">
+								<span class="title label">Busca Cópia</span>
+							</div>
+						<div class="row" style="padding:2px;">
+							<div class="element" style="width:100%;" align="center">
+								<h:outputLabel styleClass="label align-left" value="Cod. Cópia: " for="buscaCopia" style="width:14%;margin-right:1%;"/>
+								<h:inputText id="buscaCopia"
+											 style="width:65%;"
+											 styleClass="input-text width-77 align-left"
+											 value="#{gerenciarEmprestimoMB.codCopia}"
+											 required="true"
+											 tabindex="1" />
+								<p:commandButton class="botao" value="Buscar" action="#{gerenciarEmprestimoMB.buscarCopia}" update="@form" />
+							</div>
+						</div>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.codCopia}">
+					<!-- Dados Cópia -->
+					<div class="leitura">
+						<div class="header">
+							<span class="title label" style="width:8% !important">Cópia</span>
+						</div>
+						<c:choose>
+							<c:when test="#{not empty gerenciarEmprestimoMB.copia}">
+								<div class="row">
+									<div class="element" align="center" style="width:100% !important;">
+										<h:outputLabel styleClass="label" value="Titúlo: " for="titulo" style="width:12% !important"/>
+										<h:outputText id="titulo" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.titulo}" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="element" align="center">
+										<h:outputLabel styleClass="label" value="Livro: " title="Código do livro" for="livro"/>
+										<h:outputText id="livro" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.id}" />
+									</div>
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Cópia: " title="Código da cópia" for="copia" />
+										<h:outputText id="copia" styleClass="text" value="#{gerenciarEmprestimoMB.copia.id}" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Edição: " title="Edição" for="edicao"/>
+										<h:outputText id="edicao" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.edicao}" />
+									</div>
+									<div class="element">
+										<h:outputLabel styleClass="label" value="ISBN: " title="ISBN" for="isbn"/>
+										<h:outputText id="isbn" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.isbn}" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Autores: " title="Autores do livro" for="autores"/>
+										<h:outputText id="autores" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.autores}"/>
+									</div>
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Estado: " title="Estado da cópia" for="estado"/>
+										<h:outputText id="estado" styleClass="text" value="#{gerenciarEmprestimoMB.copia.estado}"/>
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<h:outputText class="label" value="Nenhum resultado." style="float:none !important;" />
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.copia}">
+					<!-- Ações Cópia -->
+					<h:panelGroup rendered="#{gerenciarEmprestimoMB.disponivel}">
+						<div class="row" align="center">
+							<div style="margin-top:3%;">
+								<p:commandButton value="Emprestar" action="#{gerenciarEmprestimoMB.emprestar}" disabled="#{gerenciarEmprestimoMB.actionPicked}" style="margin-right:1%;" class="botao" ajax="false"/>
+								<p:commandButton value="Reservar" action="/pages/BIBLIOTECARIO/editarLeitor" disabled="#{gerenciarEmprestimoMB.actionPicked}" style="margin-right:1%;" class="botao" ajax="false"/>
+								<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
+							</div>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{gerenciarEmprestimoMB.reservada}">
+						<div class="row" align="center">
+							<div style="margin-top:3%;">
+								<p:commandButton value="Emprestar(Reservado)" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+								<p:commandButton value="Cancelar Reserva" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+								<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
+							</div>
+						</div>
+					</h:panelGroup>
+					<h:panelGroup rendered="#{gerenciarEmprestimoMB.emprestada}">
+						<div class="row" align="center">
+							<div style="margin-top:3%;">
+								<p:commandButton value="Efetuar Devolução" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+								<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+				<!-- Busca Leitor -->
+				<h:panelGroup rendered="#{gerenciarEmprestimoMB.displayBuscaLeitor}">
+					<h:panelGroup rendered="#{empty gerenciarEmprestimoMB.leitor}">
+						<div class="leitura" style="margin-bottom:2%;">
+							<div class="header">
+								<span class="title label">Busca Leitor</span>
+							</div>
+							<div class="row" style="padding:2px;">
+								<div class="row">
+									<div class="element" style="width:100%;" align="center">
+										<h:outputLabel styleClass="label align-left" value="CPF: " for="buscaLeitor" style="width:13%;margin-right:1%;"/>
+										<h:inputText id="buscaLeitor"
+													 style="width:65%;"
+													 styleClass="input-text width-77 align-left"
+													 value="#{gerenciarEmprestimoMB.cpf}"
+													 required="true"
+													 tabindex="1" />
+										<p:commandButton class="botao" value="Buscar" action="#{gerenciarEmprestimoMB.buscarLeitor}" update="@form" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</h:panelGroup>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.cpf}">
+					<!-- Dados Leitor -->
+					<div class="leitura">
+						<div class="header">
+							<span class="title label" style="width:8% !important">Leitor</span>
+						</div>
+						<c:choose>
+							<c:when test="#{not empty gerenciarEmprestimoMB.leitor}">
+								<div class="row">
+									<div class="element" align="center" style="width:100% !important;">
+										<h:outputLabel styleClass="label" value="Nome: " style="width:12% !important"/>
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.nome}" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="element" align="center">
+										<h:outputLabel styleClass="label" value="CPF: "/>
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.cpf}" />
+									</div>
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Tipo: " />
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.tipo}" />
+									</div>
+								</div>
+								<div class="row">
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Estado: "/>
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.estado}" />
+									</div>
+									<div class="element">
+										<h:outputLabel styleClass="label" value="Email: "/>
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.email}" />
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<h:outputText class="label" value="Nenhum resultado." style="float:none !important;" />
+							</c:otherwise>
+						</c:choose>
+					</div>
+				</h:panelGroup>
+				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.leitor}">
+					<!-- Ações Finais -->
+					<div class="row" align="center">
+						<div style="margin-top:3%;">
+							<p:commandButton value="Confirmar" action="#{gerenciarEmprestimoMB.emprestar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+							<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
+						</div>
+					</div>
+				</h:panelGroup>
 			</div>
-			<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.codCopia}">
-				<div class="leitura">
-					<div class="header">
-						<span class="title label" style="width:8% !important">Cópia</span>
-					</div>
-					<c:choose>
-						<c:when test="#{not empty gerenciarEmprestimoMB.copia}">
-							<div class="row">
-								<div class="element" align="center" style="width:100% !important;">
-									<h:outputLabel styleClass="label" value="Titúlo: " for="titulo" style="width:12% !important"/>
-									<h:outputText id="titulo" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.titulo}" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="element" align="center">
-									<h:outputLabel styleClass="label" value="Livro: " title="Código do livro" for="livro"/>
-									<h:outputText id="livro" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.id}" />
-								</div>
-								<div class="element">
-									<h:outputLabel styleClass="label" value="Cópia: " title="Código da cópia" for="copia" />
-									<h:outputText id="copia" styleClass="text" value="#{gerenciarEmprestimoMB.copia.id}" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="element">
-									<h:outputLabel styleClass="label" value="Edição: " title="Edição" for="edicao"/>
-									<h:outputText id="edicao" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.edicao}" />
-								</div>
-								<div class="element">
-									<h:outputLabel styleClass="label" value="ISBN: " title="ISBN" for="isbn"/>
-									<h:outputText id="isbn" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.isbn}" />
-								</div>
-							</div>
-							<div class="row">
-								<div class="element">
-									<h:outputLabel styleClass="label" value="Autores: " title="Autores do livro" for="autores"/>
-									<h:outputText id="autores" styleClass="text" value="#{gerenciarEmprestimoMB.copia.livro.autores}"/>
-								</div>
-								<div class="element">
-									<h:outputLabel styleClass="label" value="Estado: " title="Estado da cópia" for="estado"/>
-									<h:outputText id="estado" styleClass="text" value="#{gerenciarEmprestimoMB.copia.estado}"/>
-								</div>
-							</div>
-						</c:when>
-						<c:otherwise>
-							<h:outputText class="label" value="Nenhum resultado." style="float:none !important;" />
-						</c:otherwise>
-					</c:choose>
-				</div>
-			</h:panelGroup>
-			<h:panelGroup rendered="#{not empty consultarLeitorMB.leitor}">
-				<div class="row" align="center">
-					<div style="margin-top:3%;">
-						<p:commandButton value="Histórico" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false">
-							<f:setPropertyActionListener value="#{consultarLeitorMB.leitor}" target="#{sessionScope['leitor']}" />
-						</p:commandButton>
-						<p:commandButton value="Alterar" action="/pages/BIBLIOTECARIO/editarLeitor" style="margin-right:1%;" class="botao" tabindex="10" ajax="false">
-							<f:setPropertyActionListener value="#{consultarLeitorMB.leitor}" target="#{sessionScope['leitor']}" />
-						</p:commandButton>
-						<p:commandButton value="Bloquear/Ativar" action="#{consultarLeitorMB.toggleAcesso}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Resetar Senha" action="#{consultarLeitorMB.resetarSenha}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Cancelar" class="botao" tabindex="11" action="#{consultarLeitorMB.reset}" update="@form" />
-					</div>
-				</div>
-			</h:panelGroup>
-		</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
