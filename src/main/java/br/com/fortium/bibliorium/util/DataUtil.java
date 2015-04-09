@@ -7,6 +7,8 @@ import java.util.Date;
 
 import org.jboss.logging.Logger;
 
+import br.com.fortium.bibliorium.persistence.enumeration.TipoUsuario;
+
 public class DataUtil {
 	
 	public static String getDataS(Date date, String pattern) {
@@ -37,5 +39,35 @@ public class DataUtil {
 			calendar.setTime(date);
 		}
 		return calendar;
+	}
+	
+	public static Date calcularDataDevolucao(TipoUsuario tipo){
+		switch(tipo){
+			case ALUNO:
+			case BIBLIOTECARIO:
+				return addDiasSemana(new Date(), 7);
+			case PROFESSOR:
+				return addDiasSemana(new Date(), 15);
+			default:
+				return null;
+		}
+		
+	}
+	
+	public static Date calcularDataFimReserva(){
+		return addDiasSemana(new Date(), 7);
+	}
+	
+	private static Date addDiasSemana(Date date, Integer qtd){
+		Calendar calendar = getCalendar(date);
+		calendar.add(Calendar.DAY_OF_WEEK, qtd);
+		
+		if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY){
+			calendar.add(Calendar.DAY_OF_WEEK, 2);
+		}else if(calendar.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY){
+			calendar.add(Calendar.DAY_OF_WEEK, 1);
+		}
+		
+		return calendar.getTime();
 	}
 }

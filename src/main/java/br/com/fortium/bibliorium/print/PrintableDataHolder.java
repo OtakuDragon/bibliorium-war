@@ -5,7 +5,7 @@ public class PrintableDataHolder {
 	private String printableName;
 	private Printable[] printables;
 	
-	public PrintableDataHolder(String printableName, Printable[] printables) {
+	public PrintableDataHolder(String printableName, Printable... printables) {
 		setPrintableName(printableName);
 		setPrintables(printables);
 	}

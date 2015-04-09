@@ -89,7 +89,7 @@
 					</p:dataTable>
 				</div>
 			</div>
-			<p:dialog id="idDetalheDialog" styleClass="dialog leitura historico"  modal="true" widgetVar="detalheDialog" header="Detalhe Empréstimo" resizable="false" draggable="false" width="30%" style="max-width:770px">
+			<p:dialog id="idDetalheDialog" styleClass="dialog leitura historico"  modal="true" widgetVar="detalheDialog" header="Detalhe Empréstimo" resizable="false" draggable="false" width="40%" style="max-width:770px">
 					<div class="row">
 						<div class="element" align="center">
 							<h:outputLabel styleClass="label left-side" value="Titulo: "/>
@@ -133,10 +133,12 @@
 								</h:outputText>
 						</div>
 						<div class="element">
+							
 							<h:outputLabel styleClass="label" value="Multa: "/>
-							<h:outputText id="isbn" styleClass="text " value="#{historicoMB.emprestimoDetalhe.valorMulta}" >
+							<h:outputText styleClass="text" value="#{historicoMB.emprestimoDetalhe.valorMulta}" rendered="#{not empty valorMulta}">
 								<f:convertNumber currencyCode="BRL" type="currency" />
 							</h:outputText>
+							<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty valorMulta}" />
 						</div>
 					</div>
 			</p:dialog>

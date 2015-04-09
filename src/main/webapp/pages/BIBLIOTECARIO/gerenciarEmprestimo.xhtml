@@ -89,8 +89,8 @@
 					<h:panelGroup rendered="#{gerenciarEmprestimoMB.disponivel}">
 						<div class="row" align="center">
 							<div style="margin-top:3%;">
-								<p:commandButton value="Emprestar" action="#{gerenciarEmprestimoMB.emprestar}" disabled="#{gerenciarEmprestimoMB.actionPicked}" style="margin-right:1%;" class="botao" ajax="false"/>
-								<p:commandButton value="Reservar" action="/pages/BIBLIOTECARIO/editarLeitor" disabled="#{gerenciarEmprestimoMB.actionPicked}" style="margin-right:1%;" class="botao" ajax="false"/>
+								<p:commandButton value="Emprestar" action="#{gerenciarEmprestimoMB.emprestar}" disabled="#{not empty gerenciarEmprestimoMB.action}" style="margin-right:1%;" class="botao" ajax="false"/>
+								<p:commandButton value="Reservar" action="#{gerenciarEmprestimoMB.reservar}" disabled="#{not empty gerenciarEmprestimoMB.action}" style="margin-right:1%;" class="botao" ajax="false"/>
 								<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
 							</div>
 						</div>
@@ -98,7 +98,7 @@
 					<h:panelGroup rendered="#{gerenciarEmprestimoMB.reservada}">
 						<div class="row" align="center">
 							<div style="margin-top:3%;">
-								<p:commandButton value="Emprestar(Reservado)" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+								<p:commandButton value="Emprestar" action="#{gerenciarEmprestimoMB.emprestarReserva}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
 								<p:commandButton value="Cancelar Reserva" action="/pages/ALL/historico" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
 								<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
 							</div>
@@ -182,7 +182,7 @@
 					<!-- Ações Finais -->
 					<div class="row" align="center">
 						<div style="margin-top:3%;">
-							<p:commandButton value="Confirmar" action="#{gerenciarEmprestimoMB.emprestar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
+							<p:commandButton value="Confirmar" action="#{gerenciarEmprestimoMB.confirmar}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false"/>
 							<p:commandButton value="Cancelar" action="#{gerenciarEmprestimoMB.reset}" style="margin-right:1%;" class="botao" update="@form"/>
 						</div>
 					</div>

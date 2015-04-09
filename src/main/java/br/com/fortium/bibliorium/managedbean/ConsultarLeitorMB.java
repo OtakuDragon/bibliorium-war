@@ -31,7 +31,7 @@ public class ConsultarLeitorMB extends AbstractManagedBean<ConsultarLeitorMB> {
 		if(cpf == null || !cpf.matches("^\\d{11}")){
 			getDialogUtil().showDialog(DialogType.ERROR, "CPF inválido, 11 números.");
 		}else{
-			leitor = usuarioService.buscar(cpf);
+			leitor = usuarioService.buscarComInativos(cpf);
 		}
 	}
 	

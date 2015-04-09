@@ -4,9 +4,17 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import br.com.fortium.bibliorium.builder.EmprestimoBuilder;
+import br.com.fortium.bibliorium.enumeration.DialogType;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
+import br.com.fortium.bibliorium.persistence.entity.Emprestimo;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.EstadoCopia;
+import br.com.fortium.bibliorium.persistence.enumeration.EstadoUsuario;
+import br.com.fortium.bibliorium.print.ComprovanteEmprestimoPrintable;
+import br.com.fortium.bibliorium.print.Printable;
+import br.com.fortium.bibliorium.print.PrintableBuilder;
+import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.service.CopiaService;
 import br.com.fortium.bibliorium.service.EmprestimoService;
 import br.com.fortium.bibliorium.service.UsuarioService;
@@ -15,6 +23,8 @@ import br.com.fortium.bibliorium.service.UsuarioService;
 @ViewScoped
 public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmprestimoMB> {
 
+	private enum Action {EMPRESTIMO, RESERVA, DEVOLUCAO}
+	
 	private static final long serialVersionUID = 2249645974635438267L;
 	
 	private String codCopia;
@@ -24,7 +34,8 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	private Usuario leitor;
 	
 	private Boolean displayBuscaLeitor;
-	private Boolean actionPicked;
+	
+	private Action action;
 	
 	@EJB
 	private CopiaService copiaService;
@@ -51,22 +62,78 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		}
 	}
 	
-	public void emprestar(){
-		setDisplayBuscaLeitor(Boolean.TRUE);
-		setActionPicked(Boolean.TRUE);
-	}
-	
 	public void buscarLeitor(){
 		leitor = usuarioService.buscar(cpf);
 	}
 	
+	public void emprestar(){
+		setDisplayBuscaLeitor(Boolean.TRUE);
+		setAction(Action.EMPRESTIMO);
+	}
+	
+	public void reservar(){
+		setDisplayBuscaLeitor(Boolean.TRUE);
+		setAction(Action.RESERVA);
+	}
+	
+	public void emprestarReserva(){
+		Emprestimo reserva = emprestimoService.buscarReserva(copia);
+		leitor = reserva.getUsuario();
+		cpf    = leitor.getCpf();
+		
+		emprestimoService.concluirEmprestimo(reserva);
+		
+		setAction(Action.EMPRESTIMO);
+	}
+	
+	public void confirmar(){
+		if(getAction() == Action.EMPRESTIMO || getAction() == Action.RESERVA){
+			efetuarEmprestimo();
+		}
+	}
+
+	private void efetuarEmprestimo() {
+		if(leitor.getEstado() == EstadoUsuario.INADIMPLENTE){
+			getDialogUtil().showDialog(DialogType.ERROR, "Empréstimo/Reserva recusado(a), este leitor está inadimplente");
+			return;
+		}else if(emprestimoService.countEmprestimoAtivos(leitor) >= 5){
+			getDialogUtil().showDialog(DialogType.ERROR, "Empréstimo/Reserva recusado(a), este leitor já atingiu o limite de 5 empréstimo/reserva ativos");
+			return;
+		}
+		
+		Emprestimo emprestimo = null;
+		
+		switch(getAction()){
+			case EMPRESTIMO:
+				emprestimo = EmprestimoBuilder.novoEmprestimo(leitor, copia);
+				emprestimoService.efetuarEmprestimo(emprestimo);
+				getDialogUtil().showDialog(DialogType.SUCCESS, "Empréstimo realizado com sucesso");
+				break;
+			case RESERVA:
+				emprestimo = EmprestimoBuilder.novaReserva(leitor, copia);
+				emprestimoService.efetuarEmprestimo(emprestimo);
+				getDialogUtil().showDialog(DialogType.SUCCESS, "Reserva realizada com sucesso");
+				break;
+			default:
+				return;
+		}
+		
+		printComprovanteEmprestimo(emprestimo);
+		reset();
+	}
+
 	public void reset(){
 		setCpf(null);
 		setCopia(null);
 		setLeitor(null);
 		setCodCopia(null);
-		setActionPicked(Boolean.FALSE);
 		setDisplayBuscaLeitor(Boolean.FALSE);
+	}
+	
+	private void printComprovanteEmprestimo(Emprestimo emprestimo){
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo);
+		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
+		setPrintable(dataHolder);
 	}
 	
 	public boolean isDisponivel(){
@@ -133,12 +200,12 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		this.leitor = leitor;
 	}
 
-	public Boolean getActionPicked() {
-		return actionPicked;
+	public Action getAction() {
+		return action;
 	}
 
-	public void setActionPicked(Boolean actionPicked) {
-		this.actionPicked = actionPicked;
+	public void setAction(Action action) {
+		this.action = action;
 	}
 
 }

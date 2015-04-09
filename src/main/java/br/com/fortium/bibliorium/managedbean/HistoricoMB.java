@@ -3,6 +3,7 @@ package br.com.fortium.bibliorium.managedbean;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -69,22 +70,25 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 			dataPeriodo.add(Calendar.MONTH, 1);
 			
 		}while(dataPeriodo.compareTo(hoje) <= 0);
-
-		adicionarMesAtual(retorno);
 		
 		Collections.reverse(retorno);
 		
 		return retorno;
 	}
-
-	private void adicionarMesAtual(List<String> lista){
-		Date dataAtual = new Date();
-		String dataAtualS = formatter.format(dataAtual);
-		lista.add(dataAtualS);
-		periodosDate.put(dataAtualS, dataAtual);
-	}
 	
 	public List<Emprestimo> getEmprestimos() {
+		Collections.sort(emprestimos, new Comparator<Emprestimo>(){
+			@Override
+			public int compare(Emprestimo o1, Emprestimo o2) {
+				if(o1.getId() < o2.getId()){
+					return 1;
+				}else if(o1.getId() > o2.getId()){
+					return -1;
+				}
+				return 0;
+			}
+			
+		});
 		return emprestimos;
 	}
 
