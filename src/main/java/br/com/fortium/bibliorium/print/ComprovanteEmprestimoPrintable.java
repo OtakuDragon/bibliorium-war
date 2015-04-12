@@ -56,5 +56,13 @@ public class ComprovanteEmprestimoPrintable implements Printable {
 	public void setCodValidacao(String codValidacao) {
 		printableInfo.put("Cod. Validação", codValidacao);
 	}
+	
+	public void setDataFechamento(String dataFechamento) {
+		printableInfo.put("Data Fechamento", dataFechamento);
+	}
+	
+	public void setValorMulta(String valorMulta) {
+		printableInfo.put("Multa", valorMulta);
+	}
 
 }

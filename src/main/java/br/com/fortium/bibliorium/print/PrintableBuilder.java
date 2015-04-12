@@ -1,7 +1,11 @@
 package br.com.fortium.bibliorium.print;
 
+import java.math.BigDecimal;
+import java.text.Format;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.persistence.entity.Emprestimo;
@@ -12,6 +16,10 @@ import br.com.fortium.bibliorium.util.HashUtil;
 
 public class PrintableBuilder {
 
+	public static enum TipoComprovante{NOVO, DEVOLUCAO}
+	
+	private static Format currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt","br"));
+	
 	public static Printable[] buildEtiquetas(List<Copia> copias){
 		List<Printable> retorno = new ArrayList<Printable>();
 		
@@ -30,7 +38,7 @@ public class PrintableBuilder {
 		return retorno.toArray(new Printable[]{});
 	}
 	
-	public static Printable buildComprovanteEmprestimo(Emprestimo emprestimo){
+	public static Printable buildComprovanteEmprestimo(Emprestimo emprestimo, TipoComprovante tipo){
 		ComprovanteEmprestimoPrintable retorno = new ComprovanteEmprestimoPrintable();
 		
 		Usuario leitor = emprestimo.getUsuario();
@@ -45,7 +53,13 @@ public class PrintableBuilder {
 		retorno.setCodEmprestimo (emprestimo.getId().toString());
 		retorno.setDataDevolucao (DataUtil.getDataS(emprestimo.getDataDevolucao(), "dd/MM/yyyy"));
 		retorno.setDataEmprestimo(DataUtil.getDataS(emprestimo.getDataEmprestimo(), "dd/MM/yyyy"));
-		retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataEmprestimo()));
+		if(tipo == TipoComprovante.NOVO){
+			retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataEmprestimo()));
+		}else{
+			retorno.setDataFechamento(DataUtil.getDataS(emprestimo.getDataFechamento(), "dd/MM/yyyy"));
+			retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataFechamento()));
+			retorno.setValorMulta(currencyFormat.format(emprestimo.getValorMulta() == null ? BigDecimal.ZERO : emprestimo.getValorMulta()));
+		}
 		
 		return retorno;
 	}

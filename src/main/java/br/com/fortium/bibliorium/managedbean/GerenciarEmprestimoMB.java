@@ -86,6 +86,28 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		setAction(Action.EMPRESTIMO);
 	}
 	
+	public void cancelarReserva(){
+		emprestimoService.cancelarReserva(copia);
+		getDialogUtil().showDialog(DialogType.SUCCESS, "Reserva cancelada com sucesso");
+		reset();
+	}
+	
+	public void efetuarDevolucao(){
+		Emprestimo emprestimo = emprestimoService.buscarEmprestimo(copia);
+		emprestimoService.concluirEmprestimo(emprestimo);
+		printComprovanteDevolucao(emprestimo);
+		getDialogUtil().showDialog(DialogType.SUCCESS, "Emprestimo finalizado com sucesso");
+	}
+
+	public void reset(){
+		setCpf(null);
+		setCopia(null);
+		setLeitor(null);
+		setCodCopia(null);
+		setAction(null);
+		setDisplayBuscaLeitor(Boolean.FALSE);
+	}
+	
 	public void confirmar(){
 		if(getAction() == Action.EMPRESTIMO || getAction() == Action.RESERVA){
 			efetuarEmprestimo();
@@ -121,17 +143,15 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		printComprovanteEmprestimo(emprestimo);
 		reset();
 	}
-
-	public void reset(){
-		setCpf(null);
-		setCopia(null);
-		setLeitor(null);
-		setCodCopia(null);
-		setDisplayBuscaLeitor(Boolean.FALSE);
-	}
 	
 	private void printComprovanteEmprestimo(Emprestimo emprestimo){
-		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo);
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.NOVO);
+		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
+		setPrintable(dataHolder);
+	}
+	
+	private void printComprovanteDevolucao(Emprestimo emprestimo){
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.DEVOLUCAO);
 		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
 		setPrintable(dataHolder);
 	}
