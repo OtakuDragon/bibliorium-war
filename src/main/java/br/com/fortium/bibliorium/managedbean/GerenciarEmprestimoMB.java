@@ -6,11 +6,11 @@ import javax.faces.bean.ViewScoped;
 
 import br.com.fortium.bibliorium.builder.EmprestimoBuilder;
 import br.com.fortium.bibliorium.enumeration.DialogType;
+import br.com.fortium.bibliorium.exception.ValidationException;
 import br.com.fortium.bibliorium.persistence.entity.Copia;
 import br.com.fortium.bibliorium.persistence.entity.Emprestimo;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.persistence.enumeration.EstadoCopia;
-import br.com.fortium.bibliorium.persistence.enumeration.EstadoUsuario;
 import br.com.fortium.bibliorium.print.ComprovanteEmprestimoPrintable;
 import br.com.fortium.bibliorium.print.Printable;
 import br.com.fortium.bibliorium.print.PrintableBuilder;
@@ -96,7 +96,19 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		Emprestimo emprestimo = emprestimoService.buscarEmprestimo(copia);
 		emprestimoService.concluirEmprestimo(emprestimo);
 		printComprovanteDevolucao(emprestimo);
+		reset();
 		getDialogUtil().showDialog(DialogType.SUCCESS, "Emprestimo finalizado com sucesso");
+	}
+	
+	public void renovarEmprestimo(){
+		try {
+			Emprestimo emprestimo = emprestimoService.renovarEmprestimo(copia);
+			getDialogUtil().showDialog(DialogType.SUCCESS, "Emprestimo renovado com sucesso");
+			printComprovanteEmprestimo(emprestimo);
+			reset();
+		} catch (ValidationException e) {
+			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
+		}
 	}
 
 	public void reset(){
@@ -115,33 +127,29 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	}
 
 	private void efetuarEmprestimo() {
-		if(leitor.getEstado() == EstadoUsuario.INADIMPLENTE){
-			getDialogUtil().showDialog(DialogType.ERROR, "Empréstimo/Reserva recusado(a), este leitor está inadimplente");
-			return;
-		}else if(emprestimoService.countEmprestimoAtivos(leitor) >= 5){
-			getDialogUtil().showDialog(DialogType.ERROR, "Empréstimo/Reserva recusado(a), este leitor já atingiu o limite de 5 empréstimo/reserva ativos");
-			return;
-		}
-		
 		Emprestimo emprestimo = null;
 		
-		switch(getAction()){
-			case EMPRESTIMO:
-				emprestimo = EmprestimoBuilder.novoEmprestimo(leitor, copia);
-				emprestimoService.efetuarEmprestimo(emprestimo);
-				getDialogUtil().showDialog(DialogType.SUCCESS, "Empréstimo realizado com sucesso");
-				break;
-			case RESERVA:
-				emprestimo = EmprestimoBuilder.novaReserva(leitor, copia);
-				emprestimoService.efetuarEmprestimo(emprestimo);
-				getDialogUtil().showDialog(DialogType.SUCCESS, "Reserva realizada com sucesso");
-				break;
-			default:
-				return;
+		try{
+			switch(getAction()){
+				case EMPRESTIMO:
+					emprestimo = EmprestimoBuilder.novoEmprestimo(leitor, copia);
+					emprestimoService.efetuarEmprestimo(emprestimo);
+					getDialogUtil().showDialog(DialogType.SUCCESS, "Empréstimo realizado com sucesso");
+					break;
+				case RESERVA:
+					emprestimo = EmprestimoBuilder.novaReserva(leitor, copia);
+					emprestimoService.efetuarEmprestimo(emprestimo);
+					getDialogUtil().showDialog(DialogType.SUCCESS, "Reserva realizada com sucesso");
+					break;
+				default:
+					return;
+			}
+			
+			printComprovanteEmprestimo(emprestimo);
+			reset();
+		}catch(ValidationException e){
+			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
 		}
-		
-		printComprovanteEmprestimo(emprestimo);
-		reset();
 	}
 	
 	private void printComprovanteEmprestimo(Emprestimo emprestimo){
