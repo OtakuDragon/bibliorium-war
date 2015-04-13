@@ -73,9 +73,9 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 		switch(tipo){
 			case ALUNO:
 			case PROFESSOR:
-				return "/pages/LEITOR/index.xhtml?faces-redirect=true";
+				return "/pages/ALL/pesquisarLivro.xhtml?faces-redirect=true";
 			case BIBLIOTECARIO:
-				return "/pages/BIBLIOTECARIO/index.xhtml?faces-redirect=true";
+				return "/pages/BIBLIOTECARIO/gerenciarEmprestimo.xhtml?faces-redirect=true";
 			default:
 				addMessage(FacesMessage.SEVERITY_ERROR, "Tipo de usuário inválido.", null);
 				return null;

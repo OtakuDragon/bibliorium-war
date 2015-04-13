@@ -165,7 +165,7 @@
 							<p:commandButton value="Editar" action="/pages/BIBLIOTECARIO/editarLivro" style="font-size:80% !important;float:right;"/>
 						</c:when>
 						<c:otherwise>
-							<p:commandButton value="Reservar" style="font-size:80% !important;float:right;" />
+							<p:commandButton value="Reservar" action="#{pesquisarLivroMB.reservar}" style="font-size:80% !important;float:right;" update=":returnDialogForm:returnDialog" />
 						</c:otherwise>
 					</c:choose>
 				</div>

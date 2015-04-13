@@ -16,7 +16,7 @@ import br.com.fortium.bibliorium.util.HashUtil;
 
 public class PrintableBuilder {
 
-	public static enum TipoComprovante{NOVO, DEVOLUCAO}
+	public static enum TipoComprovante{EMPRESTIMO, DEVOLUCAO}
 	
 	private static Format currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt","br"));
 	
@@ -53,7 +53,7 @@ public class PrintableBuilder {
 		retorno.setCodEmprestimo (emprestimo.getId().toString());
 		retorno.setDataDevolucao (DataUtil.getDataS(emprestimo.getDataDevolucao(), "dd/MM/yyyy"));
 		retorno.setDataEmprestimo(DataUtil.getDataS(emprestimo.getDataEmprestimo(), "dd/MM/yyyy"));
-		if(tipo == TipoComprovante.NOVO){
+		if(tipo == TipoComprovante.EMPRESTIMO){
 			retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataEmprestimo()));
 		}else{
 			retorno.setDataFechamento(DataUtil.getDataS(emprestimo.getDataFechamento(), "dd/MM/yyyy"));

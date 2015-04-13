@@ -16,8 +16,15 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIInput;
 import javax.faces.event.AjaxBehaviorEvent;
 
+import br.com.fortium.bibliorium.enumeration.DialogType;
+import br.com.fortium.bibliorium.exception.ValidationException;
 import br.com.fortium.bibliorium.persistence.entity.Emprestimo;
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
+import br.com.fortium.bibliorium.persistence.enumeration.TipoEmprestimo;
+import br.com.fortium.bibliorium.print.ComprovanteEmprestimoPrintable;
+import br.com.fortium.bibliorium.print.Printable;
+import br.com.fortium.bibliorium.print.PrintableBuilder;
+import br.com.fortium.bibliorium.print.PrintableDataHolder;
 import br.com.fortium.bibliorium.service.EmprestimoService;
 import br.com.fortium.bibliorium.util.DataUtil;
 
@@ -42,6 +49,11 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 	@Override
 	protected void init() {
 		leitor      = (Usuario) extractSessionAttribute("leitor");
+		
+		if(leitor == null){
+			leitor = getUsuarioAutenticado();
+		}
+		
 		periodos    = calcularPeriodos(leitor);
 		emprestimos = emprestimoService.buscar(leitor, null);
 	}
@@ -53,6 +65,16 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		
 		emprestimos = emprestimoService.buscar(leitor, data);
 		
+	}
+
+	public void renovar(){
+		try{
+			Emprestimo emprestimo = emprestimoService.renovarEmprestimo(emprestimoDetalhe.getCopia());
+			printComprovante(emprestimo);
+			getDialogUtil().showDialog(DialogType.SUCCESS, "Empréstimo renovado com sucesso");
+		}catch(ValidationException e){
+			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
+		}
 	}
 	
 	private List<String> calcularPeriodos(Usuario leitor) {
@@ -92,6 +114,19 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		return emprestimos;
 	}
 
+	public boolean isRenovavel(){
+		return (emprestimoDetalhe != null &&
+			    emprestimoDetalhe.getTipo() == TipoEmprestimo.EMPRESTIMO &&
+			    emprestimoDetalhe.getDataFechamento() == null &&
+			    emprestimoDetalhe.getDataDevolucao().after(new Date()));
+	}
+	
+	private void printComprovante(Emprestimo emprestimo){
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
+		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
+		setPrintable(dataHolder);
+	}
+	
 	public void setEmprestimos(List<Emprestimo> emprestimos) {
 		this.emprestimos = emprestimos;
 	}

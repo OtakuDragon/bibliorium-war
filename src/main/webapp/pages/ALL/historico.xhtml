@@ -141,6 +141,9 @@
 							<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty valorMulta}" />
 						</div>
 					</div>
+					<div class="row">
+						<p:commandButton value="Renovar" action="#{historicoMB.renovar}" style="font-size:80% !important;float:right;" rendered="#{historicoMB.renovavel}" update=":returnDialogForm:returnDialog" />
+					</div>
 			</p:dialog>
 		</h:form>
 	</ui:define>

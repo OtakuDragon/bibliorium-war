@@ -1,22 +1,22 @@
 package br.com.fortium.bibliorium.util;
 
-import static br.com.fortium.bibliorium.constantes.DialogConsts.*;
-
-import javax.faces.context.FacesContext;
-import javax.servlet.http.HttpSession;
+import static br.com.fortium.bibliorium.constantes.DialogConsts.DEFAULT_HEADER;
+import static br.com.fortium.bibliorium.constantes.DialogConsts.DEFAULT_MESSAGE;
+import static br.com.fortium.bibliorium.constantes.DialogConsts.WARNING_ICON;
 
 import org.primefaces.context.RequestContext;
 
 import br.com.fortium.bibliorium.enumeration.DialogType;
+import br.com.fortium.bibliorium.managedbean.AbstractManagedBean;
 
-public class DialogUtil {
+public class DialogUtil extends AbstractManagedBean<DialogUtil> {
 
+	private static final long serialVersionUID = 1141010581647200671L;
+	
 	//Estes nome estão definidos, nas expressões do p:dialog em templateBase.xhtml que representam os parametros do dialog.
 	private static final String DIALOG_HEADER  = "dialogHeader";
 	private static final String DIALOG_ICON    = "dialogIcon";
 	private static final String DIALOG_MESSAGE = "dialogMesssage";
-	
-	private HttpSession session;
 	
 	private static DialogUtil instance;
 	
@@ -29,10 +29,14 @@ public class DialogUtil {
 	}
 	
 	private DialogUtil(){
-		session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(true);
-		session.setAttribute(DIALOG_HEADER,   DEFAULT_HEADER);
-		session.setAttribute(DIALOG_ICON,     WARNING_ICON);
-		session.setAttribute(DIALOG_MESSAGE, DEFAULT_MESSAGE);
+		setSessionAttribute(DIALOG_HEADER, DEFAULT_HEADER);
+		setSessionAttribute(DIALOG_ICON, WARNING_ICON);
+		setSessionAttribute(DIALOG_MESSAGE, DEFAULT_MESSAGE);
+	}
+	
+	@Override
+	protected void init() {
+		//Never executed
 	}
 	
 	public void showDialog(DialogType type){
@@ -48,9 +52,9 @@ public class DialogUtil {
 	}
 	
 	private void showDialog(String icon, String header, String message){
-		session.setAttribute(DIALOG_ICON,    icon);
-		session.setAttribute(DIALOG_HEADER,  header);
-		session.setAttribute(DIALOG_MESSAGE, message);
+		setSessionAttribute(DIALOG_ICON,    icon);
+		setSessionAttribute(DIALOG_HEADER,  header);
+		setSessionAttribute(DIALOG_MESSAGE, message);
 		showDialog();
 	}
 	

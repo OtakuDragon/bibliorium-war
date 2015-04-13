@@ -95,7 +95,7 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	public void efetuarDevolucao(){
 		Emprestimo emprestimo = emprestimoService.buscarEmprestimo(copia);
 		emprestimoService.concluirEmprestimo(emprestimo);
-		printComprovanteDevolucao(emprestimo);
+		printComprovante(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
 		reset();
 		getDialogUtil().showDialog(DialogType.SUCCESS, "Emprestimo finalizado com sucesso");
 	}
@@ -104,7 +104,7 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		try {
 			Emprestimo emprestimo = emprestimoService.renovarEmprestimo(copia);
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Emprestimo renovado com sucesso");
-			printComprovanteEmprestimo(emprestimo);
+			printComprovante(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
 			reset();
 		} catch (ValidationException e) {
 			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
@@ -145,21 +145,15 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 					return;
 			}
 			
-			printComprovanteEmprestimo(emprestimo);
+			printComprovante(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
 			reset();
 		}catch(ValidationException e){
 			getDialogUtil().showDialog(DialogType.ERROR, e.getMessage());
 		}
 	}
 	
-	private void printComprovanteEmprestimo(Emprestimo emprestimo){
-		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.NOVO);
-		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
-		setPrintable(dataHolder);
-	}
-	
-	private void printComprovanteDevolucao(Emprestimo emprestimo){
-		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.DEVOLUCAO);
+	private void printComprovante(Emprestimo emprestimo, PrintableBuilder.TipoComprovante tipo){
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
 		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
 		setPrintable(dataHolder);
 	}
