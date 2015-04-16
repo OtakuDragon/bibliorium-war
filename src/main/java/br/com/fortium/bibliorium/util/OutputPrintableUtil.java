@@ -59,10 +59,12 @@ public class OutputPrintableUtil {
 		StringBuilder fileContent = new StringBuilder();
 		
 		for (String key : printableInfo.keySet()) {
-			fileContent.append(key);
-			fileContent.append(Printable.RELATION);
-			fileContent.append(printableInfo.get(key));
-			fileContent.append(Printable.LINE_BREAK);
+			if(printableInfo.get(key) != null){
+				fileContent.append(key);
+				fileContent.append(Printable.RELATION);
+				fileContent.append(printableInfo.get(key));
+				fileContent.append(Printable.LINE_BREAK);
+			}
 		}
 		
 		return fileContent.toString();

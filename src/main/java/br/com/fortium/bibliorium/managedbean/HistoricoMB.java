@@ -118,7 +118,7 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		return (emprestimoDetalhe != null &&
 			    emprestimoDetalhe.getTipo() == TipoEmprestimo.EMPRESTIMO &&
 			    emprestimoDetalhe.getDataFechamento() == null &&
-			    emprestimoDetalhe.getDataDevolucao().after(new Date()));
+			    emprestimoDetalhe.getDataPrevista().after(new Date()));
 	}
 	
 	private void printComprovante(Emprestimo emprestimo){

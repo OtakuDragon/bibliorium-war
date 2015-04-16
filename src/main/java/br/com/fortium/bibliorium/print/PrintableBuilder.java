@@ -16,7 +16,7 @@ import br.com.fortium.bibliorium.util.HashUtil;
 
 public class PrintableBuilder {
 
-	public static enum TipoComprovante{EMPRESTIMO, DEVOLUCAO}
+	public static enum TipoComprovante{EMPRESTIMO, DEVOLUCAO, RECIBO}
 	
 	private static Format currencyFormat = NumberFormat.getCurrencyInstance(new Locale("pt","br"));
 	
@@ -51,7 +51,7 @@ public class PrintableBuilder {
 		retorno.setCodCopia      (emprestimo.getCopia().getId().toString());
 		retorno.setTipo          (emprestimo.getTipo().toString());
 		retorno.setCodEmprestimo (emprestimo.getId().toString());
-		retorno.setDataDevolucao (DataUtil.getDataS(emprestimo.getDataDevolucao(), "dd/MM/yyyy"));
+		retorno.setDataPrevista (DataUtil.getDataS(emprestimo.getDataPrevista(), "dd/MM/yyyy"));
 		retorno.setDataEmprestimo(DataUtil.getDataS(emprestimo.getDataEmprestimo(), "dd/MM/yyyy"));
 		if(tipo == TipoComprovante.EMPRESTIMO){
 			retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataEmprestimo()));
@@ -59,6 +59,9 @@ public class PrintableBuilder {
 			retorno.setDataFechamento(DataUtil.getDataS(emprestimo.getDataFechamento(), "dd/MM/yyyy"));
 			retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataFechamento()));
 			retorno.setValorMulta(currencyFormat.format(emprestimo.getValorMulta() == null ? BigDecimal.ZERO : emprestimo.getValorMulta()));
+			if(tipo == TipoComprovante.RECIBO){
+				retorno.setValorPago(currencyFormat.format(emprestimo.getValorMulta().toString()));
+			}
 		}
 		
 		return retorno;

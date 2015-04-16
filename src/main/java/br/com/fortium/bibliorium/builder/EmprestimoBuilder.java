@@ -12,16 +12,13 @@ public class EmprestimoBuilder {
 
 	public static Emprestimo novoEmprestimo(Usuario leitor, Copia copia){
 		Emprestimo retorno = new Emprestimo();
-		
+
 		retorno.setUsuario(leitor);
 		retorno.setCopia(copia);
 		retorno.setDataEmprestimo(new Date());
-		retorno.setDataDevolucao (DataUtil.calcularDataDevolucao(leitor.getTipo()));
-		retorno.setDataFechamento(null);
-		retorno.setDataRenovacao(null);
+		retorno.setDataPrevista(DataUtil.calcularDataDevolucao(leitor.getTipo()));
 		retorno.setTipo(TipoEmprestimo.EMPRESTIMO);
-		retorno.setValorMulta(null);
-		
+
 		return retorno;
 	}
 
@@ -31,11 +28,8 @@ public class EmprestimoBuilder {
 		retorno.setUsuario(leitor);
 		retorno.setCopia(copia);
 		retorno.setDataEmprestimo(new Date());
-		retorno.setDataDevolucao(DataUtil.calcularDataFimReserva());
-		retorno.setDataFechamento(null);
-		retorno.setDataRenovacao(null);
+		retorno.setDataPrevista(DataUtil.calcularDataFimReserva());
 		retorno.setTipo(TipoEmprestimo.RESERVA);
-		retorno.setValorMulta(null);
 		
 		return retorno;
 	}

@@ -49,7 +49,7 @@ public class ComprovanteEmprestimoPrintable implements Printable {
 		printableInfo.put("Data Empréstimo", dataEmprestimo);
 	}
 
-	public void setDataDevolucao(String dataDevolucao) {
+	public void setDataPrevista(String dataDevolucao) {
 		printableInfo.put("Data prevista", dataDevolucao);
 	}
 
@@ -63,6 +63,10 @@ public class ComprovanteEmprestimoPrintable implements Printable {
 	
 	public void setValorMulta(String valorMulta) {
 		printableInfo.put("Multa", valorMulta);
+	}
+
+	public void setValorPago(String valorPago) {
+		printableInfo.put("Valor Pago", valorPago);
 	}
 
 }

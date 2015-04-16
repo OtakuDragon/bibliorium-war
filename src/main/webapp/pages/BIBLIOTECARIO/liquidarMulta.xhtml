@@ -1,0 +1,110 @@
+<ui:composition template="/WEB-INF/templates/templateBase.xhtml"
+				xmlns="http://www.w3.org/1999/xhtml"
+				xmlns:h="http://java.sun.com/jsf/html"
+				xmlns:f="http://java.sun.com/jsf/core"
+				xmlns:ui="http://java.sun.com/jsf/facelets"
+				xmlns:p="http://primefaces.org/ui"
+				xmlns:h5="http://xmlns.jcp.org/jsf/passthrough"
+				xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<ui:define name="Conteudo">
+		<div class="titulo-conteudo-div">
+			<span class="titulo-conteudo-text">Liquidar Multa</span>
+		</div>
+		<h:form id="consultarLeitorForm" styleClass="form-conteudo" enctype="multipart/form-data">
+		<div class="form-conteudo wrapper">
+			<div class="leitura" style="margin-bottom:5%;">
+				<div class="header">
+					<span class="title label" style="width:23% !important;">Busca Emprestimo</span>
+				</div>
+				<div class="row">
+					<div class="element" style="width:100%;" align="center">
+						<h:outputLabel styleClass="label align-left" value="Cod. Empréstimo: " title="Código do emprestimo" style="width:23% !important;margin-right:1%;"/>
+						<h:inputText styleClass="input-text align-left"
+									 style="width:55%;"
+									 value="#{liquidarMultaMB.codEmprestimo}"
+									 tabindex="1" />
+						<p:commandButton class="botao" value="Pesquisar" action="#{liquidarMultaMB.pesquisar}" ajax="false" />
+					</div>
+				</div>
+			</div>
+			<div class="leitura">
+				<div class="header">
+					<span class="title label">Emprestimo</span>
+				</div>
+				<c:choose>
+					<c:when test="#{not empty liquidarMultaMB.emprestimo}">
+						<div class="row">
+							<div class="element" align="center">
+								<h:outputLabel styleClass="label left-side" value="Titulo: "/>
+								<h:outputText id="titulo" styleClass="text" value="#{liquidarMultaMB.emprestimo.copia.livro.titulo}" />
+							</div>
+							<div class="element" align="center">
+								<h:outputLabel styleClass="label" value="Livro: "/>
+								<h:outputText id="codLivro" styleClass="text" value="#{liquidarMultaMB.emprestimo.copia.livro.id}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="element" align="center">
+								<h:outputLabel styleClass="label left-side" value="Cópia: "/>
+								<h:outputText id="codCopia" styleClass="text" value="#{liquidarMultaMB.emprestimo.copia.id}" />
+							</div>
+							<div class="element">
+								<h:outputLabel styleClass="label" value="Tipo: "/>
+								<h:outputText id="tipo" styleClass="text" value="#{liquidarMultaMB.emprestimo.tipo}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="element">
+								<h:outputLabel styleClass="label left-side" value="Dt Início: "/>
+								<h:outputText id="dtInicio" styleClass="text" value="#{liquidarMultaMB.emprestimo.dataEmprestimo}">
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</div>
+							<div class="element">
+								<h:outputLabel styleClass="label" value="Dt. Prev: "/>
+								<h:outputText id="dtPrevista" styleClass="text" value="#{liquidarMultaMB.emprestimo.dataPrevista}" >
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								</h:outputText>
+							</div>
+						</div>
+						<div class="row">
+							<div class="element">
+								<h:outputLabel styleClass="label left-side" value="Dt. Fim: "/>
+									<h:outputText value="Em aberto" styleClass="text" rendered="#{empty liquidarMultaMB.emprestimo.dataFechamento}"/>
+									<h:outputText value="#{liquidarMultaMB.emprestimo.dataFechamento}" styleClass="text" rendered="#{not empty liquidarMultaMB.emprestimo.dataFechamento}" >
+										<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+									</h:outputText>
+							</div>
+							<div class="element">
+								<h:outputLabel styleClass="label" value="Multa: "/>
+								<h:outputText styleClass="text" value="#{liquidarMultaMB.emprestimo.valorMulta}" rendered="#{not empty valorMulta}">
+									<f:convertNumber currencyCode="BRL" type="currency" />
+								</h:outputText>
+								<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty valorMulta}" />
+							</div>
+						</div>
+						<div class="row">
+							<div class="element">
+								<h:outputLabel styleClass="label left-side" value="Estado: "/>
+								<h:outputText value="#{liquidarMultaMB.emprestimo.estado}" styleClass="text" />
+							</div>
+						</div>
+					</c:when>
+					<c:otherwise>
+						<h:outputText class="label" value="Nenhum resultado." style="float:none !important;" />
+					</c:otherwise>
+				</c:choose>
+			</div>
+			<h:panelGroup rendered="#{not empty liquidarMultaMB.emprestimo}">
+				<div class="row" align="center">
+					<div style="margin-top:3%;">
+						<p:commandButton value="Liquidar" action="/pages/ALL/historico" rendered="#{liquidarMultaMB.emprestimo.valorMulta > 0 and liquidarMultaMB.emprestimo.isAberto()}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false" />
+						<p:commandButton value="Cancelar" class="botao" tabindex="11" action="#{liquidarMultaMB.reset}" update="@form" />
+					</div>
+				</div>
+			</h:panelGroup>
+		</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

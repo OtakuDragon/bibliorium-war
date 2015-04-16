@@ -119,7 +119,7 @@
 						</div>
 						<div class="element">
 							<h:outputLabel styleClass="label" value="Dt. Prev: "/>
-							<h:outputText id="dtPrevista" styleClass="text" value="#{historicoMB.emprestimoDetalhe.dataDevolucao}" >
+							<h:outputText id="dtPrevista" styleClass="text" value="#{historicoMB.emprestimoDetalhe.dataPrevista}" >
 								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
 							</h:outputText>
 						</div>
@@ -133,12 +133,17 @@
 								</h:outputText>
 						</div>
 						<div class="element">
-							
 							<h:outputLabel styleClass="label" value="Multa: "/>
 							<h:outputText styleClass="text" value="#{historicoMB.emprestimoDetalhe.valorMulta}" rendered="#{not empty valorMulta}">
 								<f:convertNumber currencyCode="BRL" type="currency" />
 							</h:outputText>
 							<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty valorMulta}" />
+						</div>
+					</div>
+					<div class="row">
+						<div class="element">
+							<h:outputLabel styleClass="label left-side" value="Estado: "/>
+							<h:outputText value="#{historicoMB.emprestimoDetalhe.estado}" styleClass="text" />
 						</div>
 					</div>
 					<div class="row">
