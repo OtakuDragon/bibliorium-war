@@ -151,7 +151,7 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 		return retorno;
 	}
 	
-	protected Usuario getUsuarioAutenticado(){
+	public Usuario getUsuarioAutenticado(){
 		return (Usuario)getSessionAttribute(Usuario.AUTENTICADO);
 	}
 	

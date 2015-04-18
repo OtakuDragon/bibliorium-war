@@ -121,6 +121,18 @@
 			<p:dialog id="idDetalheDialog" styleClass="dialog leitura"  modal="true" widgetVar="detalheDialog" header="Detalhe Livro" resizable="false" draggable="false" width="40%" style="max-width:770px">
 					<div class="row">
 						<div class="element" align="center">
+							<h:outputLabel styleClass="label left-side" value="Código: "/>
+							<h:outputText styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.id}" />
+						</div>
+						<div class="element" align="center">
+							<h:outputLabel styleClass="label" value="Adic. Em: "/>
+							<h:outputText styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.dataCadastro}" >
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+							</h:outputText>
+						</div>
+					</div>
+					<div class="row">
+						<div class="element" align="center">
 							<h:outputLabel styleClass="label left-side" value="Titulo: "/>
 							<h:outputText id="titulo" styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.titulo}" />
 						</div>
