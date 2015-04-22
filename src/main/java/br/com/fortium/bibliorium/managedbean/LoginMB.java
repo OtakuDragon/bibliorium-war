@@ -22,8 +22,6 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 	private String cpf;
 	private String senha;
 	
-	private String contextPath;
-	
 	@EJB
 	private UsuarioService usuarioService;
 	
@@ -100,14 +98,6 @@ public class LoginMB extends AbstractManagedBean<LoginMB>{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
-	}
-
-	public String getContextPath() {
-		return contextPath;
-	}
-
-	public void setContextPath(String contextPath) {
-		this.contextPath = contextPath;
 	}
 
 }
