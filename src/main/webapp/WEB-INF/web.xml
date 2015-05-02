@@ -35,4 +35,8 @@
     <param-name>primefaces.THEME</param-name>
     <param-value>bluesky</param-value>
   </context-param>
+  <context-param>  
+	<param-name>timezone</param-name>
+	<param-value>GMT-3</param-value>
+  </context-param> 
 </web-app>

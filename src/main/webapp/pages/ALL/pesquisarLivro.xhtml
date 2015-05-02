@@ -127,7 +127,7 @@
 						<div class="element" align="center">
 							<h:outputLabel styleClass="label" value="Adic. Em: "/>
 							<h:outputText styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.dataCadastro}" >
-								<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+								<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
 							</h:outputText>
 						</div>
 					</div>

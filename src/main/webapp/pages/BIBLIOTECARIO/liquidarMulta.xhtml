@@ -58,13 +58,13 @@
 							<div class="element">
 								<h:outputLabel styleClass="label left-side" value="Dt Início: "/>
 								<h:outputText id="dtInicio" styleClass="text" value="#{liquidarMultaMB.emprestimo.dataEmprestimo}">
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
 								</h:outputText>
 							</div>
 							<div class="element">
 								<h:outputLabel styleClass="label" value="Dt. Prev: "/>
 								<h:outputText id="dtPrevista" styleClass="text" value="#{liquidarMultaMB.emprestimo.dataPrevista}" >
-									<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+									<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
 								</h:outputText>
 							</div>
 						</div>
@@ -73,7 +73,7 @@
 								<h:outputLabel styleClass="label left-side" value="Dt. Fim: "/>
 									<h:outputText value="Em aberto" styleClass="text" rendered="#{empty liquidarMultaMB.emprestimo.dataFechamento}"/>
 									<h:outputText value="#{liquidarMultaMB.emprestimo.dataFechamento}" styleClass="text" rendered="#{not empty liquidarMultaMB.emprestimo.dataFechamento}" >
-										<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+										<f:convertDateTime type="date" pattern="dd/MM/yyyy" timeZone="#{initParam.timezone}"/>
 									</h:outputText>
 							</div>
 							<div class="element">
