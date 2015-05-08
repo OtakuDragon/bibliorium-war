@@ -134,10 +134,10 @@
 						</div>
 						<div class="element">
 							<h:outputLabel styleClass="label" value="Multa: "/>
-							<h:outputText styleClass="text" value="#{historicoMB.emprestimoDetalhe.valorMulta}" rendered="#{not empty valorMulta}">
+							<h:outputText styleClass="text" value="#{historicoMB.emprestimoDetalhe.valorMulta}" rendered="#{not empty historicoMB.emprestimoDetalhe.valorMulta}">
 								<f:convertNumber currencyCode="BRL" type="currency" />
 							</h:outputText>
-							<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty valorMulta}" />
+							<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty historicoMB.emprestimoDetalhe.valorMulta}" />
 						</div>
 					</div>
 					<div class="row">
