@@ -71,7 +71,7 @@ public class CadastrarLivroMB extends AbstractManagedBean<CadastrarLivroMB> {
 			throw new ValidatorException(new FacesMessage("O código ISBN deve ser um número de 10 ou 13 Digítos"));
 		}
 		
-		if(StringUtils.isNumeric(isbn) && livroService.isIsbnCadastrado(isbn)){
+		if(StringUtils.isNumeric(isbn) && livroService.isIsbnAtivo(isbn)){
 			throw new ValidatorException(new FacesMessage("ISBN já cadastrado"));
 		}
 	}

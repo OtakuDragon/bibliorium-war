@@ -10,6 +10,7 @@ import br.com.fortium.bibliorium.enumeration.DialogType;
 import br.com.fortium.bibliorium.persistence.entity.Categoria;
 import br.com.fortium.bibliorium.persistence.entity.Livro;
 import br.com.fortium.bibliorium.service.CategoriaService;
+import br.com.fortium.bibliorium.service.CopiaService;
 import br.com.fortium.bibliorium.service.LivroService;
 
 @ManagedBean
@@ -26,6 +27,8 @@ public class EditarLivroMB extends AbstractManagedBean<EditarLivroMB> {
 	private CategoriaService categoriaService;
 	@EJB
 	private LivroService livroService;
+	@EJB
+	private CopiaService copiaService;
 	
 	@Override
 	protected void init() {
@@ -56,7 +59,7 @@ public class EditarLivroMB extends AbstractManagedBean<EditarLivroMB> {
 			getDialogUtil().showDialog(DialogType.ERROR, "Não é possivel excluir este livro, ele possui copias emprestadas ou reservadas.");
 			return null;
 		}else{
-			livroService.delete(livro);
+			copiaService.desativarCopias(livro);
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro removido com sucesso!");
 			return "/pages/ALL/pesquisarLivro";
 		}
