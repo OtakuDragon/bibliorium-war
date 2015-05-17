@@ -22,21 +22,34 @@
 						<div class="row" style="padding:2px;">
 							<div class="element">
 								<h:outputLabel styleClass="label width-30 align-left" value="Cod. Livro: "/>
-								<h:inputText styleClass="input-text width-62 align-left"
+								<h:inputText id="codLivro"
+											 styleClass="input-text width-62 align-left"
 											 value="#{gerenciarEmprestimoMB.codLivro}"
 											 required="true"
-											 tabindex="1" />
+											 requiredMessage="Campo obrigatório"
+											 tabindex="1" >
+									<p:ajax event="blur" update="codLivroMessage"/>
+								</h:inputText><br/>
+								<span class="validation-message" style="margin-right:6%;">
+									<h:message id="codLivroMessage" for="codLivro"/>
+								</span>
 							</div>
 							<div class="element">
-								<h:outputLabel styleClass="label width-30 align-left" value="Cod. Cópia: " for="buscaCopia"/>
-								<h:inputText id="buscaCopia"
+								<h:outputLabel styleClass="label width-30 align-left" value="Cod. Cópia: " for="codCopia"/>
+								<h:inputText id="codCopia"
 											 styleClass="input-text width-62 align-left"
 											 value="#{gerenciarEmprestimoMB.codCopia}"
 											 required="true"
-											 tabindex="1" />
+											 requiredMessage="Campo obrigatório"
+											 tabindex="1">
+									<p:ajax event="blur" update="codCopiaMessage"/>
+								</h:inputText><br/>
+								<span class="validation-message" style="margin-right:6%;">
+									<h:message id="codCopiaMessage" for="codCopia"/>
+								</span>
 							</div>
 						</div>
-						<div class="row" style="padding:2px;">
+						<div class="row" style="padding:3px;padding-top:7px;">
 							<div class="element width-100">
 								<p:commandButton class="botao align-right" style="margin-right:3%;" value="Buscar" action="#{gerenciarEmprestimoMB.buscarCopia}" update="@form" />
 							</div>
