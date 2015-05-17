@@ -34,7 +34,7 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 
 	private static final long serialVersionUID = 5463787346546469928L;
 	
-	private Usuario leitor;
+	private Usuario usuario;
 	private List<String> periodos;
 	private Map<String, Date> periodosDate;
 	private String opcaoPeriodo;
@@ -48,14 +48,14 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 
 	@Override
 	protected void init() {
-		leitor      = (Usuario) extractSessionAttribute("leitor");
+		usuario      = (Usuario) extractSessionAttribute("usuario");
 		
-		if(leitor == null){
-			leitor = getUsuarioAutenticado();
+		if(usuario == null){
+			usuario = getUsuarioAutenticado();
 		}
 		
-		periodos    = calcularPeriodos(leitor);
-		emprestimos = emprestimoService.buscar(leitor, null);
+		periodos    = calcularPeriodos(usuario);
+		emprestimos = emprestimoService.buscar(usuario, null);
 	}
 
 	public void filtrar(AjaxBehaviorEvent e){
@@ -63,7 +63,7 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		String value      = (String)component.getValue();
 		Date data = periodosDate.get(value);
 		
-		emprestimos = emprestimoService.buscar(leitor, data);
+		emprestimos = emprestimoService.buscar(usuario, data);
 		
 	}
 
@@ -77,11 +77,11 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		}
 	}
 	
-	private List<String> calcularPeriodos(Usuario leitor) {
+	private List<String> calcularPeriodos(Usuario usuario) {
 		List<String> retorno = new LinkedList<String>();
 		periodosDate         = new LinkedHashMap<String, Date>();
 		
-		Calendar dataPeriodo = DataUtil.getCalendar(leitor.getDataCadastro());
+		Calendar dataPeriodo = DataUtil.getCalendar(usuario.getDataCadastro());
 		Calendar hoje        = DataUtil.getCalendar(null);
 		
 		do{
@@ -131,12 +131,12 @@ public class HistoricoMB extends AbstractManagedBean<HistoricoMB> {
 		this.emprestimos = emprestimos;
 	}
 
-	public Usuario getLeitor() {
-		return leitor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLeitor(Usuario leitor) {
-		this.leitor = leitor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	

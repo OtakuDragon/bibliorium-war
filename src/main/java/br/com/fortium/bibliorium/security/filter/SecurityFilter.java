@@ -35,15 +35,13 @@ public class SecurityFilter implements Filter {
 			tipo = usuario.getTipo();
 		}
 		
-		if(!upperUrl.contains("PAGES/LEITOR") && !upperUrl.contains("PAGES/BIBLIOTECARIO") && !upperUrl.contains("PAGES/ALL")){
+		if(!upperUrl.contains("PAGES/BIBLIOTECARIO") && !upperUrl.contains("PAGES/ALL")){
 			chain.doFilter(httpRequest, response);
 		}else if(tipo == null){
 			redirectToLoginWithError(httpRequest, httpResponse, "Acesso negado: Você não está logado no sistema ou a sua sessão expirou.");
 			return;
 		}else{
-			if(upperUrl.contains("PAGES/LEITOR") && (tipo == TipoUsuario.PROFESSOR || tipo == TipoUsuario.ALUNO)){
-				chain.doFilter(httpRequest, response);
-			}else if(upperUrl.contains("PAGES/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
+			if(upperUrl.contains("PAGES/BIBLIOTECARIO") && (tipo == TipoUsuario.BIBLIOTECARIO)){
 				chain.doFilter(httpRequest, response);
 			}else if(upperUrl.contains("PAGES/ALL") && ((tipo == TipoUsuario.BIBLIOTECARIO) || (tipo == TipoUsuario.ALUNO) || (tipo == TipoUsuario.PROFESSOR))){
 				chain.doFilter(httpRequest, response);

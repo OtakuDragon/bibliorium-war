@@ -18,28 +18,28 @@ import br.com.fortium.bibliorium.service.UsuarioService;
 
 @Named
 @RequestScoped
-public class CadastrarLeitorMB extends AbstractManagedBean<CadastrarLeitorMB> {
+public class CadastrarUsuarioMB extends AbstractManagedBean<CadastrarUsuarioMB> {
 
 	private static final long serialVersionUID = 1938994385587953115L;
 	
-	private Usuario leitor;
+	private Usuario usuario;
 	
 	@EJB
 	private UsuarioService usuarioService;
 	
 	@Override
 	protected void init() {
-		setLeitor(new Usuario());
+		setUsuario(new Usuario());
 	}
 	
 	public void cadastrar(){
-		leitor.setSenha(leitor.getCpf());
-		leitor.setEstado(EstadoUsuario.ATIVO);
-		leitor.setDataCadastro(new Date());
+		usuario.setSenha(usuario.getCpf());
+		usuario.setEstado(EstadoUsuario.ATIVO);
+		usuario.setDataCadastro(new Date());
 		
-		usuarioService.cadastrar(leitor);
+		usuarioService.cadastrar(usuario);
 		
-		getDialogUtil().showDialog(DialogType.SUCCESS, "Leitor cadastrado com sucesso!");
+		getDialogUtil().showDialog(DialogType.SUCCESS, "Usuário cadastrado com sucesso!");
 	}
 	
 	public void validarCpf(FacesContext context, UIComponent component, Object value) throws ValidatorException {
@@ -70,12 +70,12 @@ public class CadastrarLeitorMB extends AbstractManagedBean<CadastrarLeitorMB> {
 		return TipoUsuario.values();
 	}
 	
-	public Usuario getLeitor() {
-		return leitor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLeitor(Usuario leitor) {
-		this.leitor = leitor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 

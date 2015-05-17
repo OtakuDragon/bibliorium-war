@@ -27,13 +27,14 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	
 	private static final long serialVersionUID = 2249645974635438267L;
 	
+	private String codLivro;
 	private String codCopia;
 	private String cpf;
 	
 	private Copia copia;
-	private Usuario leitor;
+	private Usuario usuario;
 	
-	private Boolean displayBuscaLeitor;
+	private Boolean displayBuscaUsuario;
 	
 	private Action action;
 	
@@ -48,38 +49,37 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	
 	@Override
 	protected void init() {
-		
+		codLivro = getRequest().getParameter("idLivro");
 	}
 	
-	public void buscarCopia(){
-		Long idCopia = null;
-		
+	public void buscarCopia(){	
 		try{
-			idCopia = Long.parseLong(codCopia);
-			copia = copiaService.buscar(idCopia);
+			Long idLivro = Long.parseLong(codLivro);
+			Long idCopia = Long.parseLong(codCopia);
+			copia = copiaService.buscar(idLivro, idCopia);
 		}catch(NumberFormatException e){
 			copia = null;
 		}
 	}
 	
-	public void buscarLeitor(){
-		leitor = usuarioService.buscar(cpf);
+	public void buscarUsuario(){
+		usuario = usuarioService.buscar(cpf);
 	}
 	
 	public void emprestar(){
-		setDisplayBuscaLeitor(Boolean.TRUE);
+		setDisplayBuscaUsuario(Boolean.TRUE);
 		setAction(Action.EMPRESTIMO);
 	}
 	
 	public void reservar(){
-		setDisplayBuscaLeitor(Boolean.TRUE);
+		setDisplayBuscaUsuario(Boolean.TRUE);
 		setAction(Action.RESERVA);
 	}
 	
 	public void emprestarReserva(){
 		Emprestimo reserva = emprestimoService.buscarReserva(copia);
-		leitor = reserva.getUsuario();
-		cpf    = leitor.getCpf();
+		usuario = reserva.getUsuario();
+		cpf    = usuario.getCpf();
 		
 		emprestimoService.concluirEmprestimo(reserva);
 		
@@ -114,10 +114,11 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	public void reset(){
 		setCpf(null);
 		setCopia(null);
-		setLeitor(null);
+		setUsuario(null);
+		setCodLivro(null);
 		setCodCopia(null);
 		setAction(null);
-		setDisplayBuscaLeitor(Boolean.FALSE);
+		setDisplayBuscaUsuario(Boolean.FALSE);
 	}
 	
 	public void confirmar(){
@@ -132,12 +133,12 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		try{
 			switch(getAction()){
 				case EMPRESTIMO:
-					emprestimo = EmprestimoBuilder.novoEmprestimo(leitor, copia);
+					emprestimo = EmprestimoBuilder.novoEmprestimo(usuario, copia);
 					emprestimoService.efetuarEmprestimo(emprestimo);
 					getDialogUtil().showDialog(DialogType.SUCCESS, "Empréstimo realizado com sucesso");
 					break;
 				case RESERVA:
-					emprestimo = EmprestimoBuilder.novaReserva(leitor, copia);
+					emprestimo = EmprestimoBuilder.novaReserva(usuario, copia);
 					emprestimoService.efetuarEmprestimo(emprestimo);
 					getDialogUtil().showDialog(DialogType.SUCCESS, "Reserva realizada com sucesso");
 					break;
@@ -198,12 +199,12 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		this.codCopia = codCopia;
 	}
 
-	public Boolean getDisplayBuscaLeitor() {
-		return displayBuscaLeitor;
+	public Boolean getDisplayBuscaUsuario() {
+		return displayBuscaUsuario;
 	}
 
-	public void setDisplayBuscaLeitor(Boolean displayBuscaLeitor) {
-		this.displayBuscaLeitor = displayBuscaLeitor;
+	public void setDisplayBuscaUsuario(Boolean displayBuscaUsuario) {
+		this.displayBuscaUsuario = displayBuscaUsuario;
 	}
 
 	public String getCpf() {
@@ -214,12 +215,12 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		this.cpf = cpf;
 	}
 
-	public Usuario getLeitor() {
-		return leitor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLeitor(Usuario leitor) {
-		this.leitor = leitor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public Action getAction() {
@@ -228,6 +229,14 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 
 	public void setAction(Action action) {
 		this.action = action;
+	}
+
+	public String getCodLivro() {
+		return codLivro;
+	}
+
+	public void setCodLivro(String codLivro) {
+		this.codLivro = codLivro;
 	}
 
 }

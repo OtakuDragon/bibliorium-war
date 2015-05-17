@@ -10,22 +10,22 @@ import br.com.fortium.bibliorium.util.DataUtil;
 
 public class EmprestimoBuilder {
 
-	public static Emprestimo novoEmprestimo(Usuario leitor, Copia copia){
+	public static Emprestimo novoEmprestimo(Usuario usuario, Copia copia){
 		Emprestimo retorno = new Emprestimo();
 
-		retorno.setUsuario(leitor);
+		retorno.setUsuario(usuario);
 		retorno.setCopia(copia);
 		retorno.setDataEmprestimo(new Date());
-		retorno.setDataPrevista(DataUtil.calcularDataDevolucao(leitor.getTipo()));
+		retorno.setDataPrevista(DataUtil.calcularDataDevolucao(usuario.getTipo()));
 		retorno.setTipo(TipoEmprestimo.EMPRESTIMO);
 
 		return retorno;
 	}
 
-	public static Emprestimo novaReserva(Usuario leitor, Copia copia) {
+	public static Emprestimo novaReserva(Usuario usuario, Copia copia) {
 		Emprestimo retorno = new Emprestimo();
 		
-		retorno.setUsuario(leitor);
+		retorno.setUsuario(usuario);
 		retorno.setCopia(copia);
 		retorno.setDataEmprestimo(new Date());
 		retorno.setDataPrevista(DataUtil.calcularDataFimReserva());

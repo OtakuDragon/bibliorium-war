@@ -12,11 +12,11 @@ import br.com.fortium.bibliorium.service.UsuarioService;
 
 @ManagedBean
 @ViewScoped
-public class ConsultarLeitorMB extends AbstractManagedBean<ConsultarLeitorMB> {
+public class ConsultarUsuarioMB extends AbstractManagedBean<ConsultarUsuarioMB> {
 
 	private static final long serialVersionUID = 8656997963954115958L;
 	
-	private Usuario leitor;
+	private Usuario usuario;
 	private String  cpf;
 	
 	@EJB
@@ -31,31 +31,31 @@ public class ConsultarLeitorMB extends AbstractManagedBean<ConsultarLeitorMB> {
 		if(cpf == null || !cpf.matches("^\\d{11}")){
 			getDialogUtil().showDialog(DialogType.ERROR, "CPF inválido, 11 números.");
 		}else{
-			leitor = usuarioService.buscarComInativos(cpf);
+			usuario = usuarioService.buscarComInativos(cpf);
 		}
 	}
 	
 	public void reset(){
 		cpf = "";
-		leitor = null;
+		usuario = null;
 	}
 	
 	public void toggleAcesso(){
-		if((leitor.getTipo() == TipoUsuario.BIBLIOTECARIO) && !getUsuarioAutenticado().equals(leitor)){
+		if((usuario.getTipo() == TipoUsuario.BIBLIOTECARIO) && !getUsuarioAutenticado().equals(usuario)){
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Não é possivel modificar o acesso de outros bibliotecarios.");
 		}
 		
-		EstadoUsuario estado = leitor.getEstado();
+		EstadoUsuario estado = usuario.getEstado();
 		
 		switch(estado){
 			case ATIVO:
-				leitor.setEstado(EstadoUsuario.INATIVO);
-				usuarioService.update(leitor);
+				usuario.setEstado(EstadoUsuario.INATIVO);
+				usuarioService.update(usuario);
 				getDialogUtil().showDialog(DialogType.SUCCESS, "Usuário bloqueado com sucesso.");
 				break;
 			case INATIVO:
-				leitor.setEstado(EstadoUsuario.ATIVO);
-				usuarioService.update(leitor);
+				usuario.setEstado(EstadoUsuario.ATIVO);
+				usuarioService.update(usuario);
 				getDialogUtil().showDialog(DialogType.SUCCESS, "Usuário desbloqueado com sucesso.");
 				break;
 			case INADIMPLENTE:
@@ -64,17 +64,17 @@ public class ConsultarLeitorMB extends AbstractManagedBean<ConsultarLeitorMB> {
 	}
 	
 	public void resetarSenha(){
-		leitor.setSenha(leitor.getCpf());
-		usuarioService.update(leitor);
+		usuario.setSenha(usuario.getCpf());
+		usuarioService.update(usuario);
 		getDialogUtil().showDialog(DialogType.SUCCESS, "Senha resetada com sucesso.");
 	}
 
-	public Usuario getLeitor() {
-		return leitor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLeitor(Usuario leitor) {
-		this.leitor = leitor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public String getCpf() {

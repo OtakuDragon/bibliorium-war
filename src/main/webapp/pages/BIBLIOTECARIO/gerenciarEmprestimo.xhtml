@@ -11,7 +11,7 @@
 		<div class="titulo-conteudo-div">
 			<span class="titulo-conteudo-text">Gerenciar Empréstimo</span>
 		</div>
-		<h:form id="consultarLeitorForm" styleClass="form-conteudo">
+		<h:form id="gerenciarEmprestimoForm" styleClass="form-conteudo">
 			<div class="form-conteudo wrapper">
 				<h:panelGroup rendered="#{empty gerenciarEmprestimoMB.copia}">
 					<!-- Busca Cópia -->
@@ -20,15 +20,25 @@
 								<span class="title label">Busca Cópia</span>
 							</div>
 						<div class="row" style="padding:2px;">
-							<div class="element" style="width:100%;" align="center">
-								<h:outputLabel styleClass="label align-left" value="Cod. Cópia: " for="buscaCopia" style="width:14%;margin-right:1%;"/>
+							<div class="element">
+								<h:outputLabel styleClass="label width-30 align-left" value="Cod. Livro: "/>
+								<h:inputText styleClass="input-text width-62 align-left"
+											 value="#{gerenciarEmprestimoMB.codLivro}"
+											 required="true"
+											 tabindex="1" />
+							</div>
+							<div class="element">
+								<h:outputLabel styleClass="label width-30 align-left" value="Cod. Cópia: " for="buscaCopia"/>
 								<h:inputText id="buscaCopia"
-											 style="width:65%;"
-											 styleClass="input-text width-77 align-left"
+											 styleClass="input-text width-62 align-left"
 											 value="#{gerenciarEmprestimoMB.codCopia}"
 											 required="true"
 											 tabindex="1" />
-								<p:commandButton class="botao" value="Buscar" action="#{gerenciarEmprestimoMB.buscarCopia}" update="@form" />
+							</div>
+						</div>
+						<div class="row" style="padding:2px;">
+							<div class="element width-100">
+								<p:commandButton class="botao align-right" style="margin-right:3%;" value="Buscar" action="#{gerenciarEmprestimoMB.buscarCopia}" update="@form" />
 							</div>
 						</div>
 					</div>
@@ -114,24 +124,24 @@
 						</div>
 					</h:panelGroup>
 				</h:panelGroup>
-				<!-- Busca Leitor -->
-				<h:panelGroup rendered="#{gerenciarEmprestimoMB.displayBuscaLeitor}">
-					<h:panelGroup rendered="#{empty gerenciarEmprestimoMB.leitor}">
+				<!-- Busca Usuario -->
+				<h:panelGroup rendered="#{gerenciarEmprestimoMB.displayBuscaUsuario}">
+					<h:panelGroup rendered="#{empty gerenciarEmprestimoMB.usuario}">
 						<div class="leitura" style="margin-bottom:2%;">
 							<div class="header">
-								<span class="title label">Busca Leitor</span>
+								<span class="title label" style="width:18% !important">Busca Usuário</span>
 							</div>
 							<div class="row" style="padding:2px;">
 								<div class="row">
 									<div class="element" style="width:100%;" align="center">
-										<h:outputLabel styleClass="label align-left" value="CPF: " for="buscaLeitor" style="width:13%;margin-right:1%;"/>
-										<h:inputText id="buscaLeitor"
+										<h:outputLabel styleClass="label align-left" value="CPF: " for="buscaUsuário" style="width:13%;margin-right:1%;"/>
+										<h:inputText id="buscaUsuario"
 													 style="width:65%;"
 													 styleClass="input-text width-77 align-left"
 													 value="#{gerenciarEmprestimoMB.cpf}"
 													 required="true"
 													 tabindex="1" />
-										<p:commandButton class="botao" value="Buscar" action="#{gerenciarEmprestimoMB.buscarLeitor}" update="@form" />
+										<p:commandButton class="botao" value="Buscar" action="#{gerenciarEmprestimoMB.buscarUsuario}" update="@form" />
 									</div>
 								</div>
 							</div>
@@ -139,37 +149,37 @@
 					</h:panelGroup>
 				</h:panelGroup>
 				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.cpf}">
-					<!-- Dados Leitor -->
+					<!-- Dados Usuario -->
 					<div class="leitura">
 						<div class="header">
-							<span class="title label" style="width:8% !important">Leitor</span>
+							<span class="title label" style="width:8% !important">Usuário</span>
 						</div>
 						<c:choose>
-							<c:when test="#{not empty gerenciarEmprestimoMB.leitor}">
+							<c:when test="#{not empty gerenciarEmprestimoMB.usuario}">
 								<div class="row">
 									<div class="element" align="center" style="width:100% !important;">
 										<h:outputLabel styleClass="label" value="Nome: " style="width:12% !important"/>
-										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.nome}" />
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.usuario.nome}" />
 									</div>
 								</div>
 								<div class="row">
 									<div class="element" align="center">
 										<h:outputLabel styleClass="label" value="CPF: "/>
-										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.cpf}" />
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.usuario.cpf}" />
 									</div>
 									<div class="element">
 										<h:outputLabel styleClass="label" value="Tipo: " />
-										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.tipoFormatado}" />
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.usuario.tipoFormatado}" />
 									</div>
 								</div>
 								<div class="row">
 									<div class="element">
 										<h:outputLabel styleClass="label" value="Estado: "/>
-										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.estado}" />
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.usuario.estado}" />
 									</div>
 									<div class="element">
 										<h:outputLabel styleClass="label" value="Email: "/>
-										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.leitor.email}" />
+										<h:outputText styleClass="text" value="#{gerenciarEmprestimoMB.usuario.email}" />
 									</div>
 								</div>
 							</c:when>
@@ -179,7 +189,7 @@
 						</c:choose>
 					</div>
 				</h:panelGroup>
-				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.leitor}">
+				<h:panelGroup rendered="#{not empty gerenciarEmprestimoMB.usuario}">
 					<!-- Ações Finais -->
 					<div class="row" align="center">
 						<div style="margin-top:3%;">

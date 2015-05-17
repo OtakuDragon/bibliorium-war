@@ -69,16 +69,16 @@
 				</div>
 				<div class="row" align="center">
 					<div>
-						<p:commandButton value="Pesquisar" action="#{pesquisarLivroMB.pesquisar}" style="margin-right:2%;" class="botao small-prime" tabindex="10" update="tabelaLivros"/>
+						<p:commandButton value="Pesquisar" action="#{pesquisarLivroMB.pesquisar}" style="margin-right:2%;" class="botao small-prime" tabindex="10" update=":pesquisarLivroForm:tabelaLivros" oncomplete="$('#tabelaLivrosDiv').show()"/>
 						<p:commandButton value="Limpar" h5:type="reset" class="botao small-prime" tabindex="11" ajax="false"/>
 					</div>
 				</div>
-				<div class="row" align="center">
-					<p:dataTable 
-								 id="tabelaLivros"
+				<div id="tabelaLivrosDiv" class="row" align="center">
+					<p:dataTable id="tabelaLivros"
 								 styleClass="small-prime"
 								 value="#{pesquisarLivroMB.livros}"
 								 var="livro"
+								 widgetVar="tabelaLivros"
 								 scrollable="true"
 								 scrollHeight="300"
 								 emptyMessage="Nenhum livro encontrado."
@@ -171,15 +171,28 @@
 							<h:outputText id="categoria" styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.categoria.nome}"/>
 						</div>
 					</div>
+					<div class="row">
+						<div class="element">
+							<h:outputLabel styleClass="label left-side" value="Corredor:  "/>
+							<h:outputText styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.corredor}" />
+						</div>
+						<div class="element">
+							<h:outputLabel styleClass="label" value="Estante: "/>
+							<h:outputText styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.estante}"/>
+						</div>
+					</div>
+					<div class="row">
+						<div class="element">
+							<h:outputLabel styleClass="label left-side" value="Prateleira:  "/>
+							<h:outputText styleClass="text" value="#{pesquisarLivroMB.livroDetalhe.prateleira}" />
+						</div>
+					</div>
 					<div class="row" style="margin-top:2%;">
-					<c:choose>
-						<c:when test="#{loginMB.bibliotecario}">
-							<p:commandButton value="Editar" action="/pages/BIBLIOTECARIO/editarLivro" style="font-size:80% !important;float:right;"/>
-						</c:when>
-						<c:otherwise>
-							<p:commandButton value="Reservar" action="#{pesquisarLivroMB.reservar}" style="font-size:80% !important;float:right;" update=":returnDialogForm:returnDialog" />
-						</c:otherwise>
-					</c:choose>
+						<h:panelGroup rendered="#{loginMB.bibliotecario}">
+														<p:commandButton value="Editar" action="/pages/BIBLIOTECARIO/editarLivro" style="font-size:80% !important;float:right;"/>
+							<p:commandButton value="Emprestar" action="#{pesquisarLivroMB.emprestar}" style="font-size:80% !important;float:right;margin-right:2%;"/>
+						</h:panelGroup>
+						<p:commandButton value="Reservar" action="#{pesquisarLivroMB.reservar}" rendered="#{not loginMB.bibliotecario}" style="font-size:80% !important;float:right;" update=":returnDialogForm:returnDialog" />
 				</div>
 			</p:dialog>
 		</h:form>

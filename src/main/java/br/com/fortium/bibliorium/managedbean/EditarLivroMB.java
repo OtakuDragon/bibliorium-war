@@ -47,6 +47,7 @@ public class EditarLivroMB extends AbstractManagedBean<EditarLivroMB> {
 	
 	public String salvar(){
 		if(!livroOriginal.equals(livro)){
+			livro.setCopias(null);
 			livroService.update(livro);
 			getDialogUtil().showDialog(DialogType.SUCCESS, "Livro alterado com sucesso!");
 		}

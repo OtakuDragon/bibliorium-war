@@ -32,6 +32,9 @@ public class PrintableBuilder {
 			printable.setIsbn    (livro.getIsbn());
 			printable.setCodLivro(livro.getId().toString());
 			printable.setCodCopia(copia.getId().toString());
+			printable.setCorredor(livro.getCorredor());
+			printable.setEstante(livro.getEstante());
+			printable.setPrateleira(livro.getPrateleira());
 			
 			retorno.add(printable);
 		}
@@ -41,11 +44,11 @@ public class PrintableBuilder {
 	public static Printable buildComprovanteEmprestimo(Emprestimo emprestimo, TipoComprovante tipo){
 		ComprovanteEmprestimoPrintable retorno = new ComprovanteEmprestimoPrintable();
 		
-		Usuario leitor = emprestimo.getUsuario();
+		Usuario usuario = emprestimo.getUsuario();
 		Livro   livro  = emprestimo.getCopia().getLivro();
 		
-		retorno.setNome          (leitor.getNome());
-		retorno.setCpf           (leitor.getCpf());
+		retorno.setNome          (usuario.getNome());
+		retorno.setCpf           (usuario.getCpf());
 		retorno.setTituloLivro   (livro.getTitulo());
 		retorno.setIsbn          (livro.getIsbn());
 		retorno.setCodCopia      (emprestimo.getCopia().getId().toString());

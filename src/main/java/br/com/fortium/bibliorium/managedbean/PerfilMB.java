@@ -13,7 +13,7 @@ public class PerfilMB extends AbstractManagedBean<PerfilMB> {
 
 	private static final long serialVersionUID = -3316966153212939392L;
 	
-	private Usuario leitor;
+	private Usuario usuario;
 	private boolean editing;
 	
 	@EJB
@@ -21,11 +21,11 @@ public class PerfilMB extends AbstractManagedBean<PerfilMB> {
 	
 	@Override
 	protected void init() {
-		leitor = getUsuarioAutenticado();
+		usuario = getUsuarioAutenticado();
 	}
 	
 	public void editar(){
-		usuarioService.update(leitor);
+		usuarioService.update(usuario);
 		toggleEditing();
 	}
 
@@ -33,12 +33,12 @@ public class PerfilMB extends AbstractManagedBean<PerfilMB> {
 		setEditing(!isEditing());
 	}
 	
-	public Usuario getLeitor() {
-		return leitor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLeitor(Usuario leitor) {
-		this.leitor = leitor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 
 	public boolean isEditing() {

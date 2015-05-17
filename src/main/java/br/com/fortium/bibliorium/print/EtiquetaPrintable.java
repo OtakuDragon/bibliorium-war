@@ -21,11 +21,25 @@ public class EtiquetaPrintable implements Printable {
 		printableInfo.put("Título", titulo);
 	}
 
+	public void setCategoria(String categoria) {
+		printableInfo.put("Categoria", categoria);
+	}
 
 	public void setIsbn(String isbn) {
 		printableInfo.put("ISBN", isbn);
 	}
+	
+	public void setCorredor(String corredor) {
+		printableInfo.put("Corredor", corredor);
+	}
+	
+	public void setEstante(String estante) {
+		printableInfo.put("Estante", estante);
+	}
 
+	public void setPrateleira(String prateleira) {
+		printableInfo.put("Prateleira", prateleira);
+	}
 
 	public void setCodLivro(String codLivro) {
 		printableInfo.put("Cód. Livro", codLivro);

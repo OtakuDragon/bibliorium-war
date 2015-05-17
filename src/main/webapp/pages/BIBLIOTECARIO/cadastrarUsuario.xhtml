@@ -8,9 +8,9 @@
 
 	<ui:define name="Conteudo">
 		<div class="titulo-conteudo-div">
-			<span class="titulo-conteudo-text">Editar Leitor</span>
+			<span class="titulo-conteudo-text">Cadastrar Usuário</span>
 		</div>
-		<h:form id="cadastrarLeitorForm" styleClass="form-conteudo">
+		<h:form id="cadastrarUsuarioForm" styleClass="form-conteudo" enctype="multipart/form-data">
 		<div class="form-conteudo wrapper">
 			<div class="row">
 				<div class="element" style="width:100%;" align="center">
@@ -18,7 +18,7 @@
 					<h:inputText id="nome"
 								 style="width:89%;"
 								 styleClass="input-text width-77"
-								 value="#{editarLeitorMB.leitor.nome}"
+								 value="#{cadastrarUsuarioMB.usuario.nome}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Nome inválido (Min. 5 Caracteres)."
@@ -37,7 +37,7 @@
 					<h:outputLabel styleClass="label width-20" value="RG: " title="Registro geral" for="rg" />
 					<h:inputText id="rg"
 								 styleClass="input-text width-77"
-								 value="#{editarLeitorMB.leitor.rg}" required="true"
+								 value="#{cadastrarUsuarioMB.usuario.rg}" required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="RG Inválido (Min. 6 Números)."
 								 maxlength="10"
@@ -53,10 +53,16 @@
 					<h:outputLabel styleClass="label width-20" value="CPF: " title="Cadastro de pessoa fisíca" for="cpf" />
 					<h:inputText id="cpf"
 								 styleClass="input-text width-77"
-								 value="#{editarLeitorMB.leitor.cpf}"
-								 disabled="true"
+								 value="#{cadastrarUsuarioMB.usuario.cpf}" required="true"
+								 requiredMessage="Campo obrigatório."
+								 validator="#{cadastrarUsuarioMB.validarCpf}"
+								 maxlength="11"
 								 tabindex="2">
+						<p:ajax event="blur" update="cpfMessage"/>
 					</h:inputText><br/>
+					<span class="validation-message">
+						<h:message id="cpfMessage" for="cpf"/>
+					</span>
 				</div>
 			</div>
 			<div class="row">
@@ -64,7 +70,7 @@
 					<h:outputLabel styleClass="label width-20" value="Matrícula: " title="Matrícula (Campo opcional)" for="matricula"/>
 					<h:inputText id="matricula"
 								 styleClass="input-text width-77"
-								 value="#{editarLeitorMB.leitor.matricula}"
+								 value="#{cadastrarUsuarioMB.usuario.matricula}"
 								 validatorMessage="Matrícula inválida (Min. 3 Números)."
 								 converterMessage="A matrícula deve ser um número"
 								 maxlength="20"
@@ -80,12 +86,17 @@
 					<h:outputLabel styleClass="label width-20" value="Email: " title="Email válido" for="email"/>
 					<h:inputText id="email"
 								 styleClass="input-text width-77"
-								 value="#{editarLeitorMB.leitor.email}"
+								 value="#{cadastrarUsuarioMB.usuario.email}"
 								 required="true"
+								 requiredMessage="Campo obrigatório."
+								 validator="#{cadastrarUsuarioMB.validarEmail}"
 								 maxlength="255"
-								 disabled="true"
 								 tabindex="3">
-					</h:inputText>
+						<p:ajax event="blur" update="emailMessage"/>
+					</h:inputText><br/>
+					<span class="validation-message">
+						<h:message id="emailMessage" for="email"/>
+					</span>
 				</div>
 			</div>
 			<div class="row">
@@ -94,7 +105,7 @@
 					<h:inputText id="telefone"
 								 title="Telefone"
 								 styleClass="input-text width-77"
-								 value="#{editarLeitorMB.leitor.telefone}"
+								 value="#{cadastrarUsuarioMB.usuario.telefone}"
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Telefone inválido."
@@ -108,21 +119,27 @@
 					</span>
 				</div>
 				<div class="element">
-					<h:outputLabel styleClass="label width-30" value="Tipo: " for="tipo" />
+					<h:outputLabel styleClass="label width-20" value="Tipo: " for="tipo" />
 					<h:selectOneMenu id="tipo"
 									 styleClass="select"
 									 title="Tipo de usuário"
-									 value="#{editarLeitorMB.leitor.tipo}"
-									 disabled="true"
+									 value="#{cadastrarUsuarioMB.usuario.tipo}"
+									 required="true" 
+									 requiredMessage="Campo obrigatório." 
 									 tabindex="9">
-						<f:selectItem itemLabel="#{editarLeitorMB.leitor.tipoFormatado}"/>
-					</h:selectOneMenu>
+						<f:selectItem itemLabel="Selecione.." itemValue="#{null}" />
+						<f:selectItems value="#{cadastrarUsuarioMB.tiposUsuario}"/>
+						<p:ajax event="blur" update="tipoMessage"/>
+					</h:selectOneMenu><br/>
+					<span class="validation-message">
+						<h:message id="tipoMessage" for="tipo"/>
+					</span>
 				</div>
 			</div>
 			<div class="row" align="center">
 				<div style="margin-top:3%;">
-						<p:commandButton value="Salvar" action="#{editarLeitorMB.editar}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
-						<p:commandButton value="Cancelar" action="/pages/BIBLIOTECARIO/editarLeitor" class="botao" tabindex="11" ajax="false"/>
+						<p:commandButton value="Cadastrar" action="#{cadastrarUsuarioMB.cadastrar}" style="margin-right:2%;" class="botao" tabindex="10" ajax="false"/>
+						<p:commandButton value="Cancelar" h5:type="reset" class="botao" tabindex="11" ajax="false"/>
 				</div>
 			</div>
 		</div>

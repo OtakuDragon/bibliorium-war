@@ -3,4 +3,5 @@ $(document).ready(function(){
 	$(".avancadoLink").click(function(){
 		$(".avancado").toggle();
 	});
+	$('#tabelaLivrosDiv').hide();
 });

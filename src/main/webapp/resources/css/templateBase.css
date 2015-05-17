@@ -19,11 +19,11 @@ body{padding:0;margin:0;border:0;}
 	max-height:32px
 }
 
-#menuVerticalContainer{border-right:1px solid #6A97A6;height:100vh;width:22%;float:left;}
+#menuVerticalContainer{border-right:1px solid #6A97A6;height:100vh;width:24%;float:left;}
 
 #contentContainer{
 	height:100vh;
-	width:77.5%;
+	width:75.8%;
 	float:left;
 }
 

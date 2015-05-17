@@ -10,24 +10,24 @@ import br.com.fortium.bibliorium.service.UsuarioService;
 
 @ManagedBean
 @ViewScoped
-public class EditarLeitorMB extends AbstractManagedBean<EditarLeitorMB>{
+public class EditarUsuarioMB extends AbstractManagedBean<EditarUsuarioMB>{
 
 	private static final long serialVersionUID = -4286768534297216189L;
 	
-	private Usuario leitor;
-	private Usuario leitorOriginal;
+	private Usuario usuario;
+	private Usuario usuarioOriginal;
 	
 	@EJB
 	private UsuarioService usuarioService;
 	
 	@Override
 	protected void init() {
-		leitor = (Usuario)extractSessionAttribute("leitor");
-		if(leitor == null){
+		usuario = (Usuario)extractSessionAttribute("usuario");
+		if(usuario == null){
 			redirectToHome();
 		}else{
 			try {
-				leitorOriginal = (Usuario)leitor.clone();
+				usuarioOriginal = (Usuario)usuario.clone();
 			} catch (CloneNotSupportedException e) {
 				getLogger().error(e.getMessage(), e);
 			}
@@ -35,20 +35,20 @@ public class EditarLeitorMB extends AbstractManagedBean<EditarLeitorMB>{
 	}
 
 	public String editar(){
-		if(!leitorOriginal.equals(leitor)){
-			usuarioService.update(leitor);
-			getDialogUtil().showDialog(DialogType.SUCCESS, "Leitor Alterado com sucesso!");
+		if(!usuarioOriginal.equals(usuario)){
+			usuarioService.update(usuario);
+			getDialogUtil().showDialog(DialogType.SUCCESS, "Usuário Alterado com sucesso!");
 		}
 		
-		return "/pages/BIBLIOTECARIO/consultarLeitor";
+		return "/pages/BIBLIOTECARIO/consultarUsuario";
 	}
 	
-	public Usuario getLeitor() {
-		return leitor;
+	public Usuario getUsuario() {
+		return usuario;
 	}
 
-	public void setLeitor(Usuario leitor) {
-		this.leitor = leitor;
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
 	}
 	
 }

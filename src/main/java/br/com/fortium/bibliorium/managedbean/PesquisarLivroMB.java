@@ -41,7 +41,6 @@ public class PesquisarLivroMB extends AbstractManagedBean<PesquisarLivroMB> {
 	
 	@Override
 	protected void init() {
-		livros = livroService.list();
 		filtro = new Livro();
 		setCategorias(categoriaService.buscarCategorias());
 	}
@@ -49,6 +48,10 @@ public class PesquisarLivroMB extends AbstractManagedBean<PesquisarLivroMB> {
 	public void pesquisar(){
 		livros = livroService.buscarPorFiltro(filtro);
 		filtro = new Livro();
+	}
+	
+	public String emprestar(){
+		return "/pages/BIBLIOTECARIO/gerenciarEmprestimo.xhtml?faces-redirect=true&idLivro="+ getLivroDetalhe().getId();
 	}
 	
 	public void reservar(){
@@ -105,5 +108,5 @@ public class PesquisarLivroMB extends AbstractManagedBean<PesquisarLivroMB> {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	
+
 }

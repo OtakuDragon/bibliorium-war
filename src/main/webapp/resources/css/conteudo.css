@@ -50,7 +50,7 @@
 }
 
 .width-30{
-	width: 30%;
+	width: 30% !important;
 }
 
 .width-35{
@@ -71,6 +71,10 @@
 
 .width-77{
 	width: 77%;
+}
+
+.width-100{
+	width: 100% !important;
 
 }
 
@@ -80,6 +84,10 @@
 
 .align-left{
 	float:left !important;
+}
+
+.align-right{
+	float:right !important;
 }
 
 .botao{
@@ -106,7 +114,7 @@
 }
 
 .form-conteudo .select{
-	width:67%;
+	width:78%;
 	height:25px;
 	float:right;
 }
