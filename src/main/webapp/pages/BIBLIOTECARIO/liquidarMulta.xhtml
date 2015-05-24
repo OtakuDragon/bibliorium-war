@@ -78,10 +78,10 @@
 							</div>
 							<div class="element">
 								<h:outputLabel styleClass="label" value="Multa: "/>
-								<h:outputText styleClass="text" value="#{liquidarMultaMB.emprestimo.valorMulta}" rendered="#{not empty valorMulta}">
+								<h:outputText styleClass="text" value="#{liquidarMultaMB.emprestimo.valorMulta}" rendered="#{not empty liquidarMultaMB.emprestimo.valorMulta}">
 									<f:convertNumber currencyCode="BRL" type="currency" />
 								</h:outputText>
-								<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty valorMulta}" />
+								<h:outputText styleClass="text" value="Nenhuma" rendered="#{empty liquidarMultaMB.emprestimo.valorMulta}" />
 							</div>
 						</div>
 						<div class="row">

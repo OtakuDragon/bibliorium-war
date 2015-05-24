@@ -25,7 +25,7 @@
 								 maxlength="255"
 								 tabindex="1"
 								 disabled="#{!perfilMB.editing}" >
-						<f:validateRegex pattern="^\w{3}.{2,250}" />
+						<f:validateRegex pattern=".{5,250}" />
 						<p:ajax event="blur" update="nomeMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
@@ -121,6 +121,23 @@
 									 tabindex="9"/>
 				</div>
 			</div>
+			<h:panelGroup layout="block" class="row" rendered="#{perfilMB.editing}" style="width:70% !important">
+					<h:outputLabel styleClass="label width-30" value="Nova senha: " for="senha" />
+					<h:inputSecret id="senha"
+								 title="Nova Senha"
+								 styleClass="input-text"
+								 value="#{perfilMB.usuario.senha}"
+								 validatorMessage="Mín. 8 caracteres."
+								 maxlength="200"
+								 tabindex="5"
+								 style="width:66% !important">
+						<f:validateRegex pattern="(\S{8,})?" />
+						<p:ajax event="blur" update="senhaMessage"/>
+					</h:inputSecret><br/>
+					<span class="validation-message">
+						<h:message id="senhaMessage" for="senha"/>
+					</span>
+			</h:panelGroup>
 			<div class="row" align="center">
 				<div style="margin-top:3%;">
 						<p:commandButton value="Editar"    action="#{perfilMB.toggleEditing}"   rendered="#{!perfilMB.editing}" style="margin-right:2%;float:right;" class="botao" tabindex="10" update="@form"/>

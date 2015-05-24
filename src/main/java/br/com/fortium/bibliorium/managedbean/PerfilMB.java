@@ -4,6 +4,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.com.fortium.bibliorium.persistence.entity.Usuario;
 import br.com.fortium.bibliorium.service.UsuarioService;
 
@@ -21,11 +23,19 @@ public class PerfilMB extends AbstractManagedBean<PerfilMB> {
 	
 	@Override
 	protected void init() {
-		usuario = getUsuarioAutenticado();
+		try {
+			usuario = (Usuario)getUsuarioAutenticado().clone();
+		} catch (CloneNotSupportedException e) {
+			getLogger().error(e.getMessage(), e);
+		}
 	}
 	
 	public void editar(){
+		if(StringUtils.isEmpty(usuario.getSenha())){
+			usuario.setSenha(getUsuarioAutenticado().getSenha());
+		}
 		usuarioService.update(usuario);
+		setUsuarioAutenticado(usuario);
 		toggleEditing();
 	}
 

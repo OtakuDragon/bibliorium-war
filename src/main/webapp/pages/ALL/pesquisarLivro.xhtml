@@ -107,7 +107,7 @@
 								<h:outputText value="#{livro.copiasDisponiveis.size()}" />/<h:outputText value="#{livro.copias.size()}" />
 							</div>
 						</p:column>
-						<p:column style="width: 7%;padding-left:1% !important;">
+						<p:column style="width: 5%;padding-left:1% !important;">
 							<div>
 								<p:commandButton value="Detalhar" class="botao small-prime" oncomplete="PF('detalheDialog').show()" style="font-size:85% !important;width:100%;max-width:77px !important;" update=":pesquisarLivroForm:idDetalheDialog">
 									<f:setPropertyActionListener target="#{pesquisarLivroMB.livroDetalhe}" value="#{livro}" />

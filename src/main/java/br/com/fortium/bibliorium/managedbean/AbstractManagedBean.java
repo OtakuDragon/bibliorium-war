@@ -155,4 +155,8 @@ public abstract class AbstractManagedBean<T> extends ServiceableContainer implem
 		return (Usuario)getSessionAttribute(Usuario.AUTENTICADO);
 	}
 	
+	public void setUsuarioAutenticado(Usuario usuario){
+		setSessionAttribute(Usuario.AUTENTICADO, usuario);
+	}
+	
 }
