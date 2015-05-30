@@ -99,7 +99,7 @@
 			<h:panelGroup rendered="#{not empty liquidarMultaMB.emprestimo}">
 				<div class="row" align="center">
 					<div style="margin-top:3%;">
-						<p:commandButton value="Liquidar" action="/pages/ALL/historico" rendered="#{liquidarMultaMB.emprestimo.valorMulta > 0 and liquidarMultaMB.emprestimo.isAberto()}" style="margin-right:1%;" class="botao" tabindex="10" ajax="false" />
+						<p:commandButton value="Liquidar" action="#{liquidarMultaMB.liquidar}" rendered="#{liquidarMultaMB.emprestimo.valorMulta > 0 and liquidarMultaMB.emprestimo.isAberto()}" style="margin-right:1%;" class="botao" tabindex="10" update="@form" />
 						<p:commandButton value="Cancelar" class="botao" tabindex="11" action="#{liquidarMultaMB.reset}" update="@form" />
 					</div>
 				</div>

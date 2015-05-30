@@ -63,7 +63,7 @@ public class PrintableBuilder {
 			retorno.setCodValidacao  (HashUtil.encode(emprestimo.getDataFechamento()));
 			retorno.setValorMulta(currencyFormat.format(emprestimo.getValorMulta() == null ? BigDecimal.ZERO : emprestimo.getValorMulta()));
 			if(tipo == TipoComprovante.RECIBO){
-				retorno.setValorPago(currencyFormat.format(emprestimo.getValorMulta().toString()));
+				retorno.setValorPago(currencyFormat.format(emprestimo.getValorMulta()));
 			}
 		}
 		

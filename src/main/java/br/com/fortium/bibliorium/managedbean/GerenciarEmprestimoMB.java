@@ -95,7 +95,7 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	public void efetuarDevolucao(){
 		Emprestimo emprestimo = emprestimoService.buscarEmprestimo(copia);
 		emprestimoService.concluirEmprestimo(emprestimo);
-		printComprovante(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
+		printComprovante(emprestimo, PrintableBuilder.TipoComprovante.DEVOLUCAO);
 		reset();
 		getDialogUtil().showDialog(DialogType.SUCCESS, "Emprestimo finalizado com sucesso");
 	}
@@ -154,7 +154,7 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	}
 	
 	private void printComprovante(Emprestimo emprestimo, PrintableBuilder.TipoComprovante tipo){
-		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, tipo);
 		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
 		setPrintable(dataHolder);
 	}

@@ -53,7 +53,7 @@ public class LiquidarMultaMB extends AbstractManagedBean<LiquidarMultaMB> {
 	}
 	
 	private void printComprovante(Emprestimo emprestimo, PrintableBuilder.TipoComprovante tipo){
-		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.EMPRESTIMO);
+		Printable comprovante = PrintableBuilder.buildComprovanteEmprestimo(emprestimo, PrintableBuilder.TipoComprovante.RECIBO);
 		PrintableDataHolder dataHolder = new PrintableDataHolder(ComprovanteEmprestimoPrintable.NAME, comprovante);
 		setPrintable(dataHolder);
 	}
