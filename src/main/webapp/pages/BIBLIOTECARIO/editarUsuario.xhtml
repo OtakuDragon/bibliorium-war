@@ -40,7 +40,7 @@
 								 value="#{editarUsuarioMB.usuario.rg}" required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="RG Inválido (Min. 6 Números)."
-								 maxlength="10"
+								 maxlength="12"
 								 tabindex="2">
 						<f:validateRegex pattern="^\d{6,}" />
 						<p:ajax event="blur" update="rgMessage"/>
@@ -98,9 +98,9 @@
 								 required="true"
 								 requiredMessage="Campo obrigatório."
 								 validatorMessage="Telefone inválido."
-								 maxlength="13"
+								 maxlength="11"
 								 tabindex="4">
-						<f:validateRegex pattern="^\d{8}" />
+						<f:validateRegex pattern="^\d{11}" />
 						<p:ajax event="blur" update="telefoneMessage"/>
 					</h:inputText><br/>
 					<span class="validation-message">
