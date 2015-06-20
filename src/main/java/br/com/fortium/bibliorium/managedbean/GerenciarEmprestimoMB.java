@@ -23,7 +23,7 @@ import br.com.fortium.bibliorium.service.UsuarioService;
 @ViewScoped
 public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmprestimoMB> {
 
-	private enum Action {EMPRESTIMO, RESERVA, DEVOLUCAO}
+	private enum Action {EMPRESTIMO, EMPRESTAR_RESERVA, RESERVA, DEVOLUCAO}
 	
 	private static final long serialVersionUID = 2249645974635438267L;
 	
@@ -81,9 +81,7 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		usuario = reserva.getUsuario();
 		cpf    = usuario.getCpf();
 		
-		emprestimoService.concluirEmprestimo(reserva);
-		
-		setAction(Action.EMPRESTIMO);
+		setAction(Action.EMPRESTAR_RESERVA);
 	}
 	
 	public void cancelarReserva(){
@@ -122,7 +120,7 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 	}
 	
 	public void confirmar(){
-		if(getAction() == Action.EMPRESTIMO || getAction() == Action.RESERVA){
+		if(getAction() == Action.EMPRESTIMO || getAction() == Action.EMPRESTAR_RESERVA || getAction() == Action.RESERVA ){
 			efetuarEmprestimo();
 		}
 	}
@@ -132,6 +130,9 @@ public class GerenciarEmprestimoMB extends AbstractManagedBean<GerenciarEmpresti
 		
 		try{
 			switch(getAction()){
+				case EMPRESTAR_RESERVA:
+					Emprestimo reserva = emprestimoService.buscarReserva(copia);
+					emprestimoService.concluirEmprestimo(reserva);
 				case EMPRESTIMO:
 					emprestimo = EmprestimoBuilder.novoEmprestimo(usuario, copia);
 					emprestimoService.efetuarEmprestimo(emprestimo);
